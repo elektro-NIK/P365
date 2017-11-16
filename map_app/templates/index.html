@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+{% load leaflet_tags %}
+<html>
+    <head>
+        {% leaflet_js %}
+        {% leaflet_css %}
+        <title>Map</title>
+    </head>
+    <body>
+        {% leaflet_map "mainmap" %}
+    </body>
+</html>
