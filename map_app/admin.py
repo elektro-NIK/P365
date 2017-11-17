@@ -1,3 +1,7 @@
 from django.contrib import admin
+from leaflet.admin import LeafletGeoAdmin
 
-# Register your models here.
+from .models import POI, Track
+
+admin.site.register(POI, LeafletGeoAdmin)
+admin.site.register(Track, LeafletGeoAdmin)

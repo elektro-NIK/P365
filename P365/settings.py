@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -27,7 +26,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django.contrib.gis',
     'leaflet',
 
     'map_app',
@@ -73,17 +72,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'P365.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+SPATIALITE_LIBRARY_PATH = 'mod_spatialite'
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.contrib.gis.db.backends.spatialite',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -103,7 +102,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -117,8 +115,63 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join('static'),)
+
+# Map settings
+# https://django-leaflet.readthedocs.io
+
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (50.45, 30.523),
+    'DEFAULT_ZOOM': 5,
+    'RESET_VIEW': False,
+    'TILES': [
+        ('OpenStreetMap', 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            'maxZoom': 19, 'attribution': '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        }),
+        ('OpenStreetMap B&W', 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+            'maxZoom': 18, 'attribution': '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        }),
+        ('OpenTopoMap', 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+            'maxZoom': 17,
+            'attribution': 'Map data: &copy;'
+                           ' <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>,'
+                           ' <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy;'
+                           ' <a href="https://opentopomap.org">OpenTopoMap</a>'
+                           ' (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
+        }),
+        ('Toner', 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.{ext}', {
+            'attribution': 'Map tiles by <a href="http://stamen.com">Stamen Design</a>,'
+                           ' <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy;'
+                           ' <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            'subdomains': 'abcd',
+            'minZoom': 0,
+            'maxZoom': 20,
+            'ext': 'png'
+        }),
+        ('TonerLite', 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
+            'attribution': 'Map tiles by <a href="http://stamen.com">Stamen Design</a>,'
+                           ' <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy;'
+                           ' <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            'subdomains': 'abcd',
+            'minZoom': 0,
+            'maxZoom': 20,
+            'ext': 'png'
+        }),
+        ('WorldStreetMap',
+         'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+             'attribution': 'Tiles &copy; Esri &mdash; 2012'
+         }),
+        ('WorldTopoMap',
+         'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+             'attribution': 'Tiles &copy; Esri'
+         }),
+        ('WorldImagery',
+         'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+             'attribution': 'Tiles &copy; Esri'
+         }),
+    ],
+}

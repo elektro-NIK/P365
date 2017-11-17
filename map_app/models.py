@@ -1,3 +1,26 @@
 from django.db import models
 
-# Create your models here.
+from django.contrib.gis.db import models as gismodels
+from django.contrib.auth.models import User
+
+
+class POI(models.Model):
+    name = models.CharField(max_length=64)
+    desc = models.TextField(max_length=256)
+    user = models.ForeignKey(User)
+    created = models.DateTimeField(auto_now_add=True)
+    geom = gismodels.PointField()
+
+    def __str__(self):
+        return self.name
+
+
+class Track(models.Model):
+    name = models.CharField(max_length=64)
+    desc = models.CharField(max_length=256)
+    user = models.ForeignKey(User)
+    created = models.DateTimeField(auto_now_add=True)
+    geom = gismodels.MultiLineStringField()
+
+    def __str__(self):
+        return self.name
