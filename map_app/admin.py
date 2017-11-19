@@ -1,7 +1,7 @@
 from django.contrib import admin
 from leaflet.admin import LeafletGeoAdmin
 
-from .models import POI, Track
+from .models import POIModel, TrackModel
 
-admin.site.register(POI, LeafletGeoAdmin)
-admin.site.register(Track, LeafletGeoAdmin)
+admin.site.register(POIModel, LeafletGeoAdmin)
+admin.site.register(TrackModel, LeafletGeoAdmin)

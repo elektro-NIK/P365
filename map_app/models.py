@@ -4,7 +4,7 @@ from django.contrib.gis.db import models as gismodels
 from django.contrib.auth.models import User
 
 
-class POI(models.Model):
+class POIModel(models.Model):
     name = models.CharField(max_length=64)
     desc = models.TextField(max_length=256)
     user = models.ForeignKey(User)
@@ -15,12 +15,12 @@ class POI(models.Model):
         return self.name
 
 
-class Track(models.Model):
+class TrackModel(models.Model):
     name = models.CharField(max_length=64)
     desc = models.CharField(max_length=256)
     user = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)
-    geom = gismodels.MultiLineStringField()
+    geom = gismodels.LineStringField()
 
     def __str__(self):
         return self.name

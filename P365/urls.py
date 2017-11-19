@@ -18,10 +18,12 @@ from django.contrib import admin
 
 from map_app import urls as map_urls
 from djgeojson.views import GeoJSONLayerView
-from map_app.models import POI
+from map_app.models import POIModel
+from map_app.views import UploadGPXView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^map/', include(map_urls)),
-    url(r'^data.geojson/$', GeoJSONLayerView.as_view(model=POI, properties=('name', 'desc', 'user')), name='POI')
+    url(r'^data.geojson/$', GeoJSONLayerView.as_view(model=POIModel, properties=('name', 'desc', 'user')), name='POI'),
+    url(r'^upload/$', UploadGPXView.as_view(), name='upload'),
 ]
