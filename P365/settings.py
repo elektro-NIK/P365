@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'leaflet',
 
-    'map_app',
+    'profile',
+    'maps',
+    'story',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +59,7 @@ ROOT_URLCONF = 'P365.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -174,4 +176,11 @@ LEAFLET_CONFIG = {
              'attribution': 'Tiles &copy; Esri'
          }),
     ],
+}
+
+MAX_LENGTH = {
+    'name': 30,
+    'description': 250,
+    'title': 50,
+    'text': 5000,
 }

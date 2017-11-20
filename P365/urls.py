@@ -16,14 +16,12 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from map_app import urls as map_urls
-from djgeojson.views import GeoJSONLayerView
-from map_app.models import POIModel
-from map_app.views import UploadGPXView
+from profile import urls as profile_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^map/', include(map_urls)),
-    url(r'^data.geojson/$', GeoJSONLayerView.as_view(model=POIModel, properties=('name', 'desc', 'user')), name='POI'),
-    url(r'^upload/$', UploadGPXView.as_view(), name='upload'),
+    url(r'^user/', include(profile_urls)),
+    # url(r'^track/', include()),
+    # url(r'^article/', include()),
+
 ]
