@@ -17,11 +17,12 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 from profile import urls as profile_urls
+from profile.views import LoginView, ProfileRedirect, SignUpView
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls, name='admin'),
+    url(r'^login/$', LoginView.as_view(), name='login'),
+    url(r'^register/$', SignUpView.as_view(), name='signup'),
+    url(r'^accounts/profile/$', ProfileRedirect.as_view()),
     url(r'^user/', include(profile_urls)),
-    # url(r'^track/', include()),
-    # url(r'^article/', include()),
-
 ]
