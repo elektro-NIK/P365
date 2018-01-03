@@ -40,8 +40,10 @@ INSTALLED_APPS = [
 
     'django.contrib.gis',
     'leaflet',
+    'captcha',
 
     'profile',
+    'calendar_year',
     'maps',
     'story',
 ]
@@ -125,6 +127,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join('static'),)
 
+# Auth settings
+LOGIN_URL = '/login/'
+
 # Map settings
 # https://django-leaflet.readthedocs.io
 
@@ -186,3 +191,7 @@ MAX_LENGTH = {
     'title': 50,
     'text': 5000,
 }
+
+RECAPTCHA_PUBLIC_KEY = '6LeeJDoUAAAAAM8GyFn-vXwwTBYNrlDIijMuYMJD'
+RECAPTCHA_PRIVATE_KEY = ''
+NOCAPTCHA = True
