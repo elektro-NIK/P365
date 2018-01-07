@@ -20,7 +20,7 @@
                     <span class="glyphicon glyphicon-user"></span> {{ user.username }}
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="#">
+                    <li><a href="{% url 'profile' username=user.username %}">
                         <span class="glyphicon glyphicon-user"></span> Profile</a>
                     </li>
                     <li class="divider"></li>

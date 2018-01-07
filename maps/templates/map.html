@@ -1,0 +1,20 @@
+{% extends "base/base.html" %}
+{% load leaflet_tags %}
+{% load staticfiles %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            {% leaflet_map "mainmap" %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block css %}
+    {% leaflet_css %}
+    <link href="{% static 'css/map.css' %}" rel="stylesheet" media="screen">
+{% endblock %}
+
+{% block js %}
+    {% leaflet_js %}
+{% endblock %}
