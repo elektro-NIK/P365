@@ -3,11 +3,7 @@
 {% load staticfiles %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-xs-12">
-            {% leaflet_map "mainmap" %}
-        </div>
-    </div>
+    {% leaflet_map "mainmap" %}
 {% endblock %}
 
 {% block css %}

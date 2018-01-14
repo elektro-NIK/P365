@@ -1,3 +1,18 @@
+html, body, .container-fluid {
+    height: 100%;
+}
+
+body {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin-bottom: 0;
+}
+
+.container-fluid {
+    padding-right: 0;
+    padding-left: 0;
+}
+
 .leaflet-container {
     position: relative;
     width:  100%;
