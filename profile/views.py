@@ -30,13 +30,13 @@ class LoginView(View):
     def post(request):
         from django.contrib.auth.forms import AuthenticationForm
         form = AuthenticationForm(data=request.POST)
+        nexturl = request.POST['next']
         if form.is_valid():
-            nexturl = request.POST['next'] or reverse('profile', kwargs={'username': request.POST['username']})
             user = User.objects.get(username=request.POST['username'])
             login(request, user)
-            return HttpResponseRedirect(nexturl)
+            return HttpResponseRedirect(nexturl or reverse('profile', kwargs={'username': user.username}))
         else:
-            return render(request, 'login.html', {'title': 'Login', 'form': form})
+            return render(request, 'login.html', {'title': 'Login', 'form': form, 'next': nexturl})
 
 
 class SignUpView(View):
@@ -46,11 +46,13 @@ class SignUpView(View):
             return HttpResponseRedirect(reverse('profile', kwargs={'username': request.user.username}))
         else:
             form = SignUpForm()
-            return render(request, 'register.html', {'title': 'Sign Up', 'form': form})
+            nexturl = request.GET.get('next') or ''
+            return render(request, 'register.html', {'title': 'Sign Up', 'form': form, 'next': nexturl})
 
     @staticmethod
     def post(request):
-        form = SignUpForm(request.POST)
+        form = SignUpForm(data=request.POST)
+        nexturl = request.POST['next']
         if form.is_valid():
             user = User.objects.create_user(
                 username=request.POST['username'],
@@ -61,9 +63,9 @@ class SignUpView(View):
             )
             user.save()
             login(request, user)
-            return HttpResponseRedirect(reverse('profile', kwargs={'username': request.user.username}))
+            return HttpResponseRedirect(nexturl or reverse('profile', kwargs={'username': user.username}))
         else:
-            return HttpResponseRedirect('#')
+            return render(request, 'register.html', {'title': 'Sign Up', 'form': form, 'next': nexturl})
 
 
 class CalendarView(View):

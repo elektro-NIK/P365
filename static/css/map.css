@@ -8,9 +8,9 @@ body {
     margin-bottom: 0;
 }
 
-.container-fluid {
-    padding-right: 0;
+#content-container {
     padding-left: 0;
+    padding-right: 0;
 }
 
 .leaflet-container {

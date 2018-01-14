@@ -6,11 +6,29 @@
             <form class="form-horizontal" method="post" action="{% url 'signup' %}">
                 {% csrf_token %}
                 <input type="hidden" name="next" value="{{ next }}">
+                {% if form.errors %}
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                    {% for field in form %}
+                        {% if field.errors %}
+                            <div class="alert alert-danger">
+                                <strong>
+                                    {% for error in field.errors %}
+                                        {{ field.name }}: {{ error|escape }}<br>
+                                    {% endfor %}
+                                </strong>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
                 <div class="form-group{% if form.username.errors %} has-error has-feedback{% endif %}">
                     <div class="control-label">
                         <div class="input-group">
                             <div class="input-group-addon"><i class="glyphicon glyphicon-user"></i></div>
-                            <input type="text" class="form-control" id="username" name="{{ form.username.name }}" placeholder="Username">
+                            <input type="text" class="form-control" id="username" name="{{ form.username.name }}" placeholder="Username" value="{{ form.username.value|default_if_none:'' }}">
                         </div>
                     </div>
                 </div>
@@ -18,7 +36,7 @@
                     <div class="control-label">
                         <div class="input-group">
                             <div class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></div>
-                            <input type="text" class="form-control" id="first_name" name="{{ form.first_name.name }}" placeholder="First name">
+                            <input type="text" class="form-control" id="first_name" name="{{ form.first_name.name }}" placeholder="First name" value="{{ form.first_name.value|default_if_none:'' }}">
                         </div>
                     </div>
                 </div>
@@ -26,7 +44,7 @@
                     <div class="control-label">
                         <div class="input-group">
                             <div class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></div>
-                            <input type="text" class="form-control" id="last_name" name="{{ form.last_name.name }}" placeholder="Last name">
+                            <input type="text" class="form-control" id="last_name" name="{{ form.last_name.name }}" placeholder="Last name" value="{{ form.last_name.value|default_if_none:'' }}">
                         </div>
                     </div>
                 </div>
@@ -34,7 +52,7 @@
                     <div class="control-label">
                         <div class="input-group">
                             <div class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></div>
-                            <input type="text" class="form-control" id="email" name="{{ form.email.name }}" placeholder="Email">
+                            <input type="text" class="form-control" id="email" name="{{ form.email.name }}" placeholder="Email" value="{{ form.email.value|default_if_none:'' }}">
                         </div>
                     </div>
                 </div>
