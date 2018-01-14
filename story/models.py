@@ -1,7 +1,7 @@
 from django.db import models
 
 from P365.settings import MAX_LENGTH
-from maps.models import Track
+from maps.models import TrackModel
 from profile.models import Event
 
 
@@ -12,7 +12,7 @@ class Article(models.Model):
 
 
 class Story(models.Model):
-    track = models.ForeignKey(Track, null=True)
+    track = models.ForeignKey(TrackModel, null=True)
     article = models.OneToOneField(Article)
     event = models.OneToOneField(Event)
     created = models.DateTimeField(auto_now_add=True)
