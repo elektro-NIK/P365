@@ -3,13 +3,11 @@
 {% block content %}
     <div class="row">
         <div class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                <div class="well">
-                    <h3>Стаття</h3>
-                    <p>Тут має бути короткий опис історії, бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла бла-бла-бла</p>
-                    <p><a href="#" class="btn btn-primary" role="button">Кнопка</a> <a href="#" class="btn btn-default" role="button">Кнопка</a></p>
+            {% if not stories %}
+                <div class="alert alert-info" role="alert">
+                    You don't have Stories yet. Try to <a href="#" class="alert-link">create your first Story</a>.
                 </div>
-            </div>
+            {% endif %}
             {% for story in stories %}
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="well">

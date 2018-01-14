@@ -2,42 +2,39 @@
 
 {% block content %}
     <div class="row">
-        <div class="table-responsive col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
-            <table class="table table-hover table-condensed">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Length</th>
-                        <th>Status</th>
-                        <th>ID</th>
-                        <th>Icon</th>
-                        <th>Name</th>
-                        <th>Edit</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>15.01.2017 23:02</td>
-                        <td>23 km</td>
-                        <td>personal</td>
-                        <td>92103</td>
-                        <td><i class="glyphicon glyphicon-user"></i></td>
-                        <td>Львівська обл. с. Старе село</td>
-                        <td><i class="glyphicon glyphicon-user"></i><i class="glyphicon glyphicon-user"></i></td>
-                    </tr>
-                    {% for track in tracks %}
+        <div class="table-responsive col-xs-12 col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
+            {% if not stories %}
+                <div class="alert alert-info" role="alert">
+                    You don't have Tracks yet. Try to <a href="#" class="alert-link">import your first Track</a>.
+                </div>
+            {% else %}
+                <table class="table table-hover table-condensed">
+                    <thead>
                         <tr>
-                            <td>{{ track.date }}</td>
-                            <td>{{ track.length }}</td>
-                            <td>{{ track.status }}</td>
-                            <td>{{ track.id }}</td>
-                            <td>{{ track.icon }}</td>
-                            <td>{{ track.name }}</td>
-                            <td>{{ track.edit }}</td>
+                            <th>Date</th>
+                            <th>Length</th>
+                            <th>Status</th>
+                            <th>ID</th>
+                            <th>Icon</th>
+                            <th>Name</th>
+                            <th>Edit</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for track in tracks %}
+                            <tr>
+                                <td>{{ track.date }}</td>
+                                <td>{{ track.length }}</td>
+                                <td>{{ track.status }}</td>
+                                <td>{{ track.id }}</td>
+                                <td>{{ track.icon }}</td>
+                                <td>{{ track.name }}</td>
+                                <td>{{ track.edit }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
