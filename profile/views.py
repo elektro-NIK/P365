@@ -68,12 +68,6 @@ class SignUpView(View):
             return render(request, 'register.html', {'title': 'Sign Up', 'form': form, 'next': nexturl})
 
 
-class CalendarView(View):
-    @staticmethod
-    def get(request):
-        return render(request, 'calendar.html', {'title': 'Calendar'})
-
-
 class ProfileRedirect(LoginRequiredMixin, View):
     @staticmethod
     def get(request):

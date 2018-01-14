@@ -18,21 +18,25 @@ from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import logout_then_login
 
+from calendar_year.views import CalendarView
 from maps.views import MapView, TracksView
 from profile import urls as profile_urls
-from profile.views import LoginView, ProfileRedirect, SignUpView, IndexView, CalendarView
+from profile.views import LoginView, ProfileRedirect, SignUpView, IndexView
 from story.views import StoriesView
 
 urlpatterns = [
     url(r'^$', IndexView.as_view(),                                 name='index'),
     url(r'^admin/', admin.site.urls,                                name='admin'),
+
     url(r'^login/$', LoginView.as_view(),                           name='login'),
     url(r'^register/$', SignUpView.as_view(),                       name='signup'),
     url(r'^logout/$', logout_then_login,                            name='logout'),
+
+    url(r'^accounts/profile/$', ProfileRedirect.as_view()),
+    url(r'^user/', include(profile_urls)),
+
     url(r'^calendar/$', login_required(CalendarView.as_view()),     name='calendar'),
     url(r'^map/$', login_required(MapView.as_view()),               name='map'),
     url(r'^tracks/$', login_required(TracksView.as_view()),         name='tracks'),
     url(r'^stories/$', login_required(StoriesView.as_view()),       name='stories'),
-    url(r'^accounts/profile/$', ProfileRedirect.as_view()),
-    url(r'^user/', include(profile_urls)),
 ]
