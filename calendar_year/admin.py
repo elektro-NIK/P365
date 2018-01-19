@@ -3,8 +3,8 @@ from . import models
 
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('name', 'start_date', 'finish_date', 'user')
-    list_filter = ('user',)
+    list_display = ('name', 'start_date', 'finish_date', 'is_active', 'user',)
+    list_filter = ('user', 'is_active',)
     ordering = ('-start_date',)
     search_fields = ('name', 'description',)
 

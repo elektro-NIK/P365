@@ -71,8 +71,7 @@ class SignUpView(View):
 class ProfileRedirect(LoginRequiredMixin, View):
     @staticmethod
     def get(request):
-        user = request.user
-        return HttpResponseRedirect(reverse('profile', kwargs={'username': user.username}))
+        return HttpResponseRedirect(reverse('profile', kwargs={'username': request.user.username}))
 
 
 class ProfileView(LoginRequiredMixin, View):

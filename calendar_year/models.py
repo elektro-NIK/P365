@@ -10,6 +10,7 @@ class Event(models.Model):
     start_date = models.DateField()
     finish_date = models.DateField()
     user = models.ForeignKey(User)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name

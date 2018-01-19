@@ -18,9 +18,9 @@ from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import logout_then_login
 
-from calendar_year.views import CalendarView
 from maps.views import MapView, TracksView
 from profile import urls as profile_urls
+from calendar_year import urls as calendar_urls
 from profile.views import LoginView, ProfileRedirect, SignUpView, IndexView
 from story.views import StoriesView
 
@@ -35,7 +35,7 @@ urlpatterns = [
     url(r'^accounts/profile/$', ProfileRedirect.as_view()),
     url(r'^user/', include(profile_urls)),
 
-    url(r'^calendar/$', login_required(CalendarView.as_view()),     name='calendar'),
+    url(r'^calendar/', include(calendar_urls)),
     url(r'^map/$', login_required(MapView.as_view()),               name='map'),
     url(r'^tracks/$', login_required(TracksView.as_view()),         name='tracks'),
     url(r'^stories/$', login_required(StoriesView.as_view()),       name='stories'),
