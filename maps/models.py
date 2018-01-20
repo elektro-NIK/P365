@@ -7,7 +7,7 @@ from P365.settings import MAX_LENGTH
 
 class POIModel(models.Model):
     name = models.CharField(max_length=MAX_LENGTH['name'])
-    descriptions = models.TextField(max_length=MAX_LENGTH['description'], blank=True)
+    description = models.TextField(max_length=MAX_LENGTH['description'], blank=True)
     user = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)
     geom = gismodels.PointField()
