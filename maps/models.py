@@ -11,6 +11,7 @@ class POIModel(models.Model):
     user = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)
     geom = gismodels.PointField()
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
@@ -26,6 +27,7 @@ class TrackModel(models.Model):
     public = models.BooleanField(default=False)
     length = models.FloatField()
     geom = gismodels.LineStringField()
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name

@@ -3,7 +3,7 @@
 {% load staticfiles %}
 
 {% block content %}
-    {% leaflet_map "mainmap" %}
+    {% leaflet_map "mainmap" callback="window.map_init_basic" %}
 {% endblock %}
 
 {% block css %}
@@ -13,4 +13,5 @@
 
 {% block js %}
     {% leaflet_js %}
+    <script src="{% static 'js/map.js' %}"></script>
 {% endblock %}
