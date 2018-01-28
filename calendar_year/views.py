@@ -12,7 +12,7 @@ from calendar_year.models import Event
 class CalendarView(View):
     @staticmethod
     def get(request):
-        return render(request, 'calendar.html', {'title': 'Calendar'})
+        return render(request, 'calendar.html', {'title': 'Calendar', 'active': 'calendar'})
 
 
 class GetAllEventsView(View):
