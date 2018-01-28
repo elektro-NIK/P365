@@ -8,21 +8,33 @@
 </div>
 <div class="collapse navbar-collapse" id="header">
     <ul class="nav navbar-nav navbar-center">
-        <li><a href="{% url 'calendar' %}">Calendar</a></li>
-        <li><a href="{% url 'map' %}">Map</a></li>
-        <li><a href="{% url 'tracks' %}">Tracks</a></li>
-        <li><a href="{% url 'stories' %}">Stories</a></li>
+        <li class="{% if active == 'calendar' %}active{% endif %}">
+            <a href="{% url 'calendar' %}">Calendar</a>
+        </li>
+        <li class="{% if active == 'map' %}active{% endif %}">
+            <a href="{% url 'map' %}">Map</a>
+        </li>
+        <li class="{% if active == 'tracks' %}active{% endif %}">
+            <a href="{% url 'tracks' %}">Tracks</a>
+        </li>
+        <li class="{% if active == 'stories' %}active{% endif %}">
+            <a href="{% url 'stories' %}">Stories</a>
+        </li>
     </ul>
     {% if not user.is_authenticated %}
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="{% url 'signup' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li class="{% if active == 'signup' %}active{% endif %}">
+                <a href="{% url 'signup' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
+            </li>
+            <li class="{% if active == 'login' %}active{% endif %}">
+                <a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+            </li>
         </ul>
     {% else %}
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
                 <a href="{% url 'profile' user.username %}" class="dropdown-toggle" data-toggle="dropdown">
-                    <span class="glyphicon glyphicon-user"></span> {{ user.username }}
+                    <span class="glyphicon glyphicon-user"></span> {{ user.username }} <span class="glyphicon glyphicon-triangle-bottom"></span>
                 </a>
                 <ul class="dropdown-menu">
                     <li><a href="{% url 'profile' username=user.username %}">
