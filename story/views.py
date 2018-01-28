@@ -5,4 +5,4 @@ from django.views import View
 class StoriesView(View):
     @staticmethod
     def get(request):
-        return render(request, 'stories.html', {'title': 'Stories'})
+        return render(request, 'stories.html', {'title': 'Stories', 'active': 'stories'})

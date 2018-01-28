@@ -10,7 +10,7 @@ from .models import TrackModel, POIModel
 class MapView(View):
     @staticmethod
     def get(request):
-        return render(request, 'map.html', {'title': 'Map'})
+        return render(request, 'map.html', {'title': 'Map', 'active': 'map'})
 
 
 class TracksView(View):
@@ -18,7 +18,7 @@ class TracksView(View):
     def get(request):
         user = User.objects.get(username=request.user.username)
         tracks = TrackModel.objects.filter(user=user, is_active=True)
-        return render(request, 'tracks.html', {'title': 'Tracks', 'tracks': tracks})
+        return render(request, 'tracks.html', {'title': 'Tracks', 'tracks': tracks, 'active': 'tracks'})
 
 
 class GetTracksView(View):

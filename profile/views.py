@@ -36,7 +36,12 @@ class LoginView(View):
             login(request, user)
             return HttpResponseRedirect(nexturl or reverse('profile', kwargs={'username': user.username}))
         else:
-            return render(request, 'login.html', {'title': 'Login', 'form': form, 'next': nexturl})
+            return render(request, 'login.html', {
+                'title': 'Login',
+                'form': form,
+                'next': nexturl,
+                'active': 'login',
+            })
 
 
 class SignUpView(View):
@@ -65,7 +70,12 @@ class SignUpView(View):
             login(request, user)
             return HttpResponseRedirect(nexturl or reverse('profile', kwargs={'username': user.username}))
         else:
-            return render(request, 'register.html', {'title': 'Sign Up', 'form': form, 'next': nexturl})
+            return render(request, 'register.html', {
+                'title': 'Sign Up',
+                'form': form,
+                'next': nexturl,
+                'active': 'signup',
+            })
 
 
 class ProfileRedirect(LoginRequiredMixin, View):
