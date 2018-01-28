@@ -190,8 +190,9 @@ MAX_LENGTH = {
     'description': 250,
     'title': 50,
     'text': 5000,
+    'tag': 30,
 }
 
-RECAPTCHA_PUBLIC_KEY = '6LeeJDoUAAAAAM8GyFn-vXwwTBYNrlDIijMuYMJD'
-RECAPTCHA_PRIVATE_KEY = ''
-NOCAPTCHA = True
+# RECAPTCHA_PUBLIC_KEY = '6LeeJDoUAAAAAM8GyFn-vXwwTBYNrlDIijMuYMJD'
+# RECAPTCHA_PRIVATE_KEY = ''
+# NOCAPTCHA = True
