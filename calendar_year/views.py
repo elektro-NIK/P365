@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render
 from django.views import View
 
-from calendar_year.models import Event
+from calendar_year.models import EventModel
 
 
 class CalendarView(View):
@@ -19,7 +19,7 @@ class GetAllEventsView(View):
     @staticmethod
     def get(request):
         user = User.objects.get(username=request.user.username)
-        events = Event.objects.filter(user=user, is_active=True)
+        events = EventModel.objects.filter(user=user, is_active=True)
         result = [{'id': i.id,
                    'name': i.name,
                    'description': i.description,
@@ -31,7 +31,7 @@ class GetAllEventsView(View):
 class DeleteEventView(View):
     @staticmethod
     def post(request):
-        event = Event.objects.get(id=request.POST['id'])
+        event = EventModel.objects.get(id=request.POST['id'])
         user = User.objects.get(username=request.user.username)
         if event.user == user:
             event.is_active = False
@@ -47,7 +47,7 @@ class UpdateCreateEventView(View):
         user = User.objects.get(username=request.user.username)
         event_json = json.loads(request.POST['event'])
         if event_json['id']:                                                                            # Update event
-            event = Event.objects.get(id=int(event_json['id']))
+            event = EventModel.objects.get(id=int(event_json['id']))
             if event.user == user:
                 event.name = event_json['name']
                 event.description = event_json['description']
@@ -56,7 +56,7 @@ class UpdateCreateEventView(View):
             else:
                 return HttpResponseForbidden()
         else:                                                                                           # Create event
-            event = Event(
+            event = EventModel(
                 name=event_json['name'],
                 description=event_json['description'],
                 start_date=datetime.strptime(event_json['startDate'], '%Y-%m-%dT%H:%M:%S.%fZ').date(),

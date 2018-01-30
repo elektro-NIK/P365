@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.gis.db import models as gismodels
 
 from P365.settings import MAX_LENGTH
+from hashtag.models import TagModel
 
 
 class POIModel(models.Model):
@@ -26,6 +27,7 @@ class TrackModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     public = models.BooleanField(default=False)
     length = models.FloatField()
+    activity = models.ForeignKey(TagModel)
     geom = gismodels.LineStringField()
     is_active = models.BooleanField(default=True)
 

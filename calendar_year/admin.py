@@ -9,4 +9,4 @@ class EventAdmin(admin.ModelAdmin):
     search_fields = ('name', 'description',)
 
 
-admin.site.register(models.Event, EventAdmin)
+admin.site.register(models.EventModel, EventAdmin)
