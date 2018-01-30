@@ -24,6 +24,6 @@ class TagAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
 
-admin.site.register(models.Article, ArticleAdmin)
-admin.site.register(models.Story, StoryAdmin)
+admin.site.register(models.ArticleModel, ArticleAdmin)
+admin.site.register(models.StoryModel, StoryAdmin)
 admin.site.register(models.Tag, TagAdmin)
