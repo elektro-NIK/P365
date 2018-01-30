@@ -26,4 +26,4 @@ class TagAdmin(admin.ModelAdmin):
 
 admin.site.register(models.ArticleModel, ArticleAdmin)
 admin.site.register(models.StoryModel, StoryAdmin)
-admin.site.register(models.Tag, TagAdmin)
+admin.site.register(models.TagModel, TagAdmin)

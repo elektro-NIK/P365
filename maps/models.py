@@ -27,7 +27,7 @@ class TrackModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     public = models.BooleanField(default=False)
     length = models.FloatField()
-    activity = models.ForeignKey(TagModel)
+    activity = models.ForeignKey(TagModel, null=True)
     geom = gismodels.LineStringField()
     is_active = models.BooleanField(default=True)
 
