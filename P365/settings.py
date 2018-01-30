@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'calendar_year',
     'maps',
     'story',
+    'hashtag',
 ]
 
 MIDDLEWARE = [
