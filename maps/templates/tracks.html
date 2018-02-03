@@ -2,13 +2,18 @@
 {% load staticfiles %}
 
 {% block content %}
-    <div class="row">
+    <!--suppress XmlDuplicatedId -->
+<div class="row">
         <div class="table-responsive col-xs-12 col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
+            <div id="msg"></div>
             {% if not tracks %}
                 <div class="alert alert-info" role="alert">
                     You don't have Tracks yet. Try to <a href="#" class="alert-link">import your first Track</a>.
                 </div>
             {% else %}
+                <!--Fixme-->
+                <form>{% csrf_token %}</form>
+
                 <table class="table table-hover table-condensed">
                     <thead>
                         <tr>
@@ -31,11 +36,11 @@
                                 <td class="center">
                                     <span class="label label-default">{{ track.activity }}</span>
                                 </td>
-                                <td class="center">
+                                <td class="center status">
                                     {% if track.public %}
-                                        <a href="#" class="glyphicon glyphicon-globe" title="public" ></a>
+                                        <a href="#" class="glyphicon glyphicon-globe" title="public" id="status{{ track.id }}"></a>
                                     {% else %}
-                                        <a href="#" class="glyphicon glyphicon-user" title="private"></a>
+                                        <a href="#" class="glyphicon glyphicon-user" title="private" id="status{{ track.id }}"></a>
                                     {% endif %}
                                 </td>
                                 <td class="center">
@@ -53,4 +58,8 @@
 
 {% block css %}
     <link href="{% static 'css/tables.css' %}" rel="stylesheet" media="screen">
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/tracks.js' %}"></script>
 {% endblock %}
