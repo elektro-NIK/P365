@@ -4,48 +4,15 @@
 {% block content %}
     <div class="row">
         <div class="table-responsive col-xs-12 col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
+            <div id="msg"></div>
             {% if not tracks %}
                 <div class="alert alert-info" role="alert">
                     You don't have Tracks yet. Try to <a href="#" class="alert-link">import your first Track</a>.
                 </div>
             {% else %}
-                <table class="table table-hover table-condensed">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Started</th>
-                            <th>Length</th>
-                            <th class="center">Activity</th>
-                            <th class="center">Status</th>
-                            <th class="center">Edit</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for track in tracks %}
-                            <tr>
-                                <td>
-                                    <a href="#">{{ track.name }}</a>
-                                </td>
-                                <td>{{ track.start_date }}</td>
-                                <td>{{ track.length }}&nbsp;km</td>
-                                <td class="center">
-                                    <span class="label label-default">{{ track.activity }}</span>
-                                </td>
-                                <td class="center">
-                                    {% if track.public %}
-                                        <a href="#" class="glyphicon glyphicon-globe" title="public" ></a>
-                                    {% else %}
-                                        <a href="#" class="glyphicon glyphicon-user" title="private"></a>
-                                    {% endif %}
-                                </td>
-                                <td class="center">
-                                    <a href="#" class="glyphicon glyphicon-edit" title="edit"></a>
-                                    <a href="#" class="glyphicon glyphicon-trash" title="delete"></a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                <!--Fixme!-->
+                <form>{% csrf_token %}</form>
+                {% include 'partials/_tracks-table.html' %}
             {% endif %}
         </div>
     </div>
@@ -53,4 +20,8 @@
 
 {% block css %}
     <link href="{% static 'css/tables.css' %}" rel="stylesheet" media="screen">
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/tracks.js' %}"></script>
 {% endblock %}
