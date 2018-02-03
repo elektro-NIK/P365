@@ -17,13 +17,5 @@ class StoryAdmin(admin.ModelAdmin):
     search_fields = ('track', 'article', 'event',)
 
 
-class TagAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-    list_filter = ('name',)
-    ordering = ('-name',)
-    search_fields = ('name',)
-
-
-admin.site.register(models.Article, ArticleAdmin)
-admin.site.register(models.Story, StoryAdmin)
-admin.site.register(models.Tag, TagAdmin)
+admin.site.register(models.ArticleModel, ArticleAdmin)
+admin.site.register(models.StoryModel, StoryAdmin)
