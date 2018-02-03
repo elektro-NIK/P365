@@ -3,6 +3,7 @@
 {% load staticfiles %}
 
 {% block content %}
+    <div id="msg-wrong"></div>
     {% leaflet_map "mainmap" callback="window.map_init_basic" %}
 {% endblock %}
 

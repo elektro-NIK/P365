@@ -1,0 +1,9 @@
+{% for story in stories %}
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="well">
+            <h3>{{ story.title }}</h3>
+            {{ story.description }}
+            <p><a href="#" class="btn btn-primary" role="button">Кнопка</a> <a href="#" class="btn btn-default" role="button">Кнопка</a></p>
+        </div>
+    </div>
+{% endfor %}
