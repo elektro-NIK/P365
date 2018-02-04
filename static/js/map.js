@@ -6,6 +6,7 @@ function setErrorMsg() {
 }
 
 function map_init_basic (map, options) {
+    // Fixme!
     var tracks_url = '/map/geojson_tracks/';
     var pois_url = '/map/geojson_pois/';
 
@@ -27,5 +28,5 @@ function map_init_basic (map, options) {
                                 '<br>' + feature.properties.description, '</p>');
             }
         }).addTo(map);
-    })
+    }).fail(function() {setErrorMsg()});
 }
