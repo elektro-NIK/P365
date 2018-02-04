@@ -5,7 +5,22 @@ function setErrorMsg() {
         '</div>')
 }
 
-$('td.status a').click(function() {
+function updateTable() {
+    var table_url = '/get_tracks_table/';
+    $.ajax({
+        type: 'GET',
+        url: table_url,
+        success: function(response) {
+            $('#track-table').html(response);
+        },
+        error: function() {
+            setErrorMsg();
+        }
+    });
+}
+
+
+$('#track-table').on('click', 'td.status a', function() {
     var id = $(this).attr('id').replace('status', '');
     var a = $(this);
     $.ajax({
@@ -15,19 +30,11 @@ $('td.status a').click(function() {
             csrfmiddlewaretoken: $('form').find('input[name=csrfmiddlewaretoken]').val(),
         },
         success: function() {
-            icon = a.attr('class')
-            if (icon.includes('globe')) {
-                a.attr('class', icon.replace('globe', 'user'));
-                a.attr('title', 'private');
-            }
-            else {
-                a.attr('class', icon.replace('user', 'globe'));
-                a.attr('title', 'public');
-            }
+            updateTable();
         },
         error: function() {
             setErrorMsg();
         }
-    })
+    });
     return false;
 })

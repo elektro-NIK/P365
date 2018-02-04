@@ -50,3 +50,11 @@ class TrackChangeStatusView(View):
             return JsonResponse({})
         else:
             return HttpResponseForbidden()
+
+
+class GetTracksTableView(View):
+    @staticmethod
+    def get(request):
+        user = User.objects.get(username=request.user.username)
+        tracks = TrackModel.objects.filter(user=user, is_active=True)
+        return render(request, 'partials/_tracks-table.html', {'tracks': tracks})
