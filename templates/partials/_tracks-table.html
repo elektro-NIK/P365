@@ -1,3 +1,4 @@
+<!--suppress XmlDuplicatedId -->
 <table class="table table-hover table-condensed">
     <thead>
     <tr>
@@ -20,16 +21,16 @@
                 <td class="center">
                     <span class="label label-default">{{ track.activity }}</span>
                 </td>
-                <td class="center">
+                <td class="center status">
                     {% if track.public %}
-                        <a href="#" class="glyphicon glyphicon-globe" title="public" ></a>
+                        <a href="#" class="glyphicon glyphicon-globe" title="public" id="status{{ track.id }}"></a>
                     {% else %}
-                        <a href="#" class="glyphicon glyphicon-user" title="private"></a>
+                        <a href="#" class="glyphicon glyphicon-user" title="private" id="status{{ track.id }}"></a>
                     {% endif %}
                 </td>
-                <td class="center">
-                    <a href="#" class="glyphicon glyphicon-edit" title="edit"></a>
-                    <a href="#" class="glyphicon glyphicon-trash" title="delete"></a>
+                <td class="center edit">
+                    <a href="#" class="glyphicon glyphicon-edit" title="edit" id="edit{{ track.id }}"></a>
+                    <a href="#" class="glyphicon glyphicon-trash" title="delete" id="delete{{ track.id }}"></a>
                 </td>
             </tr>
         {% endfor %}
