@@ -31,8 +31,10 @@
                     {% endif %}
                 </td>
                 <td class="center edit">
-                    <a href="#" class="glyphicon glyphicon-edit" title="edit" id="edit{{ track.id }}"></a>
-                    <a href="#" class="glyphicon glyphicon-trash" title="delete" id="delete{{ track.id }}"></a>
+                    <a href="{% url 'edit_track' track.id %}" class="glyphicon glyphicon-edit" title="edit"></a>
+                    {% if not track.public %}
+                        <a href="#" class="glyphicon glyphicon-trash" title="delete" id="delete{{ track.id }}"></a>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
