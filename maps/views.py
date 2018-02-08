@@ -4,6 +4,7 @@ from django.http import JsonResponse, HttpResponseForbidden
 from django.shortcuts import render
 from django.views import View
 
+from .forms import TrackEditForm
 from .models import TrackModel, POIModel
 
 
@@ -58,3 +59,15 @@ class GetTracksTableView(View):
         user = User.objects.get(username=request.user.username)
         tracks = TrackModel.objects.filter(user=user, is_active=True)
         return render(request, 'partials/_tracks-table.html', {'tracks': tracks})
+
+
+class TrackEditView(View):
+    @staticmethod
+    def get(request, id):
+        user = User.objects.get(username=request.user.username)
+        track = TrackModel.objects.get(id=id)
+        if track.is_active and track.user == user:
+            form = TrackEditForm()
+            return render(request, 'track_edit.html', {'form': form, 'track': track})
+        else:
+            return HttpResponseForbidden()

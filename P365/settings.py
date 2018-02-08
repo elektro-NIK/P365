@@ -40,7 +40,8 @@ INSTALLED_APPS = [
 
     'django.contrib.gis',
     'leaflet',
-    'captcha',
+    # 'captcha',
+    'bootstrap3',
 
     'profile',
     'calendar_year',

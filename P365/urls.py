@@ -22,7 +22,7 @@ from profile import urls as profile_urls
 from calendar_year import urls as calendar_urls
 from maps import urls as map_urls
 
-from maps.views import TracksView, TrackChangeStatusView, GetTracksTableView
+from maps.views import TracksView, TrackChangeStatusView, GetTracksTableView, TrackEditView
 from profile.views import LoginView, ProfileRedirect, SignUpView, IndexView
 from story.views import StoriesView
 
@@ -46,4 +46,6 @@ urlpatterns = [
         login_required(TrackChangeStatusView.as_view()),            name='change_track_status'),
     url(r'^get_tracks_table/$',
         login_required(GetTracksTableView.as_view()),               name='get_tracks_table'),
+    url(r'^track/(\d+)/edit/$',
+        login_required(TrackEditView.as_view()),                    name='edit_track')
 ]
