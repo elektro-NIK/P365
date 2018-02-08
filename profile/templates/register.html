@@ -1,82 +1,26 @@
 {% extends "base/base.html" %}
-{% load i18n %}
+{% load bootstrap3 %}
+
 {% block content %}
     <div class="row">
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
             <form class="form-horizontal" method="post" action="{% url 'signup' %}">
                 {% csrf_token %}
+                <!--TODO: refactor-->
                 <input type="hidden" name="next" value="{{ next }}">
-                {% if form.errors %}
-                    {% for error in form.non_field_errors %}
-                        <div class="alert alert-danger">
-                            <strong>{{ error|escape }}</strong>
-                        </div>
-                    {% endfor %}
-                    {% for field in form %}
-                        {% if field.errors %}
-                            <div class="alert alert-danger">
-                                <strong>
-                                    {% for error in field.errors %}
-                                        {{ field.name }}: {{ error|escape }}<br>
-                                    {% endfor %}
-                                </strong>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-                <div class="form-group{% if form.username.errors %} has-error has-feedback{% endif %}">
-                    <div class="control-label">
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="glyphicon glyphicon-user"></i></div>
-                            <input type="text" class="form-control" id="username" name="{{ form.username.name }}" placeholder="Username" value="{{ form.username.value|default_if_none:'' }}">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group{% if form.first_name.errors %} has-error has-feedback{% endif %}">
-                    <div class="control-label">
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></div>
-                            <input type="text" class="form-control" id="first_name" name="{{ form.first_name.name }}" placeholder="First name" value="{{ form.first_name.value|default_if_none:'' }}">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group{% if form.last_name.errors %} has-error has-feedback{% endif %}">
-                    <div class="control-label">
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></div>
-                            <input type="text" class="form-control" id="last_name" name="{{ form.last_name.name }}" placeholder="Last name" value="{{ form.last_name.value|default_if_none:'' }}">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group{% if form.email.errors %} has-error has-feedback{% endif %}">
-                    <div class="control-label">
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></div>
-                            <input type="text" class="form-control" id="email" name="{{ form.email.name }}" placeholder="Email" value="{{ form.email.value|default_if_none:'' }}">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group{% if form.password1.errors %} has-error has-feedback{% endif %}">
-                    <div class="control-label">
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></div>
-                            <input type="password" class="form-control" id="password1" name="{{ form.password1.name }}" placeholder="Password">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group{% if form.password2.errors %} has-error has-feedback{% endif %}">
-                    <div class="control-label">
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></div>
-                            <input type="password" class="form-control" id="password2" name="{{ form.password2.name }}" placeholder="Confirm your password">
-                        </div>
-                    </div>
-                </div>
+                {% bootstrap_form_errors form %}
+                {% bootstrap_field form.username    show_label=False show_help=False addon_before='<i class="glyphicon glyphicon-user"></i>' %}
+                {% bootstrap_field form.first_name  show_label=False show_help=False addon_before='<i class="glyphicon glyphicon-info-sign"></i>' %}
+                {% bootstrap_field form.last_name   show_label=False show_help=False addon_before='<i class="glyphicon glyphicon-info-sign"></i>' %}
+                {% bootstrap_field form.email       show_label=False show_help=False addon_before='<i class="glyphicon glyphicon-envelope"></i>'%}
+                <!--TODO: icon-->
+                {% bootstrap_field form.password1   show_label=False show_help=False addon_before='<i class="glyphicon glyphicon-envelope"></i>'%}
+                {% bootstrap_field form.password2   show_label=False show_help=False addon_before='<i class="glyphicon glyphicon-user"></i>' %}
                 <div class="form-group">
                     <div  class="center-block text-center">
-                        <button type="submit" class="btn btn-success">Sign Up</button>
-                        <span>or</span>
-                        <a href="{% url 'login' %}"><button type="button" class="btn btn-default">Login</button></a>
+                        {% bootstrap_button 'Sign Up' button_type='submit' button_class='btn-success' %}
+                        or {% url 'login' as login_url %}
+                        {% bootstrap_button 'Login' button_type='link' href=login_url %}
                     </div>
                 </div>
             </form>

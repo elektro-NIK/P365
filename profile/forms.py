@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import UserCreationForm
 # from captcha.fields import ReCaptchaField
 from django.contrib.auth.models import User
 
@@ -11,12 +11,12 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', )
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
 
 
-class CaptchaAuthenticationForm(AuthenticationForm):
-    pass
-    # captcha = ReCaptchaField(attrs={
-    #     'theme': 'simple',
-    #     'lang': 'uk',
-    # })
+# class CaptchaAuthenticationForm(AuthenticationForm):
+#     pass
+#     # captcha = ReCaptchaField(attrs={
+#     #     'theme': 'simple',
+#     #     'lang': 'uk',
+#     # })
