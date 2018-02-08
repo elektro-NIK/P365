@@ -22,7 +22,6 @@ function updateTable() {
 
 $('#track-table').on('click', 'td.status a', function() {
     var id = $(this).attr('id').replace('status', '');
-    var a = $(this);
     $.ajax({
         type: 'POST',
         url: '/track/'+id+'/change_status/',
@@ -37,4 +36,7 @@ $('#track-table').on('click', 'td.status a', function() {
         }
     });
     return false;
-})
+});
+$('#track-table').on('click', 'td.edit a', function(){
+
+});
