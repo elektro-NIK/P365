@@ -1,0 +1,36 @@
+{% extends "base/base.html" %}
+{% load bootstrap3 %}
+{% load leaflet_tags %}
+<!--{% load staticfiles %}-->
+
+{% block content %}
+    <div id="msg-wrong"></div>
+    <form action="/url/to/submit/" method="post" class="form">
+        {% csrf_token %}
+        <div class="col-xs-3">
+            {% bootstrap_form form exclude='geom' %}
+        </div>
+        <div class="col-xs-9">
+            {% bootstrap_field form.geom %}
+        </div>
+        <div class="col-xs-12">
+            {% buttons %}
+                <button type="submit" class="btn btn-primary">
+                    {% bootstrap_icon "star" %} Submit
+                </button>
+            {% endbuttons %}
+        </div>
+    </form>
+{% endblock %}
+
+{% block css %}
+    {% bootstrap_css %}
+    {% leaflet_css plugins="forms" %}
+    <!--<link href="{% static 'css/map.css' %}" rel="stylesheet" media="screen">-->
+{% endblock %}
+
+{% block js %}
+    {% bootstrap_javascript %}
+    {% leaflet_js plugins="forms" %}
+    <!--<script src="{% static 'js/track.js' %}"></script>-->
+{% endblock %}
