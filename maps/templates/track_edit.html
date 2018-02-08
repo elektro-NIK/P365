@@ -1,24 +1,27 @@
 {% extends "base/base.html" %}
 {% load bootstrap3 %}
 {% load leaflet_tags %}
-<!--{% load staticfiles %}-->
+{% load staticfiles %}
 
 {% block content %}
     <div id="msg-wrong"></div>
     <form action="/url/to/submit/" method="post" class="form">
         {% csrf_token %}
         <div class="col-xs-3">
-            {% bootstrap_form form exclude='geom' %}
+            {% bootstrap_field form.name %}
+            <div class="form-group">
+                {% bootstrap_label form.description.label %}
+                <textarea name="event-description" class="form-control noresize" rows="5" placeholder="{{ form.description.label }}"></textarea>
+            </div>
+            {% bootstrap_form form exclude='name, description, geom' %}
         </div>
         <div class="col-xs-9">
-            {% bootstrap_field form.geom %}
+            {% bootstrap_field form.geom show_label=False%}
         </div>
-        <div class="col-xs-12">
-            {% buttons %}
-                <button type="submit" class="btn btn-primary">
-                    {% bootstrap_icon "star" %} Submit
-                </button>
-            {% endbuttons %}
+        <div class="col-xs-12 form-group center-block text-center">
+            {% bootstrap_button 'Save' button_type='submit' button_class='btn-success' %}
+            or {% url 'tracks' as back_url %}
+            {% bootstrap_button 'Cancel' button_type='link' href=back_url %}
         </div>
     </form>
 {% endblock %}
@@ -26,11 +29,11 @@
 {% block css %}
     {% bootstrap_css %}
     {% leaflet_css plugins="forms" %}
-    <!--<link href="{% static 'css/map.css' %}" rel="stylesheet" media="screen">-->
+    <link href="{% static 'css/track.css' %}" rel="stylesheet" media="screen">
 {% endblock %}
 
 {% block js %}
     {% bootstrap_javascript %}
     {% leaflet_js plugins="forms" %}
-    <!--<script src="{% static 'js/track.js' %}"></script>-->
+    <script src="{% static 'js/track_editor.js' %}"></script>
 {% endblock %}
