@@ -67,7 +67,20 @@ class TrackEditView(View):
         user = User.objects.get(username=request.user.username)
         track = TrackModel.objects.get(id=id)
         if track.is_active and track.user == user:
-            form = TrackEditForm()
-            return render(request, 'track_edit.html', {'form': form, 'track': track})
+            form = TrackEditForm(initial={
+                'name': track.name,
+                'description': track.description,
+                'activity': track.activity,
+                'geom': track.geom
+            })
+            timedelta = (track.finish_date - track.start_date)
+            time = {
+                'days': timedelta.days,
+                'hours': timedelta.seconds // 3600,
+                'minutes': timedelta.seconds % 3600 // 60,
+                'seconds': timedelta.seconds % 3600 % 60
+            }
+            return render(request, 'track_edit.html',
+                          {'title': track.name, 'form': form, 'track': track, 'time': time})
         else:
             return HttpResponseForbidden()

@@ -8,5 +8,5 @@ from maps.models import TrackModel
 class TrackEditForm(forms.ModelForm):
     class Meta:
         model = TrackModel
-        fields = ('name', 'description', 'start_date', 'finish_date', 'activity', 'geom')
+        fields = ('name', 'description', 'activity', 'geom')
         widgets = {'geom': LeafletWidget()}
