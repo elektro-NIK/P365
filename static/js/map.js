@@ -33,7 +33,7 @@ function map_init_basic (map, options) {
             }
         });
         b.addTo(map);
-        bounds += b.getBounds();
-        map.fitBounds(b.getBounds());
+        bounds.extend(b.getBounds());
+        map.fitBounds(bounds);
     }).fail(function() {setErrorMsg()});
 }
