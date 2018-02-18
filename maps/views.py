@@ -99,6 +99,7 @@ class TrackEditView(View):
                 activity = TagModel.objects.get(name=form.cleaned_data['activity'])
                 track.name = form.cleaned_data['name']
                 track.description = form.cleaned_data['description']
+                # TODO:
                 # track.length = calculate()
                 # track.speed = track.length / time?
                 # track.altitude_gain = calculate()
