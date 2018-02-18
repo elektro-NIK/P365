@@ -4,18 +4,3 @@ function setErrorMsg() {
         '<strong>Something went wrong!</strong> Please try again.' +
         '</div>')
 }
-
-function map_init_basic (map, options) {
-    // Fixme!
-    var tracks_url = '/map/geojson_tracks/';
-
-    $.getJSON(tracks_url, function (data) {
-        var json = JSON.parse(data);
-        L.geoJson(json, {
-            onEachFeature: function (feature, layer) {
-                layer.bindPopup('<p>' + '<b>' + feature.properties.name + '</b>' +
-                                '<br>' + feature.properties.description, '</p>');
-            }
-        }).addTo(map)
-    }).fail(function() {setErrorMsg()});
-}
