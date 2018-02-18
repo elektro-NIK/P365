@@ -5,7 +5,7 @@
 
 {% block content %}
     <div id="msg-wrong"></div>
-    <form action="/url/to/submit/" method="post" class="form">
+    <form action="{% url 'edit_track' track.id %}" method="post" class="form">                                          <!-- Fixme -->
         {% csrf_token %}
         <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
             {% bootstrap_field form.name %}
