@@ -5,15 +5,7 @@
     <div class="row">
         <div class="table-responsive col-xs-12 col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
             <div id="msg"></div>
-            <div id="track-table">
-                {% if not tracks %}
-                    <div class="alert alert-info" role="alert">
-                        You don't have Tracks yet. Try to <a href="#" class="alert-link">import your first Track</a>.
-                    </div>
-                {% else %}
-                    {% include 'partials/_tracks-table.html' %}
-                {% endif %}
-            </div>
+            {% include 'partials/_tracks-table.html' %}
         </div>
     </div>
 {% endblock %}
