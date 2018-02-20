@@ -10,6 +10,16 @@ from .forms import TrackEditForm
 from .models import TrackModel, POIModel
 
 
+def get_track_time(track):
+    timedelta = (track.finish_date - track.start_date)
+    return {
+        'days': timedelta.days,
+        'hours': timedelta.seconds // 3600,
+        'minutes': timedelta.seconds % 3600 // 60,
+        'seconds': timedelta.seconds % 3600 % 60
+    }
+
+
 class MapView(View):
     @staticmethod
     def get(request):
@@ -85,15 +95,10 @@ class TrackEditView(View):
                 'activity': track.activity,
                 'geom': track.geom
             })
-            timedelta = (track.finish_date - track.start_date)
-            time = {
-                'days': timedelta.days,
-                'hours': timedelta.seconds // 3600,
-                'minutes': timedelta.seconds % 3600 // 60,
-                'seconds': timedelta.seconds % 3600 % 60
-            }
-            return render(request, 'track_edit.html',
-                          {'title': track.name, 'form': form, 'track': track, 'time': time})  # Fixme (track, times)
+            return render(request, 'track_edit.html', {'title': track.name,
+                                                       'form': form,
+                                                       'track': track,
+                                                       'time': get_track_time(track)})  # Fixme (track, times)
         return HttpResponseForbidden()
 
     @staticmethod
@@ -119,15 +124,10 @@ class TrackEditView(View):
                 return HttpResponseRedirect(reverse('tracks'))
             return HttpResponseForbidden()
         track = TrackModel.objects.get(id=id)
-        timedelta = (track.finish_date - track.start_date)
-        time = {
-            'days': timedelta.days,
-            'hours': timedelta.seconds // 3600,
-            'minutes': timedelta.seconds % 3600 // 60,
-            'seconds': timedelta.seconds % 3600 % 60
-        }
-        return render(request, 'track_edit.html',
-                      {'title': track.name, 'form': form, 'track': track, 'time': time})  # Fixme (track, time)
+        return render(request, 'track_edit.html', {'title': track.name,
+                                                   'form': form,
+                                                   'track': track,
+                                                   'time': get_track_time(track)})  # Fixme (track, time)
 
 
 class TrackView(View):
@@ -136,7 +136,9 @@ class TrackView(View):
         user = User.objects.get(username=request.user.username)
         track = TrackModel.objects.get(id=id)
         if track.public or track.user == user:
-            return render(request, 'track.html', {'title': track.name, 'track': track})
+            return render(request, 'track.html', {'title': track.name,
+                                                  'track': track,
+                                                  'time': get_track_time(track)})
         return HttpResponseForbidden()
 
 
