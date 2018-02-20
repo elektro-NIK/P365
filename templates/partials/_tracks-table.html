@@ -17,7 +17,7 @@
             {% for track in tracks %}
                 <tr id="track{{ track.id }}">
                     <td>
-                        <a href="#">{{ track.name }}</a>
+                        <a href="{% url 'track' track.id %}">{{ track.name }}</a>
                     </td>
                     <td>{{ track.start_date }}</td>
                     <td>{{ track.length }}&nbsp;km</td>
