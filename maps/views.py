@@ -42,6 +42,17 @@ class GetPoisView(View):
         return JsonResponse(data, safe=False)
 
 
+class GetTrackView(View):
+    @staticmethod
+    def get(request, id):
+        user = User.objects.get(username=request.user.username)
+        track = TrackModel.objects.get(id=id)
+        if track.public or track.user == user:
+            data = serialize('geojson', [track], geometry_field='geom')
+            return JsonResponse(data, safe=False)
+        return HttpResponseForbidden()
+
+
 class TrackChangeStatusView(View):
     @staticmethod
     def post(request, id):
@@ -117,6 +128,16 @@ class TrackEditView(View):
         }
         return render(request, 'track_edit.html',
                       {'title': track.name, 'form': form, 'track': track, 'time': time})  # Fixme (track, time)
+
+
+class TrackView(View):
+    @staticmethod
+    def get(request, id):
+        user = User.objects.get(username=request.user.username)
+        track = TrackModel.objects.get(id=id)
+        if track.public or track.user == user:
+            return render(request, 'track.html', {'title': track.name, 'track': track})
+        return HttpResponseForbidden()
 
 
 class TrackDeleteView(View):
