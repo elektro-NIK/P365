@@ -6,7 +6,7 @@ function setErrorMsg() {
 }
 
 function updateTable() {
-    var table_url = '/get_tracks_table/';
+    var table_url = '/get_tracks_table/';       // Fixme!
     $.ajax({
         type: 'GET',
         url: table_url,
@@ -19,12 +19,11 @@ function updateTable() {
     });
 }
 
-
 $('#track-table').on('click', 'td.status a', function() {
     var id = $(this).attr('id').replace('status', '');
     $.ajax({
         type: 'POST',
-        url: '/track/'+id+'/change_status/',
+        url: '/track/'+id+'/change_status/',   // Fixme!
         data: {
             csrfmiddlewaretoken: $('form').find('input[name=csrfmiddlewaretoken]').val(),
         },
@@ -37,6 +36,21 @@ $('#track-table').on('click', 'td.status a', function() {
     });
     return false;
 });
-$('#track-table').on('click', 'td.edit a', function(){
 
+$('#track-table').on('click', 'td.edit a.glyphicon-trash', function(){
+    var id = $(this).attr('id').replace('delete', '');
+    $.ajax({
+        type: 'POST',
+        url: '/track/'+id+'/delete/',
+        data: {
+            csrfmiddlewaretoken: $('form').find('input[name=csrfmiddlewaretoken]').val(),
+        },
+        success: function() {
+            $('#track'+id).hide();
+        },
+        error: function() {
+            setErrorMsg();
+        }
+    });
+    return false;
 });

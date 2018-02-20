@@ -51,8 +51,7 @@ class TrackChangeStatusView(View):
             track.public = not track.public
             track.save()
             return JsonResponse({})
-        else:
-            return HttpResponseForbidden()
+        return HttpResponseForbidden()
 
 
 class GetTracksTableView(View):
@@ -84,8 +83,7 @@ class TrackEditView(View):
             }
             return render(request, 'track_edit.html',
                           {'title': track.name, 'form': form, 'track': track, 'time': time})  # Fixme (track, times)
-        else:
-            return HttpResponseForbidden()
+        return HttpResponseForbidden()
 
     @staticmethod
     def post(request, id):
@@ -119,3 +117,15 @@ class TrackEditView(View):
         }
         return render(request, 'track_edit.html',
                       {'title': track.name, 'form': form, 'track': track, 'time': time})  # Fixme (track, time)
+
+
+class TrackDeleteView(View):
+    @staticmethod
+    def post(request, id):
+        track = TrackModel.objects.get(id=id)
+        user = User.objects.get(username=request.user.username)
+        if track.user == user and not track.public:
+            track.is_active = False
+            track.save()
+            return JsonResponse({})
+        return HttpResponseForbidden()
