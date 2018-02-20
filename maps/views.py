@@ -124,7 +124,7 @@ class TrackDeleteView(View):
     def post(request, id):
         track = TrackModel.objects.get(id=id)
         user = User.objects.get(username=request.user.username)
-        if track.user == user:
+        if track.user == user and not track.public:
             track.is_active = False
             track.save()
             return JsonResponse({})
