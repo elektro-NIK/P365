@@ -19,8 +19,8 @@
                     <td>
                         <a href="{% url 'track' track.id %}">{{ track.name }}</a>
                     </td>
-                    <td>{{ track.start_date }}</td>
-                    <td>{{ track.length }}&nbsp;km</td>
+                    <td>{{ track.start_date|date }} {{ track.start_date|time }}</td>
+                    <td>{{ track.length|floatformat }}&nbsp;km</td>
                     <td class="center">
                         <span class="label label-default">{{ track.activity }}</span>
                     </td>

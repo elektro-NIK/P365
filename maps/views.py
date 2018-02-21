@@ -20,6 +20,12 @@ def get_track_time(track):
     }
 
 
+def calculate_length(line):
+    line.srid = 4326
+    line.transform(3035)
+    return line.length / 1000
+
+
 class MapView(View):
     @staticmethod
     def get(request):
@@ -113,13 +119,13 @@ class TrackEditView(View):
                 activity = TagModel.objects.get(name=form.cleaned_data['activity'])
                 track.name = form.cleaned_data['name']
                 track.description = form.cleaned_data['description']
-                # TODO:
-                # track.length = calculate()
-                # track.speed = track.length / time?
-                # track.altitude_gain = calculate()
-                # track.altitude_loss = calculate()
-                track.activity = activity
                 track.geom = form.cleaned_data['geom']
+                track.length = calculate_length(track.geom)
+                track.speed = track.length / ((track.finish_date - track.start_date).total_seconds() // 3600)
+                # Fixme!:
+                track.altitude_gain = 0
+                track.altitude_loss = 0
+                track.activity = activity
                 track.save()
                 return HttpResponseRedirect(reverse('tracks'))
             return HttpResponseForbidden()
