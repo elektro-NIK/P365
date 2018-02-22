@@ -3,8 +3,10 @@
 {% load staticfiles %}
 
 {% block content %}
-    <div id="msg-wrong"></div>
-    {% leaflet_map "mainmap" callback="window.map_init_basic" %}
+    <div class="row">
+        <div id="msg-wrong"></div>
+        {% leaflet_map "mainmap" callback="window.map_init_basic" %}
+    </div>
 {% endblock %}
 
 {% block css %}
@@ -14,5 +16,38 @@
 
 {% block js %}
     {% leaflet_js %}
-    <script src="{% static 'js/map.js' %}"></script>
+    <script src="{% static 'js/msg_wrong.js' %}"></script>
+    <script>
+        function map_init_basic (map, options) {
+            var tracks_url = "{% url 'geojson_tracks' %}";
+            var pois_url = "{% url 'geojson_pois' %}";
+
+            var bounds;
+
+            $.getJSON(tracks_url, function (data) {
+                var json = JSON.parse(data);
+                b = L.geoJson(json, {
+                    onEachFeature: function (feature, layer) {
+                        layer.bindPopup('<p>' + '<b>' + feature.properties.name + '</b>' +
+                                        '<br>' + feature.properties.description, '</p>');
+                    }
+                });
+                b.addTo(map)
+                bounds = b.getBounds();
+            }).fail(function() {setErrorMsg()});
+
+            $.getJSON(pois_url, function (data) {
+                var json = JSON.parse(data);
+                var b = L.geoJson(json, {
+                    onEachFeature: function (feature, layer) {
+                        layer.bindPopup('<p>' + '<b>' + feature.properties.name + '</b>' +
+                                        '<br>' + feature.properties.description, '</p>');
+                    }
+                });
+                b.addTo(map);
+                bounds.extend(b.getBounds());
+                map.fitBounds(bounds);
+            }).fail(function() {setErrorMsg()});
+        }
+    </script>
 {% endblock %}

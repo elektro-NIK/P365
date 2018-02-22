@@ -14,65 +14,6 @@ function editEvent(event) {
     $('#event-modal').modal();
 }
 
-function deleteEvent(event) {
-    $.ajax({
-        type: 'POST',
-        url: '/calendar/delete_event/',
-        data: {
-            csrfmiddlewaretoken: $('form').find('input[name=csrfmiddlewaretoken]').val(),
-            id: event.id,
-        },
-        success: function() {
-            updateAllEvents()
-        },
-        error: function() {
-            setErrorMsg()
-        }
-    })
-}
-
-function saveEvent() {
-    var update_event = {
-        id: $('#event-modal input[name="event-index"]').val(),
-        name: $('#event-modal input[name="event-name"]').val(),
-        description: $('#event-modal textarea[name="event-description"]').val(),
-        startDate: $('#event-modal input[name="event-start-date"]').datepicker('getDate'),
-        endDate: $('#event-modal input[name="event-end-date"]').datepicker('getDate')
-    }
-
-    $.ajax({
-        type: 'POST',
-        url: '/calendar/update_or_create_event/',
-        data: {
-            csrfmiddlewaretoken: $('form').find('input[name=csrfmiddlewaretoken]').val(),
-            event: JSON.stringify(update_event)
-        },
-        success: function() {
-            updateAllEvents();
-        },
-        error: function() {
-            setErrorMsg();
-        }
-    })
-    $('#event-modal').modal('hide');
-}
-
-function updateAllEvents() {
-    $.ajax({
-        url: '/calendar/get_all_events/',
-        success: function (data) {
-            for (var i in data) {
-                data[i].startDate = new Date(data[i].startDate);
-                data[i].endDate = new Date(data[i].endDate);
-            }
-            $('#calendar').data('calendar').setDataSource(data);
-        },
-        error: function() {
-            setErrorMsg();
-        }
-    })
-}
-
 $(function() {
     $('#calendar').calendar({
         style:'border',

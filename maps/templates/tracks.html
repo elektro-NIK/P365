@@ -4,7 +4,7 @@
 {% block content %}
     <div class="row">
         <div class="table-responsive col-xs-12 col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
-            <div id="msg"></div>
+            <div id="msg-wrong"></div>
             {% include 'partials/_tracks-table.html' %}
         </div>
     </div>
@@ -15,5 +15,55 @@
 {% endblock %}
 
 {% block js %}
-    <script src="{% static 'js/tracks.js' %}"></script>
+    <script src="{% static 'js/msg_wrong.js' %}"></script>
+    <script>
+        function updateTable() {
+            $.ajax({
+                type: "GET",
+                url: "{% url 'get_tracks_table' %}",
+                success: function(response) {
+                    $('#track-table').html(response);
+                },
+                error: function() {
+                    setErrorMsg();
+                }
+            });
+        }
+
+        $('#track-table').on('click', 'td.status a', function() {
+            var id = $(this).attr('id').replace('status', '');
+            $.ajax({
+                type: "POST",
+                url: "{% url 'change_track_status' 1 %}".replace('1', id),
+                data: {
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                },
+                success: function() {
+                    updateTable();
+                },
+                error: function() {
+                    setErrorMsg();
+                }
+            });
+            return false;
+        });
+
+        $('#track-table').on('click', 'td.edit a.glyphicon-trash', function(){
+            var id = $(this).attr('id').replace('delete', '');
+            $.ajax({
+                type: "POST",
+                url: "{% url 'delete_track' 1 %}".replace('1', id),
+                data: {
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                },
+                success: function() {
+                    $('#track'+id).hide();
+                },
+                error: function() {
+                    setErrorMsg();
+                }
+            });
+            return false;
+        });
+    </script>
 {% endblock %}

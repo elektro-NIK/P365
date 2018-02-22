@@ -4,38 +4,34 @@
 {% load staticfiles %}
 
 {% block content %}
-    <div id="msg-wrong"></div>
-    <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
-        <center><b>{{ track.name }}</b></center>
-        <center><span class="label label-default">{{ track.activity }}</span></center>
-        <br><p>{{ track.description }}</p>
-        <div>
-            <div class="thumbnail text-center col-xs-3 col-sm-6">
-                Distance:
-                <h3>{{ track.length|floatformat }}</h3>
-                <h4>km</h4>
+    <div class="row">
+        <div id="msg-wrong"></div>
+        <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
+            <center><b>{{ track.name }}</b></center>
+            <center><span class="label label-default">{{ track.activity }}</span></center>
+            <br><p>{{ track.description }}</p>
+            <div>
+                <div class="thumbnail text-center col-xs-3 col-sm-6">
+                    Distance:
+                    <h3>{{ track.length|floatformat }}</h3>
+                    <h4>km</h4>
+                </div>
+                <div class="thumbnail text-center col-xs-3 col-sm-6">
+                    Avg. speed:
+                    <h3>{{ track.speed|floatformat }}</h3>
+                    <h4>km/h</h4>
+                </div>
+                <div class="thumbnail text-center col-xs-3 col-sm-6">
+                    Time:
+                    <h3>{{ time.days }} <small>days</small></h3>
+                    <h4>{{ time.hours }}:{{ time.minutes }}:{{ time.seconds }}</h4>
+                </div>
             </div>
-            <div class="thumbnail text-center col-xs-3 col-sm-6">
-                Avg. speed:
-                <h3>{{ track.speed|floatformat }}</h3>
-                <h4>km/h</h4>
-            </div>
-            <div class="thumbnail text-center col-xs-3 col-sm-6">
-                Time:
-                <h3>{{ time.days }} <small>days</small></h3>
-                <h4>{{ time.hours }}:{{ time.minutes }}:{{ time.seconds }}</h4>
-            </div>
-            <!-- Fixme! -->
-            <!--<div class="thumbnail text-center col-xs-3 col-sm-6">-->
-                <!--Altitude:-->
-                <!--<h3><small class="glyphicon glyphicon-arrow-up"></small> {{ track.altitude_gain|floatformat|default:'0' }} m</h3>-->
-                <!--<h4><small class="glyphicon glyphicon-arrow-down"></small> {{ track.altitude_loss|floatformat|default:'0' }} m</h4>-->
-            <!--</div>-->
         </div>
+         <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
+             {% leaflet_map "mainmap" callback="window.map_init_basic" %}
+         </div>
     </div>
-     <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
-         {% leaflet_map "mainmap" callback="window.map_init_basic" %}
-     </div>
 {% endblock %}
 
 {% block css %}
@@ -47,7 +43,7 @@
 {% block js %}
     {% bootstrap_javascript %}
     {% leaflet_js %}
-    <script src="{% static 'js/track.js' %}"></script>
+    <script src="{% static 'js/msg_wrong.js' %}"></script>
     <script>
         function map_init_basic (map, options) {
             var tracks_url = "{% url 'geojson_get_track' track.id %}";
