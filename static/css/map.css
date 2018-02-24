@@ -1,4 +1,4 @@
-html, body, .container-fluid {
+html, body, div.row, #content-container {
     height: 100%;
 }
 
@@ -6,11 +6,6 @@ body {
     padding-top: 50px;
     padding-bottom: 50px;
     margin-bottom: 0;
-}
-
-#content-container {
-    padding-left: 0;
-    padding-right: 0;
 }
 
 .leaflet-container {
