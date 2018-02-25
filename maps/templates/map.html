@@ -18,54 +18,29 @@
     {% leaflet_js %}
     <script src="{% static 'js/msg_wrong.js' %}"></script>
     <script>
-        function map_init_basic (map, options) {
-            var bounds;
-            var tracks_url = "{% url 'geojson_tracks' %}";
-            var pois_url = "{% url 'geojson_pois' %}";
+        var bounds;
 
-            $.getJSON("{% url 'geojson_tracks' %}")
-            .done(function(data) {
-                var json = JSON.parse(data);
-                b = L.geoJson(json, {
-                    onEachFeature: function (feature, layer) {
-                        layer.bindPopup('<p>' + '<b>' + feature.properties.name + '</b>' +
-                                        '<br>' + feature.properties.description, '</p>');
-                    }
-                });
-                b.addTo(map);
-                if (bounds) {
-                    bounds.extend(b.getBounds());
-                    map.fitBounds(bounds);
+        function parseData (map, data) {
+            var json = JSON.parse(data);
+            b = L.geoJson(json, {
+                onEachFeature: function (feature, layer) {
+                    layer.bindPopup('<p>' + '<b>' + feature.properties.name + '</b>' +
+                                    '<br>' + feature.properties.description, '</p>');
                 }
-                else {
-                    bounds = b.getBounds();
-                }
-            })
-            .fail(function() {
-                setErrorMsg();
             });
+            b.addTo(map);
+            bounds ? bounds.extend(b.getBounds()) : bounds = b.getBounds()
+            bounds.isValid() ? map.fitBounds(bounds) : {}
+        }
+
+        function map_init_basic (map, options) {
+            $.getJSON("{% url 'geojson_tracks' %}")
+            .done(function(data) {parseData(map, data)})
+            .fail(function()     {setErrorMsg()});
 
             $.getJSON("{% url 'geojson_pois' %}")
-            .done(function(data) {
-                var json = JSON.parse(data);
-                b = L.geoJson(json, {
-                    onEachFeature: function (feature, layer) {
-                        layer.bindPopup('<p>' + '<b>' + feature.properties.name + '</b>' +
-                                        '<br>' + feature.properties.description, '</p>');
-                    }
-                });
-                b.addTo(map);
-                if (bounds) {
-                    bounds.extend(b.getBounds());
-                    map.fitBounds(bounds);
-                }
-                else {
-                    bounds = b.getBounds();
-                }
-            })
-            .fail(function() {
-                setErrorMsg();
-            });
+            .done(function(data) {parseData(map, data)})
+            .fail(function()     {setErrorMsg()});
         }
     </script>
 {% endblock %}

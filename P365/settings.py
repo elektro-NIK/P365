@@ -137,8 +137,8 @@ LOGIN_URL = '/login/'
 # https://django-leaflet.readthedocs.io
 
 LEAFLET_CONFIG = {
-    'DEFAULT_CENTER': (50.45, 30.523),
-    'DEFAULT_ZOOM': 5,
+    'DEFAULT_CENTER': (30, 0),
+    'DEFAULT_ZOOM': 2,
     'RESET_VIEW': False,
     'TILES': [
         ('OpenStreetMap', 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
