@@ -49,6 +49,6 @@ urlpatterns = [
         login_required(TrackDeleteView.as_view()),                  name='delete_track'),
     url(r'^track/(\d+)/edit/$',
         login_required(TrackEditView.as_view()),                    name='edit_track'),
-    url(r'^get_tracks_table/$',
+    url(r'^track/get_table/$',
         login_required(GetTracksTableView.as_view()),               name='get_tracks_table'),
 ]

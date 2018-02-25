@@ -122,7 +122,7 @@ class TrackEditView(View):
                 track.geom = form.cleaned_data['geom']
                 track.length = calculate_length(track.geom)
                 track.speed = track.length / ((track.finish_date - track.start_date).total_seconds() // 3600)
-                # Fixme: altitude
+                # Fix me: altitude
                 track.altitude_gain = 0
                 track.altitude_loss = 0
                 track.activity = activity

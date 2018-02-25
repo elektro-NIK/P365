@@ -31,7 +31,7 @@
         }
 
         $('#track-table').on('click', 'td.status a', function() {
-            var id = $(this).attr('id').replace('status', '');
+            var id = $(this).parent().parent().attr('id').replace('track', '');
             $.ajax({
                 type: "POST",
                 url: "{% url 'change_track_status' 1 %}".replace('1', id),
@@ -49,7 +49,7 @@
         });
 
         $('#track-table').on('click', 'td.edit a.glyphicon-trash', function(){
-            var id = $(this).attr('id').replace('delete', '');
+            var id = $(this).parent().parent().attr('id').replace('track', '');
             $.ajax({
                 type: "POST",
                 url: "{% url 'delete_track' 1 %}".replace('1', id),
