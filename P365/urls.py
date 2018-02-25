@@ -13,35 +13,33 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+
 from django.conf.urls import url, include
 from django.contrib import admin
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import logout_then_login
 
 from profile import urls as profile_urls
 from calendar_year import urls as calendar_urls
-from maps import urls as map_urls
+from map import urls as map_urls
 from track import urls as track_urls
+from story import urls as story_urls
 
-from maps.views import TracksView
 from profile.views import LoginView, ProfileRedirect, SignUpView, IndexView
-from story.views import StoriesView
 
 urlpatterns = [
+    # main
     url(r'^$', IndexView.as_view(),                                 name='index'),
     url(r'^admin/', admin.site.urls,                                name='admin'),
-
+    # auth
     url(r'^login/$', LoginView.as_view(),                           name='login'),
     url(r'^register/$', SignUpView.as_view(),                       name='signup'),
     url(r'^logout/$', logout_then_login,                            name='logout'),
-
+    # redirection
     url(r'^accounts/profile/$', ProfileRedirect.as_view()),
+    # includes
     url(r'^user/', include(profile_urls)),
-
     url(r'^calendar/', include(calendar_urls)),
-    url(r'^map/', include(map_urls)),
-    url(r'^tracks/$', login_required(TracksView.as_view()),         name='tracks'),
-    url(r'^stories/$', login_required(StoriesView.as_view()),       name='stories'),
-
     url(r'^track/', include(track_urls)),
+    url(r'^map/', include(map_urls)),
+    url(r'^story/', include(story_urls)),
 ]
