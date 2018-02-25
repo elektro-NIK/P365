@@ -10,7 +10,7 @@
     <title>{{ title }} - P365</title>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="header_container">
         <div class="container-fluid">
             {% include "base/header.html" %}
         </div>
@@ -18,7 +18,7 @@
     <div id="content-container" class="container-fluid">
         {% block content %}{% endblock %}
     </div>
-    <nav class="footer navbar-inverse navbar-static-bottom">
+    <nav class="footer navbar-inverse navbar-static-bottom" id="footer_container">
         <div class="container-fluid">
             {% include "base/footer.html" %}
         </div>

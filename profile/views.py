@@ -1,6 +1,6 @@
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.contrib.auth.views import login
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -24,13 +24,13 @@ class LoginView(View):
             from django.contrib.auth.forms import AuthenticationForm
             form = AuthenticationForm()
             nexturl = request.GET.get('next') or ''
-            return render(request, 'login.html', {'title': 'Sign Up', 'form': form, 'next': nexturl})
+            return render(request, 'login.html', {'title': 'Login', 'form': form, 'next': nexturl})
 
     @staticmethod
     def post(request):
         from django.contrib.auth.forms import AuthenticationForm
         form = AuthenticationForm(data=request.POST)
-        nexturl = request.POST['next']
+        nexturl = request.GET.get('next')
         if form.is_valid():
             user = User.objects.get(username=request.POST['username'])
             login(request, user)
@@ -57,17 +57,12 @@ class SignUpView(View):
     @staticmethod
     def post(request):
         form = SignUpForm(data=request.POST)
-        nexturl = request.POST['next']
+        nexturl = request.GET.get('next')
         if form.is_valid():
-            user = User.objects.create_user(
-                username=request.POST['username'],
-                email=request.POST['email'],
-                password=request.POST['password1'],
-                first_name=request.POST['first_name'],
-                last_name=request.POST['last_name'],
-            )
-            user.save()
-            login(request, user)
+            form.save()
+            user = authenticate(request, username=request.POST['username'], password=request.POST['password1'])
+            if user is not None:
+                login(request, user)
             return HttpResponseRedirect(nexturl or reverse('profile', kwargs={'username': user.username}))
         else:
             return render(request, 'register.html', {

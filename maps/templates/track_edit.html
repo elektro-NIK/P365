@@ -8,7 +8,7 @@
         <div id="msg-wrong"></div>
         <form action="{% url 'edit_track' track.id %}" method="post" class="form">
             {% csrf_token %}
-            <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
+            <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3" id="info">
                 {% bootstrap_field form.name %}
                 <div class="form-group">
                     {% bootstrap_label form.description.label %}
@@ -16,33 +16,27 @@
                 </div>
                 {% bootstrap_field form.activity %}
                 <div>
-                    <div class="thumbnail text-center col-xs-3 col-sm-6">
+                    <div class="thumbnail text-center col-xs-4 col-sm-6">
                         Distance:
                         <h3>{{ track.length|floatformat }}</h3>
                         <h4>km</h4>
                     </div>
-                    <div class="thumbnail text-center col-xs-3 col-sm-6">
+                    <div class="thumbnail text-center col-xs-4 col-sm-6">
                         Avg. speed:
                         <h3>{{ track.speed|floatformat }}</h3>
                         <h4>km/h</h4>
                     </div>
-                    <div class="thumbnail text-center col-xs-3 col-sm-6">
+                    <div class="thumbnail text-center col-xs-4 col-sm-6">
                         Time:
                         <h3>{{ time.days }} <small>days</small></h3>
                         <h4>{{ time.hours }}:{{ time.minutes }}:{{ time.seconds }}</h4>
                     </div>
-                    <!-- Fixme! -->
-                    <!--<div class="thumbnail text-center col-xs-3 col-sm-6">-->
-                          <!--Altitude:-->
-                        <!--<h3><small class="glyphicon glyphicon-arrow-up"></small> {{ track.altitude_gain|floatformat|default:'0' }} m</h3>-->
-                        <!--<h4><small class="glyphicon glyphicon-arrow-down"></small> {{ track.altitude_loss|floatformat|default:'0' }} m</h4>-->
-                    <!--</div>-->
                 </div>
             </div>
             <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
                 {{ form.geom }}
             </div>
-            <div class="col-xs-12 form-group center-block text-center">
+            <div class="col-xs-12 form-group center-block text-center" id="buttons">
                 {% bootstrap_button 'Save' button_type='submit' button_class='btn-success' %}
                 or {% url 'tracks' as back_url %}
                 {% bootstrap_button 'Cancel' button_type='link' href=back_url %}

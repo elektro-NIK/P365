@@ -1,17 +1,15 @@
 {% extends "base/base.html" %}
+{% load staticfiles %}
 {% load bootstrap3 %}
 
 {% block content %}
 <div class="row">
     <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
-        <form class="form-horizontal" method="post" action="{% url 'login' %}">
+        <form class="form-horizontal" method="post" action="{% url 'login' %}?next={{ next }}">
             {% csrf_token %}
-            <!--TODO: refactor-->
-            <input type="hidden" name="next" value="{{ next }}">
             {% bootstrap_form_errors form %}
-            {% bootstrap_field form.username    show_label=False show_help=False addon_before='<i class="glyphicon glyphicon-user"></i>' %}
-            <!--TODO: icon-->
-            {% bootstrap_field form.password   show_label=False show_help=False addon_before='<i class="glyphicon glyphicon-envelope"></i>'%}
+            {% bootstrap_field form.username show_label=False show_help=False addon_before='<i class="glyphicon glyphicon-user"></i>' %}
+            {% bootstrap_field form.password show_label=False show_help=False %}
             <div class="form-group">
                 <div  class="center-block text-center">
                     {% bootstrap_button 'Login' button_type='submit' button_class='btn-success' %}
@@ -22,4 +20,8 @@
         </form>
     </div>
 </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/password_field_fix.js' %}"></script>
 {% endblock %}

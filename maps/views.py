@@ -104,7 +104,7 @@ class TrackEditView(View):
             return render(request, 'track_edit.html', {'title': track.name,
                                                        'form': form,
                                                        'track': track,
-                                                       'time': get_track_time(track)})  # Fixme (track, times)
+                                                       'time': get_track_time(track)})
         return HttpResponseForbidden()
 
     @staticmethod
@@ -122,7 +122,7 @@ class TrackEditView(View):
                 track.geom = form.cleaned_data['geom']
                 track.length = calculate_length(track.geom)
                 track.speed = track.length / ((track.finish_date - track.start_date).total_seconds() // 3600)
-                # Fixme!:
+                # Fixme: altitude
                 track.altitude_gain = 0
                 track.altitude_loss = 0
                 track.activity = activity
@@ -133,7 +133,7 @@ class TrackEditView(View):
         return render(request, 'track_edit.html', {'title': track.name,
                                                    'form': form,
                                                    'track': track,
-                                                   'time': get_track_time(track)})  # Fixme (track, time)
+                                                   'time': get_track_time(track)})
 
 
 class TrackView(View):
