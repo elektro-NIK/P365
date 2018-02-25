@@ -21,8 +21,9 @@ from django.contrib.auth.views import logout_then_login
 from profile import urls as profile_urls
 from calendar_year import urls as calendar_urls
 from maps import urls as map_urls
+from track import urls as track_urls
 
-from maps.views import TracksView, TrackView, TrackChangeStatusView, GetTracksTableView, TrackEditView, TrackDeleteView
+from maps.views import TracksView
 from profile.views import LoginView, ProfileRedirect, SignUpView, IndexView
 from story.views import StoriesView
 
@@ -42,13 +43,5 @@ urlpatterns = [
     url(r'^tracks/$', login_required(TracksView.as_view()),         name='tracks'),
     url(r'^stories/$', login_required(StoriesView.as_view()),       name='stories'),
 
-    url(r'^track/(\d+)/$', TrackView.as_view(),                     name='track'),
-    url(r'^track/(\d+)/change_status/$',
-        login_required(TrackChangeStatusView.as_view()),            name='change_track_status'),
-    url(r'^track/(\d+)/delete/$',
-        login_required(TrackDeleteView.as_view()),                  name='delete_track'),
-    url(r'^track/(\d+)/edit/$',
-        login_required(TrackEditView.as_view()),                    name='edit_track'),
-    url(r'^track/get_table/$',
-        login_required(GetTracksTableView.as_view()),               name='get_tracks_table'),
+    url(r'^track/', include(track_urls)),
 ]

@@ -3,7 +3,7 @@ from django.db import models
 
 from P365.settings import MAX_LENGTH
 from hashtag.models import TagModel
-from maps.models import TrackModel
+from track.models import TrackModel
 from calendar_year.models import EventModel
 
 

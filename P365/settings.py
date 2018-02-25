@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'maps',
     'story',
     'hashtag',
+    'track',
 ]
 
 MIDDLEWARE = [

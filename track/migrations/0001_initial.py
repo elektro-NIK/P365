@@ -14,18 +14,27 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('hashtag', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='POIModel',
+            name='TrackModel',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=30)),
                 ('description', models.TextField(blank=True, max_length=250)),
                 ('created', models.DateTimeField(auto_now_add=True)),
+                ('start_date', models.DateTimeField()),
+                ('finish_date', models.DateTimeField()),
+                ('length', models.FloatField(default=0)),
+                ('speed', models.FloatField(default=0)),
+                ('altitude_gain', models.FloatField(default=0)),
+                ('altitude_loss', models.FloatField(default=0)),
+                ('public', models.BooleanField(default=False)),
                 ('is_active', models.BooleanField(default=True)),
-                ('geom', django.contrib.gis.db.models.fields.PointField(srid=4326)),
+                ('geom', django.contrib.gis.db.models.fields.LineStringField(srid=4326)),
+                ('activity', models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='hashtag.TagModel')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
