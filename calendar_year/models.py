@@ -12,5 +12,7 @@ class EventModel(models.Model):
     user = models.ForeignKey(User)
     is_active = models.BooleanField(default=True)
 
+    objects = models.Manager()
+
     def __str__(self):
         return self.name

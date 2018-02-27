@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
-from django.db import models
-from django.contrib.gis.db import models as gismodels
+from django.contrib.gis.db import models
 
 from P365.settings import MAX_LENGTH
 from hashtag.models import TagModel
@@ -21,11 +20,13 @@ class TrackModel(models.Model):
     altitude_gain = models.FloatField(default=0)
     altitude_loss = models.FloatField(default=0)
     # Properties
-    activity = models.ForeignKey(TagModel, default=1)
+    activity = models.ForeignKey(TagModel)
     public = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     # GIS
-    geom = gismodels.LineStringField()
+    geom = models.MultiLineStringField(dim=3)
+
+    objects = models.Manager()
 
     def __str__(self):
         return self.name

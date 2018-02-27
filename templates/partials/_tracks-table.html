@@ -24,15 +24,16 @@
                         </td>
                         <td class="center status">
                             {% if track.public %}
-                                <a href="#" class="glyphicon glyphicon-globe" title="public" id="status{{ track.id }}"></a>
+                                <a href="#" class="glyphicon glyphicon-globe" title="public"></a>
                             {% else %}
-                                <a href="#" class="glyphicon glyphicon-user" title="private" id="status{{ track.id }}"></a>
+                                <a href="#" class="glyphicon glyphicon-user" title="private"></a>
                             {% endif %}
                         </td>
                         <td class="center edit">
-                            <a href="{% url 'edit_track' track.id %}" class="glyphicon glyphicon-edit" title="edit"></a>
+                            <!--<a href="{% url 'edit_track' track.id %}" class="glyphicon glyphicon-edit" title="edit"></a>-->
+                            <a href="#" class="glyphicon glyphicon-edit" title="edit"></a>
                             {% if not track.public %}
-                                <a href="#" class="glyphicon glyphicon-trash" title="delete" id="delete{{ track.id }}"></a>
+                                <a href="#" class="glyphicon glyphicon-trash" title="delete"></a>
                             {% endif %}
                         </td>
                     </tr>

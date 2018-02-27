@@ -13,6 +13,8 @@ class ArticleModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User)
 
+    objects = models.Manager()
+
     def __str__(self):
         return self.title
 
@@ -25,5 +27,7 @@ class StoryModel(models.Model):
     tags = models.ManyToManyField(TagModel)
     user = models.ForeignKey(User)
 
+    objects = models.Manager()
+
     def __str__(self):
-        return self.event, self.article, self.track
+        return '{} {} {}'.format(self.event, self.article, self.track)

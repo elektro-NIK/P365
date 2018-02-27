@@ -11,7 +11,7 @@ class ArticleAdmin(admin.ModelAdmin):
 
 
 class StoryAdmin(admin.ModelAdmin):
-    list_display = ('track', 'article', 'event', 'created', 'user',)
+    list_display = ('event', 'track', 'article', 'created', 'user',)
     list_filter = ('user',)
     ordering = ('-created',)
     search_fields = ('track', 'article', 'event',)
