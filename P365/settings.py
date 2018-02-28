@@ -138,6 +138,14 @@ LEAFLET_CONFIG = {
     'DEFAULT_CENTER': (30, 0),
     'DEFAULT_ZOOM': 2,
     'RESET_VIEW': False,
+    'PLUGINS': {
+        'elevation': {
+            'css': os.path.join(STATIC_URL, 'css/leaflet.elevation.css'),
+            'js': [os.path.join(STATIC_URL, 'js/leaflet.elevation.min.js'),
+                   os.path.join(STATIC_URL, 'js/d3.min.js')],
+            'auto-include': False
+        }
+    },
     'TILES': [
         ('OpenStreetMap', 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             'maxZoom': 19, 'attribution': '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',

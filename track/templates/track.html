@@ -36,33 +36,38 @@
 
 {% block css %}
     {% bootstrap_css %}
-    {% leaflet_css %}
+    {% leaflet_css plugins='elevation' %}
     <link href="{% static 'css/track.css' %}" rel="stylesheet" media="screen">
 {% endblock %}
 
 {% block js %}
     {% bootstrap_javascript %}
-    {% leaflet_js %}
+    {% leaflet_js plugins='elevation' %}
     <script src="{% static 'js/msg_wrong.js' %}"></script>
     <script>
         function map_init_basic (map, options) {
-            var tracks_url = "{% url 'geojson_get_track' track.id %}";
-            var height;
-
-            if($(window).height() > $(document).height()) {
-                height = $(window).height()-180;                                                // <--- Fixme
-            }
-            else {
-                height = $(window).height() * 2 - $(document).height() - 125;                   // <--- Fixme
-            }
+            var height = $(window).height() > $(document).height() ? $(window).height()-180 : $(window).height() * 2 - $(document).height() - 125; // <--- Fixme
             $('div.leaflet-container').height(height);
             map.invalidateSize();
 
-            $.getJSON(tracks_url, function (data) {
-                var json = JSON.parse(data);
-                var b = L.geoJson(json);
-                b.addTo(map);
-                map.fitBounds(b.getBounds());
+            $.getJSON("{% url 'geojson_get_track' track.id %}")
+            .done(function (data) {
+                var elevation = L.control.elevation({
+                    position: 'bottomleft',
+                    width: 600,
+                    height: 100,
+                    margins: {
+                        top: 10,
+                        right: 60,
+                        bottom: 20,
+                        left: 60
+                    },
+                    useHeightIndicator: true,
+                }).addTo(map);
+                var track = L.geoJson(JSON.parse(data), {
+                    onEachFeature: elevation.addData.bind(elevation)
+                }).addTo(map);
+                map.fitBounds(track.getBounds());
             }).fail(function() {setErrorMsg()});
         }
     </script>
