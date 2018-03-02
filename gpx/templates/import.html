@@ -1,0 +1,47 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+    <div class="row">
+        <div class="col col-xs-12 col-sm-6 col-md-4 col-md-offset-2 col-lg-3 col-lg-offset-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Tracks:</h3>
+                </div>
+                <div class="panel-body">
+                    <input type="checkbox" id="selectAllTracks"> Select all<hr class="slim">
+                    {% for track in gpx.tracks %}
+                        <div>
+                            <input type="checkbox" class="spacing">
+                            <span>{{ track.name }}</span>
+                            <i class="glyphicon glyphicon-ok pull-right" ></i><br>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Routes:</h3>
+                </div>
+                <div class="panel-body">
+                    <input type="checkbox" id="selectAllRoutes"> Select all<hr class="slim">
+                    {% for route in gpx.routes %}
+                        <div>
+                            <input type="checkbox" class="spacing"> {{ route.name }}
+                            <i class="glyphicon glyphicon-ok pull-right" ></i><br>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 center-block text-center">
+            <button class="btn btn-success" id="save">Save</button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/importgpx.js' %}"></script>
+{% endblock %}

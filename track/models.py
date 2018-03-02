@@ -12,13 +12,16 @@ class TrackModel(models.Model):
     # Inside
     user = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)
-    # Outside
+    # Info
     start_date = models.DateTimeField()
     finish_date = models.DateTimeField()
     length = models.FloatField(default=0)
     speed = models.FloatField(default=0)
+    speed_max = models.FloatField(default=0)
     altitude_gain = models.FloatField(default=0)
     altitude_loss = models.FloatField(default=0)
+    altitude_max = models.FloatField(default=0)
+    altitude_min = models.FloatField(default=0)
     # Properties
     activity = models.ForeignKey(TagModel)
     public = models.BooleanField(default=False)

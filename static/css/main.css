@@ -20,3 +20,16 @@
 #content-container {
     margin-bottom: 50px;
 }
+
+[hidden] {
+  display: none !important;
+}
+
+hr.slim {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+input.spacing {
+    margin-left: 1em;
+}

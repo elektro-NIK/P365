@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'hashtag',
     'track',
     'poi',
+    'gpx',
 ]
 
 MIDDLEWARE = [

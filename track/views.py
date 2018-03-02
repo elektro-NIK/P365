@@ -10,16 +10,6 @@ from track.forms import TrackEditForm
 from track.models import TrackModel
 
 
-def get_track_time(track):
-    timedelta = (track.finish_date - track.start_date)
-    return {
-        'days': timedelta.days,
-        'hours': timedelta.seconds // 3600,
-        'minutes': timedelta.seconds % 3600 // 60,
-        'seconds': timedelta.seconds % 3600 % 60
-    }
-
-
 def calculate_length(line):
     line.srid = 4326
     line.transform(3035)
@@ -72,7 +62,7 @@ class TrackEditView(View):
             return render(request, 'track_edit.html', {'title': track.name,
                                                        'form': form,
                                                        'track': track,
-                                                       'time': get_track_time(track)})
+                                                       'time': (track.finish_date - track.start_date)})
         return HttpResponseForbidden()
 
     @staticmethod
@@ -101,7 +91,7 @@ class TrackEditView(View):
         return render(request, 'track_edit.html', {'title': track.name,
                                                    'form': form,
                                                    'track': track,
-                                                   'time': get_track_time(track)})
+                                                   'time': (track.finish_date - track.start_date)})
 
 
 class TrackView(View):
@@ -112,7 +102,7 @@ class TrackView(View):
         if track.public or track.user == user:
             return render(request, 'track.html', {'title': track.name,
                                                   'track': track,
-                                                  'time': get_track_time(track)})
+                                                  'time': (track.finish_date - track.start_date)})
         return HttpResponseForbidden()
 
 
