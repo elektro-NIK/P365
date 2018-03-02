@@ -23,6 +23,7 @@ from calendar_year import urls as calendar_urls
 from map import urls as map_urls
 from track import urls as track_urls
 from story import urls as story_urls
+from gpx import urls as gpx_urls
 
 from profile.views import LoginView, ProfileRedirect, SignUpView, IndexView
 
@@ -42,4 +43,5 @@ urlpatterns = [
     url(r'^track/', include(track_urls)),
     url(r'^map/', include(map_urls)),
     url(r'^story/', include(story_urls)),
+    url(r'^gpx/', include(gpx_urls)),
 ]
