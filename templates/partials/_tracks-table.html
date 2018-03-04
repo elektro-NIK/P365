@@ -1,5 +1,11 @@
 <div id="track-table">
     {% if tracks %}
+        <form class="form" method="post" enctype="multipart/form-data" action="{% url 'import_gpx' %}">
+            {% csrf_token %}
+            <label class="btn btn-success pull-right">
+                Add <input type="file" accept=".gpx" onchange="this.form.submit()" hidden name="gpx_file">
+            </label>
+        </form>
         <table class="table table-hover table-condensed">
             <thead>
                 <tr>
@@ -42,7 +48,13 @@
         </table>
     {% else %}
         <div class="alert alert-info" role="alert">
-            You don't have Tracks yet. Try to <a href="#" class="alert-link">import your first Track</a>.
+            <form class="form" method="post" enctype="multipart/form-data" action="{% url 'import_gpx' %}">
+                {% csrf_token %}
+                You don't have Tracks yet. Try to
+                <label class="btn btn-success">
+                    import your first Track <input type="file" accept=".gpx" onchange="this.form.submit()" hidden name="gpx_file">
+                </label>
+            </form>
         </div>
     {% endif %}
 </div>

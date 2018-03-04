@@ -5,12 +5,6 @@
     <div class="row">
         <div class="table-responsive col-xs-12 col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
             <div id="msg-wrong"></div>
-            <form class="form" method="post" enctype="multipart/form-data" action="{% url 'import_gpx' %}">
-                {% csrf_token %}
-                <label class="btn btn-success pull-right">
-                    Add <input type="file" accept=".gpx" onchange="this.form.submit()" hidden name="gpx_file">
-                </label>
-            </form>
             {% include 'partials/_tracks-table.html' %}
         </div>
     </div>
