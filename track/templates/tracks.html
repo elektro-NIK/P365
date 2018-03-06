@@ -5,13 +5,16 @@
     <div class="row">
         <div class="table-responsive col-xs-12 col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
             <div id="msg-wrong"></div>
-            {% include 'partials/_tracks-table.html' %}
+            <div id="table-tracks">
+                {% include 'partials/_tracks-table.html' %}
+            </div>
         </div>
     </div>
 {% endblock %}
 
 {% block css %}
     <link href="{% static 'css/tables.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/tracks_table.css' %}" rel="stylesheet" media="screen">
 {% endblock %}
 
 {% block js %}
@@ -22,7 +25,7 @@
                 type: "GET",
                 url: "{% url 'get_tracks_table' %}",
                 success: function(response) {
-                    $('#track-table').html(response);
+                    $('#table-tracks').html(response);
                 },
                 error: function() {
                     setErrorMsg();
@@ -30,7 +33,7 @@
             });
         }
 
-        $('#track-table').on('click', 'td.status a', function() {
+        $('#table-tracks').on('click', 'td.status a', function() {
             var id = $(this).parent().parent().attr('id').replace('track', '');
             $.ajax({
                 type: "POST",
@@ -48,16 +51,19 @@
             return false;
         });
 
-        $('#track-table').on('click', 'td.edit a.glyphicon-trash', function(){
+        $('#table-tracks').on('click', 'td.edit a.glyphicon-trash', function(){
             var id = $(this).parent().parent().attr('id').replace('track', '');
             $.ajax({
                 type: "POST",
                 url: "{% url 'delete_track' 1 %}".replace('1', id),
                 data: {
-                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
                 },
                 success: function() {
-                    $('#track'+id).hide();
+                    if ( $('[id^=track]:visible').length > 1 )
+                        $('#track'+id).hide();
+                    else
+                        updateTable();
                 },
                 error: function() {
                     setErrorMsg();

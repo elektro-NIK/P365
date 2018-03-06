@@ -1,0 +1,9 @@
+div.progress-bar-thin {
+    height: 10px;
+    margin-bottom: 10px;
+    display: none;
+}
+
+[hidden] {
+    display: none !important;
+}
