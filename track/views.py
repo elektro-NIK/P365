@@ -124,12 +124,3 @@ class TracksView(View):
         user = User.objects.get(username=request.user.username)
         tracks = TrackModel.objects.filter(user=user, is_active=True).order_by('-start_date')
         return render(request, 'tracks.html', {'title': 'Tracks', 'tracks': tracks, 'active': 'tracks'})
-
-
-class GetTracksView(View):
-    @staticmethod
-    def get(request):
-        user = User.objects.get(username=request.user.username)
-        tracks = TrackModel.objects.filter(user=user, is_active=True)
-        data = serialize('geojson', tracks, geometry_field='geom')
-        return JsonResponse(data, safe=False)

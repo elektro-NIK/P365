@@ -34,9 +34,17 @@
         }
 
         function map_init_basic (map, options) {
-            $.getJSON("{% url 'geojson_tracks' %}")
-            .done(function(data) {parseData(map, data)})
-            .fail(function()     {setErrorMsg()});
+            $.getJSON("{% url 'json_tracks_nums' %}")
+            .done(function(data) {
+                for (i = 0; i < data.length; i++) {
+                    var id = data[i];
+                    var url = "{% url 'geojson_track' 0 %}".replace('0', id)
+                    $.getJSON(url)
+                    .done(function(data) {parseData(map, data)})
+                    .fail(function()     {setErrorMsg()});
+                }
+            })
+            .fail(function() {setErrorMsg()});
 
             $.getJSON("{% url 'geojson_pois' %}")
             .done(function(data) {parseData(map, data)})
