@@ -5,6 +5,9 @@
 {% block content %}
     <div class="row">
         <div id="msg-wrong"></div>
+        <div class="progress progress-bar-thin">
+            <div class="progress-bar progress-bar-striped active" role="progressbar"></div>
+        </div>
         {% leaflet_map "mainmap" callback="window.map_init_basic" %}
     </div>
 {% endblock %}
@@ -36,11 +39,22 @@
         function map_init_basic (map, options) {
             $.getJSON("{% url 'json_tracks_nums' %}")
             .done(function(data) {
+                if (data.length > 0) {
+                    $('.leaflet-container').height($('.leaflet-container').height() - 5);
+                    $('.progress').show();
+                }
                 for (i = 0; i < data.length; i++) {
                     var id = data[i];
-                    var url = "{% url 'geojson_track' 0 %}".replace('0', id)
+                    var url = "{% url 'geojson_track' 0 %}".replace('0', id);
+                    var step = 100.0/data.length;
+                    var progress = 0;
                     $.getJSON(url)
-                    .done(function(data) {parseData(map, data)})
+                    .done(function(data) {
+                        progress += step;
+                        $('.progress-bar').css('width', progress.toString()+'%');
+                        progress > 100.001-step ? $('.progress').hide() : false;
+                        parseData(map, data);
+                    })
                     .fail(function()     {setErrorMsg()});
                 }
             })

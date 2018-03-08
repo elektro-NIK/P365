@@ -29,8 +29,6 @@ class TracksNumsView(View):
         user = User.objects.get(username=request.user.username)
         tracks = TrackModel.objects.filter(user=user, is_active=True)
         tracks = [track.id for track in tracks]
-        from sys import stderr
-        print(tracks, file=stderr)
         return JsonResponse(tracks, safe=False)
 
 

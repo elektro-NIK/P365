@@ -29,3 +29,15 @@ hr.slim {
 input.spacing {
     margin-left: 1em;
 }
+
+div.progress-bar-thin {
+    height: 5px;
+    margin-bottom: 0px;
+    display: none;
+}
+
+body {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin-bottom: 0;
+}

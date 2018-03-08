@@ -5,6 +5,7 @@
 
 {% block content %}
     <div class="row">
+        <br>
         <div id="msg-wrong"></div>
         <form action="{% url 'edit_track' track.id %}" method="post" class="form">
             {% csrf_token %}
