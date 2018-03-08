@@ -58,7 +58,10 @@
                     .done(function(data) {
                         progress += step;
                         $('.progress-bar').css('width', progress.toString()+'%');
-                        progress > 100.001-step ? $('.progress').hide() : false;
+                        if (progress > 100.001-step) {
+                            $('.progress').hide();
+                            $('.leaflet-container').height('100%');
+                        }
                         parseData(map, data);
                     })
                     .fail(function()     {setErrorMsg()});
