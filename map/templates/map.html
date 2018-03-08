@@ -29,6 +29,9 @@
                 onEachFeature: function (feature, layer) {
                     layer.bindPopup('<p>' + '<b>' + feature.properties.name + '</b>' +
                                     '<br>' + feature.properties.description, '</p>');
+                    layer.on('click', function() {
+                        map.fitBounds(this.getBounds());
+                    });
                 }
             });
             b.addTo(map);
@@ -37,6 +40,9 @@
         }
 
         function map_init_basic (map, options) {
+            map.on('click', function() {
+                bounds && bounds.isValid() ? map.fitBounds(bounds) : {}
+            });
             $.getJSON("{% url 'json_tracks_nums' %}")
             .done(function(data) {
                 if (data.length > 0) {
