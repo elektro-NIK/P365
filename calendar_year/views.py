@@ -46,22 +46,25 @@ class UpdateCreateEventView(View):
     def post(request):
         user = User.objects.get(username=request.user.username)
         event_json = json.loads(request.POST['event'])
+        print(event_json['startDate'])
         if event_json['id']:                                                                            # Update event
             event = EventModel.objects.get(id=int(event_json['id']))
             if event.user == user:
                 event.name = event_json['name']
                 event.description = event_json['description']
-                event.start_date = datetime.strptime(event_json['startDate'], '%Y-%m-%dT%H:%M:%S.%fZ').date()
-                event.finish_date = datetime.strptime(event_json['endDate'], '%Y-%m-%dT%H:%M:%S.%fZ').date()
+                event.start_date = datetime.strptime(event_json['startDate'], '%Y-%m-%dT%H:%M:%S.%fZ')
+                event.finish_date = datetime.strptime(event_json['endDate'], '%Y-%m-%dT%H:%M:%S.%fZ')
+                print('UPDATE: ', event)
             else:
                 return HttpResponseForbidden()
         else:                                                                                           # Create event
             event = EventModel(
                 name=event_json['name'],
                 description=event_json['description'],
-                start_date=datetime.strptime(event_json['startDate'], '%Y-%m-%dT%H:%M:%S.%fZ').date(),
-                finish_date=datetime.strptime(event_json['endDate'], '%Y-%m-%dT%H:%M:%S.%fZ').date(),
+                start_date=datetime.strptime(event_json['startDate'], '%Y-%m-%dT%H:%M:%S.%fZ'),
+                finish_date=datetime.strptime(event_json['endDate'], '%Y-%m-%dT%H:%M:%S.%fZ'),
                 user=user
             )
+            print('CREATE: ', event.start_date)
         event.save()
         return HttpResponse(json.dumps(''), content_type='application/json')
