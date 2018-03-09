@@ -13,7 +13,8 @@
             {% for poi in pois %}
                 <tr id="poi{{ poi.id }}">
                     <td>
-                        <a href="{% url 'poi' poi.id %}">{{ poi.name }}</a>
+                        <a href="#">{{ poi.name }}</a>
+                        <!--<a href="{% url 'poi' poi.id %}">{{ poi.name }}</a>-->
                     </td>
                     <td>{{ poi.created|date }} {{ poi.created|time }}</td>
                     <td>{{ poi.length|floatformat }} km</td>

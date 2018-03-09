@@ -14,7 +14,7 @@ class POIModel(models.Model):
     # Properties
     is_active = models.BooleanField(default=True)
     # GIS
-    geom = models.PointField(dim=3)
+    geom = models.PointField()
 
     objects = models.Manager()
 

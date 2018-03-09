@@ -11,4 +11,12 @@ class TrackAdmin(LeafletGeoAdmin):
     search_fields = ('name', 'description',)
 
 
+class RouteAdmin(LeafletGeoAdmin):
+    list_display = ('name', 'created', 'activity', 'public', 'is_active', 'length', 'user',)
+    list_filter = ('user', 'activity', 'public', 'is_active',)
+    ordering = ('-created',)
+    search_fields = ('name', 'description',)
+
+
 admin.site.register(models.TrackModel, TrackAdmin)
+admin.site.register(models.RouteModel, RouteAdmin)
