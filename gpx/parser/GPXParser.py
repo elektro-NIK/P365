@@ -11,17 +11,14 @@ class GPXParser:
         return p1.time == p2.time
 
     def tracks(self):
-        res = dict()
+        res = {}
         for track in self._gpx.tracks:
-            # max speed
             name = track.name
-            segments = []
-            max_speed = 0
+            segments, max_speed = [], 0
             for segment in track.segments:
                 if len(segment.points) > 1:
-                    points = []
-                    prev_point = None
-                    for point in segment.points:
+                    points, prev_point = [], None
+                    for point, _ in segment.walk():
                         if prev_point and not self._equal_points(point, prev_point):
                             if point.speed_between(prev_point) > max_speed:
                                 max_speed = point.speed_between(prev_point)
@@ -54,7 +51,7 @@ class GPXParser:
             line = LineString(points)
             res[name] = {
                 'description': description,
-                'length': route.length(),
+                'length': route.length() / 1000,
                 'geom': line
             }
         return res

@@ -38,7 +38,6 @@ class GPXImportView(View):
                     geom=value['geom']
                 ).save()
             for key, value in routes.items():
-                print(value['description'])
                 RouteModel(
                     name=key,
                     description=value['description'],

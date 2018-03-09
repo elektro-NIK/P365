@@ -6,8 +6,9 @@ from django.urls import reverse
 from django.views import View
 
 from hashtag.models import TagModel
+from poi.models import POIModel
 from track.forms import TrackEditForm
-from track.models import TrackModel
+from track.models import TrackModel, RouteModel
 
 
 def calculate_length(line):
@@ -123,4 +124,12 @@ class TracksView(View):
     def get(request):
         user = User.objects.get(username=request.user.username)
         tracks = TrackModel.objects.filter(user=user, is_active=True).order_by('-start_date')
-        return render(request, 'tracks.html', {'title': 'Tracks', 'tracks': tracks, 'active': 'tracks'})
+        routes = RouteModel.objects.filter(user=user, is_active=True).order_by('-created')
+        pois = POIModel.objects.filter(user=user, is_active=True).order_by('-created')
+        return render(request, 'tracks.html', {
+            'title':  'Tracks',
+            'active': 'tracks',
+            'tracks': tracks,
+            'routes': routes,
+            'pois':   pois
+        })
