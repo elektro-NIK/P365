@@ -54,7 +54,6 @@ class UpdateCreateEventView(View):
                 event.description = event_json['description']
                 event.start_date = datetime.strptime(event_json['startDate'], '%Y-%m-%dT%H:%M:%S.%fZ')
                 event.finish_date = datetime.strptime(event_json['endDate'], '%Y-%m-%dT%H:%M:%S.%fZ')
-                print('UPDATE: ', event)
             else:
                 return HttpResponseForbidden()
         else:                                                                                           # Create event
@@ -65,6 +64,5 @@ class UpdateCreateEventView(View):
                 finish_date=datetime.strptime(event_json['endDate'], '%Y-%m-%dT%H:%M:%S.%fZ'),
                 user=user
             )
-            print('CREATE: ', event.start_date)
         event.save()
         return HttpResponse(json.dumps(''), content_type='application/json')

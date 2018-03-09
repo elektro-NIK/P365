@@ -33,3 +33,29 @@ class TrackModel(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class RouteModel(models.Model):
+    # General
+    name = models.CharField(max_length=MAX_LENGTH['name'])
+    description = models.TextField(max_length=MAX_LENGTH['description'], null=True)
+    # Inside
+    user = models.ForeignKey(User)
+    created = models.DateTimeField(auto_now_add=True)
+    # Info
+    length = models.FloatField(default=0)
+    altitude_gain = models.FloatField(default=0)
+    altitude_loss = models.FloatField(default=0)
+    altitude_max = models.FloatField(default=0)
+    altitude_min = models.FloatField(default=0)
+    # Properties
+    activity = models.ForeignKey(TagModel)
+    public = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    # GIS
+    geom = models.LineStringField(dim=3)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.name
