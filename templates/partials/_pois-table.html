@@ -1,37 +1,36 @@
-{% if tracks %}
+{% if pois %}
     <table class="table table-hover table-condensed">
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Started</th>
-                <th>Length</th>
+                <th>Created</th>
                 <th class="center">Tag</th>
                 <th class="center">Status</th>
                 <th class="center">Edit</th>
             </tr>
         </thead>
         <tbody>
-            {% for track in tracks %}
-                <tr id="track{{ track.id }}">
+            {% for poi in pois %}
+                <tr id="poi{{ poi.id }}">
                     <td>
-                        <a href="{% url 'track' track.id %}">{{ track.name }}</a>
+                        <a href="{% url 'poi' poi.id %}">{{ poi.name }}</a>
                     </td>
-                    <td>{{ track.start_date|date }} {{ track.start_date|time }}</td>
-                    <td>{{ track.length|floatformat }} km</td>
+                    <td>{{ poi.created|date }} {{ poi.created|time }}</td>
+                    <td>{{ poi.length|floatformat }} km</td>
                     <td class="center">
-                        <span class="label label-default">{{ track.activity }}</span>
+                        <span class="label label-default">{{ poi.activity }}</span>
                     </td>
                     <td class="center status">
-                        {% if track.public %}
+                        {% if poi.public %}
                             <a href="#" class="glyphicon glyphicon-globe" title="public"></a>
                         {% else %}
                             <a href="#" class="glyphicon glyphicon-user" title="private"></a>
                         {% endif %}
                     </td>
                     <td class="center edit">
-                        <!--<a href="{% url 'edit_track' track.id %}" class="glyphicon glyphicon-edit" title="edit"></a>-->
+                        <!--<a href="{% url 'edit_poi' poi.id %}" class="glyphicon glyphicon-edit" title="edit"></a>-->
                         <a href="#" class="glyphicon glyphicon-edit" title="edit"></a>
-                        {% if not track.public %}
+                        {% if not poi.public %}
                             <a href="#" class="glyphicon glyphicon-trash" title="delete"></a>
                         {% endif %}
                     </td>
@@ -41,6 +40,6 @@
     </table>
 {% else %}
     <div class="alert alert-info" role="alert">
-        You don't have Tracks yet. Try to import your first Track.
+        You don't have pois yet. Try to create your first poi.
     </div>
 {% endif %}

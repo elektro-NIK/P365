@@ -1,9 +1,9 @@
-{% if tracks %}
+{% if routes %}
     <table class="table table-hover table-condensed">
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Started</th>
+                <th>Created</th>
                 <th>Length</th>
                 <th class="center">Tag</th>
                 <th class="center">Status</th>
@@ -11,27 +11,27 @@
             </tr>
         </thead>
         <tbody>
-            {% for track in tracks %}
-                <tr id="track{{ track.id }}">
+            {% for route in routes %}
+                <tr id="route{{ route.id }}">
                     <td>
-                        <a href="{% url 'track' track.id %}">{{ track.name }}</a>
+                        <a href="{% url 'route' route.id %}">{{ route.name }}</a>
                     </td>
-                    <td>{{ track.start_date|date }} {{ track.start_date|time }}</td>
-                    <td>{{ track.length|floatformat }} km</td>
+                    <td>{{ route.created|date }} {{ route.created|time }}</td>
+                    <td>{{ route.length|floatformat }} km</td>
                     <td class="center">
-                        <span class="label label-default">{{ track.activity }}</span>
+                        <span class="label label-default">{{ route.activity }}</span>
                     </td>
                     <td class="center status">
-                        {% if track.public %}
+                        {% if route.public %}
                             <a href="#" class="glyphicon glyphicon-globe" title="public"></a>
                         {% else %}
                             <a href="#" class="glyphicon glyphicon-user" title="private"></a>
                         {% endif %}
                     </td>
                     <td class="center edit">
-                        <!--<a href="{% url 'edit_track' track.id %}" class="glyphicon glyphicon-edit" title="edit"></a>-->
+                        <!--<a href="{% url 'edit_route' route.id %}" class="glyphicon glyphicon-edit" title="edit"></a>-->
                         <a href="#" class="glyphicon glyphicon-edit" title="edit"></a>
-                        {% if not track.public %}
+                        {% if not route.public %}
                             <a href="#" class="glyphicon glyphicon-trash" title="delete"></a>
                         {% endif %}
                     </td>
@@ -41,6 +41,6 @@
     </table>
 {% else %}
     <div class="alert alert-info" role="alert">
-        You don't have Tracks yet. Try to import your first Track.
+        You don't have routes yet. Try to create your first route.
     </div>
 {% endif %}

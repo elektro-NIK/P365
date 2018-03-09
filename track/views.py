@@ -118,9 +118,9 @@ class TrackDeleteView(View):
         return HttpResponseForbidden()
 
 
-class TracksView(View):
+class TableView(View):
     @staticmethod
     def get(request):
         user = User.objects.get(username=request.user.username)
         tracks = TrackModel.objects.filter(user=user, is_active=True).order_by('-start_date')
-        return render(request, 'tracks.html', {'title': 'Tracks', 'tracks': tracks, 'active': 'tracks'})
+        return render(request, 'tables.html', {'title': 'Tables', 'tracks': tracks, 'active': 'tables'})
