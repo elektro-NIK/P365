@@ -33,7 +33,7 @@ class TableView(View):
         if ext == 'gpx' and mime is None and size < 25 * 1024 * 1024:
             user = User.objects.get(username=request.user.username)
             parser = GPXParser(file.read().decode())
-            tracks, routes = parser.tracks(), parser.routes()
+            tracks, routes, pois = parser.tracks(), parser.routes(), parser.pois()
             for key, value in tracks.items():
                 TrackModel(
                     name=key,
@@ -55,6 +55,13 @@ class TableView(View):
                     description=value['description'],
                     user=user,
                     length=value['length'],
+                    geom=value['geom'],
+                ).save()
+            for key, value in pois.items():
+                POIModel(
+                    name=key,
+                    description=value['description'],
+                    user=user,
                     geom=value['geom'],
                 ).save()
         return HttpResponseRedirect(reverse('table'))

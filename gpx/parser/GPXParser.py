@@ -13,7 +13,6 @@ class GPXParser:
     def tracks(self):
         res = {}
         for track in self._gpx.tracks:
-            name = track.name
             segments, max_speed = [], 0
             for segment in track.segments:
                 if len(segment.points) > 1:
@@ -26,7 +25,8 @@ class GPXParser:
                         prev_point = point
                     segments.append(LineString(points))
             multiline = MultiLineString(segments)
-            res[name] = {
+            res[track.name] = {
+                'description': track.description if track.description else track.comment,
                 'start_date': track.get_time_bounds().start_time,
                 'finish_date': track.get_time_bounds().end_time,
                 'length': track.length_3d() / 1000,
@@ -43,15 +43,20 @@ class GPXParser:
     def routes(self):
         res = {}
         for route in self._gpx.routes:
-            name = route.name
-            description = route.description if route.description else route.comment
-            points = [Point(i.longitude, i.latitude, 0) for i, j in route.walk()]
-            for i, _ in route.walk():
-                points.append(Point(i.longitude, i.latitude, 0))
-            line = LineString(points)
-            res[name] = {
-                'description': description,
+            points = [Point(i.longitude, i.latitude, 0) for i, _ in route.walk()]
+            res[route.name] = {
+                'description': route.description if route.description else route.comment,
                 'length': route.length() / 1000,
-                'geom': line
+                'geom': LineString(points)
+            }
+        return res
+
+    def pois(self):
+        res = {}
+        for poi in self._gpx.waypoints:
+            res[poi.name] = {
+                'description': poi.description if poi.description else poi.comment,
+                'created': poi.time,
+                'geom': Point(poi.longitude, poi.latitude, poi.elevation)
             }
         return res
