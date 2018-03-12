@@ -27,8 +27,9 @@
             var json = JSON.parse(data);
             b = L.geoJson(json, {
                 onEachFeature: function (feature, layer) {
-                    layer.bindPopup('<p>' + '<b>' + feature.properties.name + '</b>' +
-                                    '<br>' + feature.properties.description, '</p>');
+                    console.log(feature)
+                    layer.bindPopup('<p>' + '<b>' + feature.name + '</b>' +
+                                    '<br>' + feature.description, '</p>');
                     layer.on('click', function() {
                         map.fitBounds(this.getBounds());
                     });
@@ -43,7 +44,7 @@
             map.on('click', function() {
                 bounds && bounds.isValid() ? map.fitBounds(bounds) : {}
             });
-            $.getJSON("{% url 'json_tracks_nums' %}")
+            $.getJSON("{% url 'json_track_ids' %}")
             .done(function(data) {
                 if (data.length > 0) {
                     $('.leaflet-container').height($('.leaflet-container').height() - 5);
@@ -51,11 +52,12 @@
                 }
                 for (i = 0; i < data.length; i++) {
                     var id = data[i];
-                    var url = "{% url 'geojson_track' 0 %}".replace('0', id);
+                    var url = "{% url 'json_track' id=0 %}".replace('0', id);
                     var step = 100.0/data.length;
                     var progress = 0;
                     $.getJSON(url)
                     .done(function(data) {
+                    console.log(data)
                         progress += step;
                         $('.progress-bar').css('width', progress.toString()+'%');
                         if (progress > 100.001-step) {
@@ -69,7 +71,7 @@
             })
             .fail(function() {setErrorMsg()});
 
-            $.getJSON("{% url 'geojson_pois' %}")
+            $.getJSON("{% url 'json_pois' %}")
             .done(function(data) {parseData(map, data)})
             .fail(function()     {setErrorMsg()});
         }

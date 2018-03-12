@@ -14,8 +14,7 @@
             {% for route in routes %}
                 <tr id="route{{ route.id }}">
                     <td>
-                        <a href="#">{{ route.name }}</a>
-                        <!--<a href="{ url 'route' route.id }">{{ route.name }}</a>-->
+                        <a href="{% url 'route' route.id %}">{{ route.name }}</a>
                     </td>
                     <td>{{ route.created|date }} {{ route.created|time }}</td>
                     <td>{{ route.length|floatformat }} km</td>
@@ -30,7 +29,6 @@
                         {% endif %}
                     </td>
                     <td class="center edit">
-                        <!--<a href="{ url 'edit_route' route.id }" class="glyphicon glyphicon-edit" title="edit"></a>-->
                         <a href="#" class="glyphicon glyphicon-edit" title="edit"></a>
                         {% if not route.public %}
                             <a href="#" class="glyphicon glyphicon-trash" title="delete"></a>

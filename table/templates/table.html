@@ -1,0 +1,111 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+    <div class="row">
+        <div class="progress progress-bar-thin">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%;"></div>
+        </div>
+        <br>
+        <div class="table-responsive col-xs-12 col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
+            <div id="msg-wrong"></div>
+            <div class="multitable">
+                <ul class="nav nav-tabs">
+                    <li class="active tracks"><a href="#" data-toggle="tab" role="tab" data-target="#table-tracks">Tracks</a></li>
+                    <li class="routes"><a href="#" data-toggle="tab" role="tab" data-target="#table-routes">Routes</a></li>
+                    <li class="pois"><a href="#" data-toggle="tab" role="tab" data-target="#table-pois">POIs</a></li>
+                    <form class="form" method="post" enctype="multipart/form-data" action="{% url 'table' %}">
+                        {% csrf_token %}
+                        <label class="btn btn-success pull-right">
+                            <i class="glyphicon glyphicon-upload"></i> Import<input type="file" accept=".gpx" onchange="$('div.progress').show(); this.form.submit()" hidden name="gpx_file">
+                        </label>
+                    </form>
+                    <form class="form" method="post" enctype="multipart/form-data" action="{% url 'table' %}">
+                        {% csrf_token %}
+                        <label class="btn btn-success pull-right">
+                            <i class="glyphicon glyphicon-plus"></i> Create<input type="file" accept=".gpx" onchange="$('div.progress').show(); this.form.submit()" hidden name="gpx_file">
+                        </label>
+                    </form>
+                </ul>
+                <div class="tab-content" id="tables">
+                    {% include 'partials/_tables.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block css %}
+    <link href="{% static 'css/tables.css' %}" rel="stylesheet" media="screen">
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/msg_wrong.js' %}"></script>
+    <script src="{% static 'js/table.js' %}"></script>
+    <script>
+        function updateTracksTable() {
+            updateTable("{% url 'update_tracks_table' %}", "#table-tracks");
+        }
+        function updateRoutesTable() {
+            updateTable("{% url 'update_routes_table' %}", "#table-routes");
+        }
+
+        function updatePoisTable() {
+            updateTable("{% url 'update_pois_table' %}", "#table-pois");
+        }
+
+        $('#table-tracks').on('click', 'td.status a', function() {
+            var id = $(this).parent().parent().attr('id').replace('track', ''),
+                url = "{% url 'json_track_change_status' 0 %}",
+                url_upd = "{% url 'update_tracks_table' %}",
+                id_upd = "#table-tracks";
+            changeFeature(url, id, "{{ csrf_token }}", url_upd, id_upd);
+            return false;
+        });
+
+        $('#table-routes').on('click', 'td.status a', function() {
+            var id = $(this).parent().parent().attr('id').replace('route', ''),
+                url = "{% url 'json_route_change_status' 0 %}",
+                url_upd = "{% url 'update_routes_table' %}",
+                id_upd = "#table-routes";
+            changeFeature(url, id, "{{ csrf_token }}", url_upd, id_upd);
+            return false;
+        });
+
+        $('#table-pois').on('click', 'td.status a', function() {
+            var id = $(this).parent().parent().attr('id').replace('poi', ''),
+                url = "{% url 'json_poi_change_status' 0 %}",
+                url_upd = "{% url 'update_pois_table' %}",
+                id_upd = "#table-pois";
+            changeFeature(url, id, "{{ csrf_token }}", url_upd, id_upd);
+            return false;
+        });
+
+        $('#table-tracks').on('click', 'td.edit a.glyphicon-trash', function(){
+            var id = $(this).parent().parent().attr('id').replace('track', ''),
+                url = "{% url 'json_track_delete' 0 %}",
+                url_upd = "{% url 'update_tracks_table' %}",
+                id_upd = "#table-tracks";
+            changeFeature(url, id, "{{ csrf_token }}", url_upd, id_upd);
+            return false;
+        });
+
+        $('#table-routes').on('click', 'td.edit a.glyphicon-trash', function(){
+            var id = $(this).parent().parent().attr('id').replace('route', ''),
+                url = "{% url 'json_route_delete' 0 %}",
+                url_upd = "{% url 'update_routes_table' %}",
+                id_upd = "#table-routes";
+            changeFeature(url, id, "{{ csrf_token }}", url_upd, id_upd);
+            return false;
+        });
+
+        $('#table-pois').on('click', 'td.edit a.glyphicon-trash', function(){
+            var id = $(this).parent().parent().attr('id').replace('poi', ''),
+                url = "{% url 'json_poi_delete' 0 %}",
+                url_upd = "{% url 'update_pois_table' %}",
+                id_upd = "#table-pois";
+            changeFeature(url, id, "{{ csrf_token }}", url_upd, id_upd);
+            return false;
+        });
+    </script>
+{% endblock %}

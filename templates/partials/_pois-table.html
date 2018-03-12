@@ -13,8 +13,7 @@
             {% for poi in pois %}
                 <tr id="poi{{ poi.id }}">
                     <td>
-                        <a href="#">{{ poi.name }}</a>
-                        <!--<a href="{% url 'poi' poi.id %}">{{ poi.name }}</a>-->
+                        <a href="{% url 'poi' poi.id %}">{{ poi.name }}</a>
                     </td>
                     <td>{{ poi.created|date }} {{ poi.created|time }}</td>
                     <td>{{ poi.length|floatformat }} km</td>
@@ -29,7 +28,6 @@
                         {% endif %}
                     </td>
                     <td class="center edit">
-                        <!--<a href="{% url 'edit_poi' poi.id %}" class="glyphicon glyphicon-edit" title="edit"></a>-->
                         <a href="#" class="glyphicon glyphicon-edit" title="edit"></a>
                         {% if not poi.public %}
                             <a href="#" class="glyphicon glyphicon-trash" title="delete"></a>

@@ -18,12 +18,11 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth.views import logout_then_login
 
-from profile import urls as profile_urls
-from calendar_year import urls as calendar_urls
-from map import urls as map_urls
-from track import urls as track_urls
-from story import urls as story_urls
-from gpx import urls as gpx_urls
+from profile import urls as urls_profile
+from calendar_year import urls as urls_calendar
+from map import urls_map, urls_poi, urls_route, urls_track
+from table import urls as urls_table
+from story import urls as urls_story
 
 from profile.views import LoginView, ProfileRedirect, SignUpView, IndexView
 
@@ -37,11 +36,14 @@ urlpatterns = [
     url(r'^logout/$', logout_then_login,                            name='logout'),
     # redirection
     url(r'^accounts/profile/$', ProfileRedirect.as_view()),
-    # includes
-    url(r'^user/', include(profile_urls)),
-    url(r'^calendar/', include(calendar_urls)),
-    url(r'^track/', include(track_urls)),
-    url(r'^map/', include(map_urls)),
-    url(r'^story/', include(story_urls)),
-    url(r'^gpx/', include(gpx_urls)),
+    # tabs
+    url(r'^calendar/', include(urls_calendar)),
+    url(r'^map/', include(urls_map)),
+    url(r'^table/', include(urls_table)),
+    url(r'^story/', include(urls_story)),
+    # other
+    url(r'^user/', include(urls_profile)),
+    url(r'^poi/', include(urls_poi)),
+    url(r'^route/', include(urls_route)),
+    url(r'^track/', include(urls_track)),
 ]

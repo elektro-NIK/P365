@@ -37,17 +37,15 @@ INSTALLED_APPS = [
 
     'django.contrib.gis',
     'leaflet',
-    # 'captcha',
     'bootstrap3',
 
-    'profile',
     'calendar_year',
-    'map',
-    'story',
-    'hashtag',
-    'track',
-    'poi',
     'gpx',
+    'hashtag',
+    'map',
+    'profile',
+    'story',
+    'table',
 ]
 
 MIDDLEWARE = [
@@ -202,7 +200,3 @@ MAX_LENGTH = {
     'text': 5000,
     'tag': 30,
 }
-
-# RECAPTCHA_PUBLIC_KEY = '6LeeJDoUAAAAAM8GyFn-vXwwTBYNrlDIijMuYMJD'
-# RECAPTCHA_PRIVATE_KEY = ''
-# NOCAPTCHA = True
