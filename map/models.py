@@ -18,12 +18,24 @@ class POIModel(models.Model):
     public = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     # Feature
-    geom = models.PointField()
+    geom = models.PointField(dim=3)
 
     objects = models.Manager()
 
     def __str__(self):
         return self.name
+
+    @property
+    def longitude(self):
+        return self.geom.x
+
+    @property
+    def latitude(self):
+        return self.geom.y
+
+    @property
+    def altitude(self):
+        return self.geom.z
 
 
 class RouteModel(models.Model):
