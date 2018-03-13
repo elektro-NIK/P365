@@ -8,42 +8,29 @@
         <br>
         <div id="msg-wrong"></div>
         <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
-            <center><b>{{ track.name }}</b></center>
-            <center><span class="label label-default">{{ track.activity }}</span></center>
-            <br><p>{{ track.description|default:'' }}</p>
+            <center><b>{{ route.name }}</b></center>
+            <center><span class="label label-default">{{ route.activity }}</span></center>
+            <br><p>{{ route.description|default:'' }}</p>
             <div class="thumbnail text-center col-xs-12 col-sm-12">
                 Distance
-                <h4>{{ track.length|floatformat|default:'-' }} km</h4>
+                <h4>{{ route.length|floatformat|default:'-' }} km</h4>
                 <hr class="slim">
                 <div class="col-xs-6">
-                    Avg. speed
-                    <h4>{{ track.speed|floatformat|default:'-' }} km/h</h4>
-                    <hr class="slim">
                     Altitude gain
-                    <h4>{{ track.altitude_gain|floatformat|default:'-' }} m</h4>
+                    <h4>{{ route.altitude_gain|floatformat|default:'-' }} m</h4>
                     <hr class="slim">
                     Max altitude
-                    <h4>{{ track.altitude_max|floatformat|default:'-' }} m</h4>
+                    <h4>{{ route.altitude_max|floatformat|default:'-' }} m</h4>
                     <hr class="slim">
-                    Start time
-                    <h4>{{ track.start_date|date|default:'-' }} {{track.start_date|time|default:'-'}}</h4>
                 </div>
                 <div class="col-xs-6">
-                    Max speed
-                    <h4>{{ track.speed_max|floatformat|default:'-' }} km/h</h4>
-                    <hr class="slim">
                     Altitude loss
-                    <h4>{{ track.altitude_loss|floatformat|default:'-' }} m</h4>
+                    <h4>{{ route.altitude_loss|floatformat|default:'-' }} m</h4>
                     <hr class="slim">
                     Min altitude
-                    <h4>{{ track.altitude_min|floatformat|default:'-' }} m</h4>
+                    <h4>{{ route.altitude_min|floatformat|default:'-' }} m</h4>
                     <hr class="slim">
-                    Finish time
-                    <h4>{{ track.finish_date|date|default:'-' }} {{ track.finish_date|time|default:'' }}</h4>
                 </div>
-                <hr class="slim">
-                Time
-                <h4>{{ track.start_date|timesince:track.finish_date }}</h4>
             </div>
         </div>
          <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
@@ -55,7 +42,7 @@
 {% block css %}
     {% bootstrap_css %}
     {% leaflet_css plugins='elevation' %}
-    <link href="{% static 'css/track.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/route.css' %}" rel="stylesheet" media="screen">
 {% endblock %}
 
 {% block js %}
@@ -68,7 +55,7 @@
             $('div.leaflet-container').height(height);
             map.invalidateSize();
 
-            $.getJSON("{% url 'json_track' track.id %}")
+            $.getJSON("{% url 'json_route' route.id %}")
             .done(function (data) {
                 var elevation = L.control.elevation({
                     position: 'bottomleft',
@@ -82,10 +69,10 @@
                     },
                     useHeightIndicator: true,
                 }).addTo(map);
-                var track = L.geoJson(JSON.parse(data), {
+                var route = L.geoJson(JSON.parse(data), {
                     onEachFeature: elevation.addData.bind(elevation)
                 }).addTo(map);
-                map.fitBounds(track.getBounds());
+                map.fitBounds(route.getBounds());
             }).fail(function() {setErrorMsg()});
         }
     </script>
