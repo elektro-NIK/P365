@@ -17,7 +17,7 @@ class TableView(View):
         user = User.objects.get(username=request.user.username)
         pois = POIModel.objects.filter(user=user, is_active=True).order_by('-created')
         routes = RouteModel.objects.filter(user=user, is_active=True).order_by('-created')
-        tracks = TrackModel.objects.filter(user=user, is_active=True).order_by('-start_date')
+        tracks = TrackModel.objects.filter(user=user, is_active=True).order_by('-created')
         return render(request, 'table.html', {
             'title':  'Table',
             'active': 'table',
