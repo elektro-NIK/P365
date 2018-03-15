@@ -20,7 +20,7 @@
                             <i class="glyphicon glyphicon-upload"></i> Import GPX<input type="file" accept=".gpx" onchange="$('div.progress').show(); this.form.submit()" hidden name="gpx_file">
                         </label>
                     </form>
-                    <a href="#">
+                    <a href="{% url 'route_create' %}">
                         <button class="btn btn-success pull-right">
                             <i class="glyphicon glyphicon-plus"></i> Route
                         </button>

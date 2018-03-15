@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.contrib.gis.geos import Point
+from django.contrib.gis.geos import Point, LineString
 from django.core.serializers import serialize
 from django.http import HttpResponseForbidden, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -8,7 +8,7 @@ from django.views import View
 
 from hashtag.models import TagModel
 
-from .forms import POIForm
+from .forms import POIForm, RouteForm
 from .models import TrackModel, POIModel, RouteModel
 
 
@@ -85,6 +85,45 @@ class POIEditView(View):
             return HttpResponseRedirect(reverse('table'))
         else:
             return render(request, 'poi_edit.html', {'title': title, 'form': form})
+
+
+class RouteEditView(View):
+    @staticmethod
+    def get(request, id=None):
+        user = User.objects.get(username=request.user.username)
+        if id:
+            route = RouteModel.objects.get(id=id)
+            if route.user != user:
+                return HttpResponseForbidden()
+            form = RouteForm(instance=route, initial={'tag': route.tag})
+            return render(request, 'route_edit.html', {'title': route.name, 'form': form})
+        else:
+            form = RouteForm()
+            return render(request, 'route_edit.html', {'title': 'New route', 'form': form})
+
+    @staticmethod
+    def post(request, id=None):
+        form = RouteForm(request.POST)
+        title = form['name'].value()
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            description = form.cleaned_data['description']
+            user = User.objects.get(username=request.user.username)
+            tag, _ = TagModel.objects.get_or_create(name=form.cleaned_data['tag'])
+            geom = form.cleaned_data['geom']
+            geom = LineString([i+(0,) for i in geom], srid=geom.srid)
+            if id:
+                route = RouteModel.objects.get(id=id)
+                if route.user == user:
+                    route.name, route.description, route.tag, route.geom = name, description, tag, geom
+                    route.save()
+                else:
+                    return HttpResponseForbidden()
+            else:
+                RouteModel(name=name, description=description, user=user, tag=tag, geom=geom).save()
+            return HttpResponseRedirect(reverse('table'))
+        else:
+            return render(request, 'route_edit.html', {'title': title, 'form': form})
 
 
 class JSONFeatureIdsView(View):
