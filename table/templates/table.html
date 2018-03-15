@@ -17,15 +17,19 @@
                     <form class="form" method="post" enctype="multipart/form-data" action="{% url 'table' %}">
                         {% csrf_token %}
                         <label class="btn btn-success pull-right">
-                            <i class="glyphicon glyphicon-upload"></i> Import<input type="file" accept=".gpx" onchange="$('div.progress').show(); this.form.submit()" hidden name="gpx_file">
+                            <i class="glyphicon glyphicon-upload"></i> Import GPX<input type="file" accept=".gpx" onchange="$('div.progress').show(); this.form.submit()" hidden name="gpx_file">
                         </label>
                     </form>
-                    <form class="form" method="post" enctype="multipart/form-data" action="{% url 'table' %}">
-                        {% csrf_token %}
-                        <label class="btn btn-success pull-right">
-                            <i class="glyphicon glyphicon-plus"></i> Create<input type="file" accept=".gpx" onchange="$('div.progress').show(); this.form.submit()" hidden name="gpx_file">
-                        </label>
-                    </form>
+                    <a href="#">
+                        <button class="btn btn-success pull-right">
+                            <i class="glyphicon glyphicon-plus"></i> Route
+                        </button>
+                    </a>
+                    <a href="{% url 'poi_create' %}">
+                        <button class="btn btn-success pull-right">
+                            <i class="glyphicon glyphicon-plus"></i> POI
+                        </button>
+                    </a>
                 </ul>
                 <div class="tab-content" id="tables">
                     {% include 'partials/_tables.html' %}

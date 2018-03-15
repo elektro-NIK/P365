@@ -11,7 +11,7 @@ class POIModel(models.Model):
     description = models.TextField(max_length=MAX_LENGTH['description'], null=True)
     # Relations
     user = models.ForeignKey(User)
-    tag = models.ForeignKey(TagModel, null=True)
+    tag = models.ForeignKey(TagModel, null=True, blank=True)
     # Datetime
     created = models.DateTimeField(auto_now_add=True)
     # Flags
@@ -44,7 +44,7 @@ class RouteModel(models.Model):
     description = models.TextField(max_length=MAX_LENGTH['description'], null=True)
     # Relations
     user = models.ForeignKey(User)
-    tag = models.ForeignKey(TagModel, null=True)
+    tag = models.ForeignKey(TagModel, null=True, blank=True)
     # Datetime
     created = models.DateTimeField(auto_now_add=True)
     # Distance
@@ -72,7 +72,7 @@ class TrackModel(models.Model):
     description = models.TextField(max_length=MAX_LENGTH['description'], null=True)
     # Relations
     user = models.ForeignKey(User)
-    tag = models.ForeignKey(TagModel, null=True)
+    tag = models.ForeignKey(TagModel, null=True, blank=True)
     # Datetime
     created = models.DateTimeField(auto_now_add=True)
     start_date = models.DateTimeField()

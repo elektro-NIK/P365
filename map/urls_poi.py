@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 
 from map.models import POIModel
 from map.views import POIView, JSONFeatureIdsView, JSONFeatureView, JSONFeaturesView, JSONFeatureChangeStatusView, \
-    JSONFeatureDeleteView
+    JSONFeatureDeleteView, POIEditView
 
 urlpatterns = [
     url(r'^(?P<id>[0-9]+)/$',
@@ -18,4 +18,8 @@ urlpatterns = [
         login_required(JSONFeatureChangeStatusView.as_view()), {'model': POIModel}, name='json_poi_change_status'),
     url(r'^(?P<id>[0-9]+)/json_delete/$',
         login_required(JSONFeatureDeleteView.as_view()),       {'model': POIModel}, name='json_poi_delete'),
+    url(r'^create/$',
+        login_required(POIEditView.as_view()),                                      name='poi_create'),
+    url(r'^(?P<id>[0-9]+)/edit/$',
+        login_required(POIEditView.as_view()),                                      name='poi_edit'),
 ]

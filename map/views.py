@@ -1,10 +1,15 @@
 from django.contrib.auth.models import User
+from django.contrib.gis.geos import Point
 from django.core.serializers import serialize
-from django.http import HttpResponseForbidden, JsonResponse
+from django.http import HttpResponseForbidden, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 from django.views import View
 
-from map.models import TrackModel, POIModel, RouteModel
+from hashtag.models import TagModel
+
+from .forms import POIForm
+from .models import TrackModel, POIModel, RouteModel
 
 
 class MapView(View):
@@ -41,6 +46,45 @@ class TrackView(View):
         if track.public or track.user == user:
             return render(request, 'track.html', {'title': track.name, 'track': track})
         return HttpResponseForbidden()
+
+
+class POIEditView(View):
+    @staticmethod
+    def get(request, id=None):
+        user = User.objects.get(username=request.user.username)
+        if id:
+            poi = POIModel.objects.get(id=id)
+            if poi.user != user:
+                return HttpResponseForbidden()
+            form = POIForm(instance=poi, initial={'tag': poi.tag})
+            return render(request, 'poi_edit.html', {'title': poi.name, 'form': form})
+        else:
+            form = POIForm()
+            return render(request, 'poi_edit.html', {'title': 'New POI', 'form': form})
+
+    @staticmethod
+    def post(request, id=None):
+        form = POIForm(request.POST)
+        title = form['name'].value()
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            description = form.cleaned_data['description']
+            user = User.objects.get(username=request.user.username)
+            tag, _ = TagModel.objects.get_or_create(name=form.cleaned_data['tag'])
+            geom = form.cleaned_data['geom']
+            geom = Point(x=geom.x, y=geom.y, z=0, srid=geom.srid)
+            if id:
+                poi = POIModel.objects.get(id=id)
+                if poi.user == user:
+                    poi.name, poi.description, poi.tag, poi.geom = name, description, tag, geom
+                    poi.save()
+                else:
+                    return HttpResponseForbidden()
+            else:
+                POIModel(name=name, description=description, user=user, tag=tag, geom=geom).save()
+            return HttpResponseRedirect(reverse('table'))
+        else:
+            return render(request, 'poi_edit.html', {'title': title, 'form': form})
 
 
 class JSONFeatureIdsView(View):
@@ -94,56 +138,3 @@ class JSONFeatureDeleteView(View):
             obj.save()
             return JsonResponse({})
         return HttpResponseForbidden()
-
-
-# def calculate_length(line):
-#     line.srid = 4326
-#     line.transform(3035)
-#     return line.length / 1000
-#
-#
-# class TrackEditView(View):
-#     @staticmethod
-#     def get(request, id):
-#         user = User.objects.get(username=request.user.username)
-#         track = TrackModel.objects.get(id=id)
-#         if track.is_active and track.user == user:
-#             form = TrackEditForm(initial={
-#                 'name': track.name,
-#                 'description': track.description,
-#                 'activity': track.activity,
-#                 'geom': track.geom
-#             })
-#             return render(request, 'track_edit.html', {'title': track.name,
-#                                                        'form': form,
-#                                                        'feature': track,
-#                                                        'time': (track.finish_date - track.start_date)})
-#         return HttpResponseForbidden()
-#
-#     @staticmethod
-#     def post(request, id):
-#         form = TrackEditForm(request.POST)
-#         if form.is_valid():
-#             user = User.objects.get(username=request.user.username)
-#             track = TrackModel.objects.get(id=id)
-#             if track.user == user:
-#                 from sys import stderr
-#                 print(form.cleaned_data['activity'], file=stderr)
-#                 activity = TagModel.objects.get(name=form.cleaned_data['activity'])
-#                 track.name = form.cleaned_data['name']
-#                 track.description = form.cleaned_data['description']
-#                 track.geom = form.cleaned_data['geom']
-#                 track.length = calculate_length(track.geom)
-# feature.speed = feature.length / ((feature.finish_date - feature.start_date).total_seconds() // 3600)
-#                 # Fix me: altitude
-#                 track.altitude_gain = 0
-#                 track.altitude_loss = 0
-#                 track.activity = activity
-#                 track.save()
-#                 return HttpResponseRedirect(reverse('tracks'))
-#             return HttpResponseForbidden()
-#         track = TrackModel.objects.get(id=id)
-#         return render(request, 'track_edit.html', {'title': track.name,
-#                                                    'form': form,
-#                                                    'feature': track,
-#                                                    'time': (track.finish_date - track.start_date)})
