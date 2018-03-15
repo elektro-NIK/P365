@@ -1,3 +1,5 @@
+{% load humanize %}
+
 {% if pois %}
     <table class="table table-hover table-condensed">
         <thead>
@@ -15,10 +17,9 @@
                     <td>
                         <a href="{% url 'poi' poi.id %}">{{ poi.name }}</a>
                     </td>
-                    <td>{{ poi.created|date }} {{ poi.created|time }}</td>
-                    <td>{{ poi.length|floatformat }} km</td>
+                    <td>{{ poi.created|naturaltime }}</td>
                     <td class="center">
-                        <span class="label label-default">{{ poi.activity }}</span>
+                        <span class="label label-default">{{ poi.tag }}</span>
                     </td>
                     <td class="center status">
                         {% if poi.public %}
@@ -28,7 +29,7 @@
                         {% endif %}
                     </td>
                     <td class="center edit">
-                        <a href="#" class="glyphicon glyphicon-edit" title="edit"></a>
+                        <a href="{% url 'poi_edit' poi.id %}" class="glyphicon glyphicon-edit" title="edit"></a>
                         {% if not poi.public %}
                             <a href="#" class="glyphicon glyphicon-trash" title="delete"></a>
                         {% endif %}

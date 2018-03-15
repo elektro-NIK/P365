@@ -7,7 +7,7 @@ td.center, th.center {
     text-align: center;
 }
 
-label.pull-right {
+.pull-right {
     margin-left: 10px;
 }
 

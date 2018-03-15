@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 
 from map.models import RouteModel
 from map.views import RouteView, JSONFeatureIdsView, JSONFeatureView, JSONFeaturesView, JSONFeatureChangeStatusView, \
-    JSONFeatureDeleteView
+    JSONFeatureDeleteView, RouteEditView
 
 urlpatterns = [
     url(r'^(?P<id>[0-9]+)/$',
@@ -18,4 +18,8 @@ urlpatterns = [
         login_required(JSONFeatureChangeStatusView.as_view()), {'model': RouteModel}, name='json_route_change_status'),
     url(r'^(?P<id>[0-9]+)/json_delete/$',
         login_required(JSONFeatureDeleteView.as_view()),       {'model': RouteModel}, name='json_route_delete'),
+    url(r'^create/$',
+        login_required(RouteEditView.as_view()),                                      name='route_create'),
+    url(r'^(?P<id>[0-9]+)/edit/$',
+        login_required(RouteEditView.as_view()),                                      name='route_edit'),
 ]

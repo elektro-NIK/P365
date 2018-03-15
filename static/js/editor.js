@@ -11,7 +11,7 @@ $(window).on('map:init', function (e) {
         height = window_height - header_height;
     }
     else if (info_height + header_height + button_height + footer_height <= window_height) {
-        height = window_height - header_height - button_height - footer_height;
+        height = page_height - header_height - button_height - footer_height;
     }
     else {
         height = info_height
