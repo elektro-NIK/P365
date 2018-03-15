@@ -57,10 +57,10 @@ class POIEditView(View):
             if poi.user != user:
                 return HttpResponseForbidden()
             form = POIForm(instance=poi, initial={'tag': poi.tag})
-            return render(request, 'poi_edit.html', {'title': poi.name, 'form': form})
+            return render(request, 'editor.html', {'title': poi.name, 'form': form})
         else:
             form = POIForm()
-            return render(request, 'poi_edit.html', {'title': 'New POI', 'form': form})
+            return render(request, 'editor.html', {'title': 'New POI', 'form': form})
 
     @staticmethod
     def post(request, id=None):
@@ -84,7 +84,7 @@ class POIEditView(View):
                 POIModel(name=name, description=description, user=user, tag=tag, geom=geom).save()
             return HttpResponseRedirect(reverse('table'))
         else:
-            return render(request, 'poi_edit.html', {'title': title, 'form': form})
+            return render(request, 'editor.html', {'title': title, 'form': form})
 
 
 class RouteEditView(View):
@@ -96,10 +96,10 @@ class RouteEditView(View):
             if route.user != user:
                 return HttpResponseForbidden()
             form = RouteForm(instance=route, initial={'tag': route.tag})
-            return render(request, 'route_edit.html', {'title': route.name, 'form': form})
+            return render(request, 'editor.html', {'title': route.name, 'form': form})
         else:
             form = RouteForm()
-            return render(request, 'route_edit.html', {'title': 'New route', 'form': form})
+            return render(request, 'editor.html', {'title': 'New route', 'form': form})
 
     @staticmethod
     def post(request, id=None):
@@ -111,7 +111,7 @@ class RouteEditView(View):
             user = User.objects.get(username=request.user.username)
             tag, _ = TagModel.objects.get_or_create(name=form.cleaned_data['tag'])
             geom = form.cleaned_data['geom']
-            geom = LineString([i+(0,) for i in geom], srid=geom.srid)
+            geom = LineString([i+(0,) if len(i) == 2 else i for i in geom], srid=geom.srid)
             if id:
                 route = RouteModel.objects.get(id=id)
                 if route.user == user:
@@ -123,7 +123,7 @@ class RouteEditView(View):
                 RouteModel(name=name, description=description, user=user, tag=tag, geom=geom).save()
             return HttpResponseRedirect(reverse('table'))
         else:
-            return render(request, 'route_edit.html', {'title': title, 'form': form})
+            return render(request, 'editor.html', {'title': title, 'form': form})
 
 
 class JSONFeatureIdsView(View):

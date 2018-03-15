@@ -14,14 +14,12 @@
                 {% bootstrap_field form.name %}
                 {% bootstrap_field form.description %}
                 {% bootstrap_field form.tag %}
+                <div class="col-xs-12 form-group center-block text-center">
+                    {% bootstrap_button 'Save' button_type='submit' button_class='btn-success' %}
+                </div>
             </div>
             <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
                 {% bootstrap_field form.geom show_label=False %}
-            </div>
-            <div class="col-xs-12 form-group center-block text-center" id="buttons">
-                {% bootstrap_button 'Save' button_type='submit' button_class='btn-success' %}
-                or {% url 'tracks' as back_url %}
-                {% bootstrap_button 'Cancel' button_type='link' href=back_url %}
             </div>
         </form>
     </div>
