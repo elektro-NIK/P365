@@ -43,7 +43,7 @@ class GPXParser:
     def routes(self):
         res = {}
         for route in self._gpx.routes:
-            points = [Point(i.longitude, i.latitude, 0) for i, _ in route.walk()]
+            points = [Point(i.longitude, i.latitude, i.elevation or 0) for i, _ in route.walk()]
             res[route.name] = {
                 'description': route.description if route.description else route.comment,
                 'length': route.length() / 1000,
@@ -57,6 +57,6 @@ class GPXParser:
             res[poi.name] = {
                 'description': poi.description if poi.description else poi.comment,
                 'created': poi.time,
-                'geom': Point(poi.longitude, poi.latitude, poi.elevation)
+                'geom': Point(poi.longitude, poi.latitude, poi.elevation or 0)
             }
         return res
