@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
 
+from google_api.elevation import get_elevation
 from hashtag.models import TagModel
 
 from .forms import POIForm, RouteForm
@@ -71,8 +72,8 @@ class POIEditView(View):
             description = form.cleaned_data['description']
             user = User.objects.get(username=request.user.username)
             tag, _ = TagModel.objects.get_or_create(name=form.cleaned_data['tag'])
-            geom = form.cleaned_data['geom']
-            geom = Point(x=geom.x, y=geom.y, z=0, srid=geom.srid)
+            # Add altitude data
+            geom = Point(*get_elevation(form.cleaned_data['geom']))
             if id:
                 poi = POIModel.objects.get(id=id)
                 if poi.user == user:
@@ -110,8 +111,8 @@ class RouteEditView(View):
             description = form.cleaned_data['description']
             user = User.objects.get(username=request.user.username)
             tag, _ = TagModel.objects.get_or_create(name=form.cleaned_data['tag'])
-            geom = form.cleaned_data['geom']
-            geom = LineString([i+(0,) if len(i) == 2 else i for i in geom], srid=geom.srid)
+            # Add altitude data
+            geom = LineString(*get_elevation(form.cleaned_data['geom']))
             if id:
                 route = RouteModel.objects.get(id=id)
                 if route.user == user:
