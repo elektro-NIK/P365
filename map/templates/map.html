@@ -22,12 +22,12 @@
     <script src="{% static 'js/msg_wrong.js' %}"></script>
     <script>
         var bounds;
+        var progress;
 
         function parseData (map, data) {
             var json = JSON.parse(data);
             b = L.geoJson(json, {
                 onEachFeature: function (feature, layer) {
-                    console.log(feature)
                     layer.bindPopup('<p>' + '<b>' + feature.name + '</b>' +
                                     '<br>' + feature.description, '</p>');
                     layer.on('click', function() {
@@ -40,11 +40,8 @@
             bounds.isValid() ? map.fitBounds(bounds) : {}
         }
 
-        function map_init_basic (map, options) {
-            map.on('click', function() {
-                bounds && bounds.isValid() ? map.fitBounds(bounds) : {}
-            });
-            $.getJSON("{% url 'json_track_ids' %}")
+        function get_all (map, url_ids, url_get) {
+            $.getJSON(url_ids)
             .done(function(data) {
                 if (data.length > 0) {
                     $('.leaflet-container').height($('.leaflet-container').height() - 5);
@@ -52,15 +49,13 @@
                 }
                 for (i = 0; i < data.length; i++) {
                     var id = data[i];
-                    var url = "{% url 'json_track' id=0 %}".replace('0', id);
-                    var step = 100.0/data.length;
-                    var progress = 0;
+                    var url = url_get.replace('0', id);
+                    var step = 1./3/data.length;
                     $.getJSON(url)
                     .done(function(data) {
-                    console.log(data)
                         progress += step;
-                        $('.progress-bar').css('width', progress.toString()+'%');
-                        if (progress > 100.001-step) {
+                        $('.progress-bar').css('width', (progress*100).toString()+'%');
+                        if (progress > 1.000001-step) {
                             $('.progress').hide();
                             $('.leaflet-container').height('100%');
                         }
@@ -70,10 +65,16 @@
                 }
             })
             .fail(function() {setErrorMsg()});
+        }
 
-            $.getJSON("{% url 'json_pois' %}")
-            .done(function(data) {parseData(map, data)})
-            .fail(function()     {setErrorMsg()});
+        function map_init_basic (map, options) {
+            map.on('click', function() {
+                bounds && bounds.isValid() ? map.fitBounds(bounds) : {}
+            });
+            progress = 0;
+            get_all(map, "{% url 'json_track_ids' %}", "{% url 'json_track' id=0 %}");
+            get_all(map, "{% url 'json_route_ids' %}", "{% url 'json_route' id=0 %}");
+            get_all(map, "{% url 'json_poi_ids' %}", "{% url 'json_poi' id=0 %}");
         }
     </script>
 {% endblock %}
