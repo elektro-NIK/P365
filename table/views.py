@@ -52,12 +52,26 @@ class TableView(View):
                     geom=value['geom']
                 ).save()
             for key, value in routes.items():
+                geom = get_elevation(value['geom'])
+                alt = [i[2] for i in geom]
+                loss, gain = 0, 0
+                last_alt = geom[0][2]
+                for point in geom:
+                    if last_alt > point[2]:
+                        loss += last_alt - point[2]
+                    elif last_alt < point[2]:
+                        gain += point[2] - last_alt
+                    last_alt = point[2]
                 RouteModel(
                     name=key,
                     description=value['description'],
                     user=user,
                     length=value['length'],
-                    geom=LineString(*get_elevation(value['geom'])),
+                    altitude_max=max(alt),
+                    altitude_min=min(alt),
+                    altitude_gain=gain,
+                    altitude_loss=loss,
+                    geom=LineString(*geom),
                 ).save()
             for key, value in pois.items():
                 POIModel(
