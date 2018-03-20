@@ -113,6 +113,16 @@ class RouteEditView(View):
             tag, _ = TagModel.objects.get_or_create(name=form.cleaned_data['tag'])
             # Add altitude data
             geom = LineString(*get_elevation(form.cleaned_data['geom']))
+            # Calculate min, max, loss, gain altitude
+            alt = [i[2] for i in geom]
+            loss, gain = 0, 0
+            last_alt = geom[0][2]
+            for point in geom:
+                if last_alt > point[2]:
+                    loss += last_alt - point[2]
+                elif last_alt < point[2]:
+                    gain += point[2] - last_alt
+                last_alt = point[2]
             if id:
                 route = RouteModel.objects.get(id=id)
                 if route.user == userelev:
@@ -121,7 +131,17 @@ class RouteEditView(View):
                 else:
                     return HttpResponseForbidden()
             else:
-                RouteModel(name=name, description=description, user=user, tag=tag, geom=geom).save()
+                RouteModel(
+                    name=name,
+                    description=description,
+                    user=user,
+                    tag=tag,
+                    altitude_max=max(alt),
+                    altitude_min=min(alt),
+                    altitude_gain=gain,
+                    altitude_loss=loss,
+                    geom=geom
+                ).save()
             return HttpResponseRedirect(reverse('table'))
         else:
             return render(request, 'editor.html', {'title': title, 'form': form})
