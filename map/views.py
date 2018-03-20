@@ -115,7 +115,7 @@ class RouteEditView(View):
             geom = LineString(*get_elevation(form.cleaned_data['geom']))
             if id:
                 route = RouteModel.objects.get(id=id)
-                if route.user == user:
+                if route.user == userelev:
                     route.name, route.description, route.tag, route.geom = name, description, tag, geom
                     route.save()
                 else:

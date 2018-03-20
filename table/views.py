@@ -2,11 +2,13 @@ import mimetypes
 from os.path import splitext
 
 from django.contrib.auth.models import User
+from django.contrib.gis.geos import LineString, Point
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
 
+from google_api.elevation import get_elevation
 from gpx.parser.GPXParser import GPXParser
 from map.models import TrackModel, RouteModel, POIModel
 
@@ -55,14 +57,14 @@ class TableView(View):
                     description=value['description'],
                     user=user,
                     length=value['length'],
-                    geom=value['geom'],
+                    geom=LineString(*get_elevation(value['geom'])),
                 ).save()
             for key, value in pois.items():
                 POIModel(
                     name=key,
                     description=value['description'],
                     user=user,
-                    geom=value['geom'],
+                    geom=Point(*get_elevation(value['geom'])),
                 ).save()
         return HttpResponseRedirect(reverse('table'))
 
