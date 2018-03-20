@@ -1,4 +1,4 @@
-html, body, div.row, #content-container {
+html, body, div.row.map, #content-container {
     height: 100%;
 }
 
