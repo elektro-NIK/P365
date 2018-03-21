@@ -125,8 +125,16 @@ class RouteEditView(View):
                 last_alt = point[2]
             if id:
                 route = RouteModel.objects.get(id=id)
-                if route.user == userelev:
-                    route.name, route.description, route.tag, route.geom = name, description, tag, geom
+                if route.user == user:
+                    route.name = name
+                    route.description = description
+                    route.tag = tag
+                    route.length = geom.length * 100
+                    route.altitude_max = max(alt)
+                    route.altitude_min = min(alt)
+                    route.altitude_gain = gain
+                    route.altitude_loss = loss
+                    route.geom = geom
                     route.save()
                 else:
                     return HttpResponseForbidden()
@@ -136,6 +144,7 @@ class RouteEditView(View):
                     description=description,
                     user=user,
                     tag=tag,
+                    length=geom.length * 100,
                     altitude_max=max(alt),
                     altitude_min=min(alt),
                     altitude_gain=gain,
