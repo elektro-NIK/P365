@@ -23,22 +23,25 @@ function get_all (map, url_ids, url_get, url_show, url_edit) {
         if (data.length > 0) {
             $('.leaflet-container').height($('.leaflet-container').height() - 5);
             $('.progress').show();
+            for (i = 0; i < data.length; i++) {
+                var id = data[i];
+                var url = url_get.replace('0', id);
+                var step = 1./3/data.length;
+                $.getJSON(url)
+                .done(function(data) {
+                    progress += step;
+                    $('.progress-bar').css('width', (progress*100).toString()+'%');
+                    if (progress > 1.000001-step) {
+                        $('.progress').hide();
+                        $('.leaflet-container').height('100%');
+                    }
+                    parseData(map, data, url_show, url_edit);
+                })
+                .fail(function()     {setErrorMsg()});
+            }
         }
-        for (i = 0; i < data.length; i++) {
-            var id = data[i];
-            var url = url_get.replace('0', id);
-            var step = 1./3/data.length;
-            $.getJSON(url)
-            .done(function(data) {
-                progress += step;
-                $('.progress-bar').css('width', (progress*100).toString()+'%');
-                if (progress > 1.000001-step) {
-                    $('.progress').hide();
-                    $('.leaflet-container').height('100%');
-                }
-                parseData(map, data, url_show, url_edit);
-            })
-            .fail(function()     {setErrorMsg()});
+        else {
+            progress += 1./3
         }
     })
     .fail(function() {setErrorMsg()});
