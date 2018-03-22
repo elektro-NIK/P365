@@ -11,7 +11,7 @@ class POIForm(ModelForm):
         fields = ['name', 'description', 'geom']
         widgets = {'geom': LeafletWidget()}
 
-    tag = CharField(max_length=MAX_LENGTH['tag'])
+    tag = CharField(max_length=MAX_LENGTH['tag'], required=False)
 
 
 class RouteForm(ModelForm):
@@ -20,4 +20,4 @@ class RouteForm(ModelForm):
         fields = ['name', 'description', 'geom']
         widgets = {'geom': LeafletWidget()}
 
-    tag = CharField(max_length=MAX_LENGTH['tag'])
+    tag = CharField(max_length=MAX_LENGTH['tag'], required=False)

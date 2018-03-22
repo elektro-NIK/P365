@@ -41,7 +41,7 @@ class POIModel(models.Model):
 class RouteModel(models.Model):
     # Basic
     name = models.CharField(max_length=MAX_LENGTH['name'])
-    description = models.TextField(max_length=MAX_LENGTH['description'], null=True)
+    description = models.TextField(max_length=MAX_LENGTH['description'], blank=True)
     # Relations
     user = models.ForeignKey(User)
     tag = models.ForeignKey(TagModel, null=True, blank=True)
