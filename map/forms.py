@@ -1,23 +1,23 @@
-from django.forms import ModelForm, CharField
+from django.contrib.gis.geos import Point
+from django.forms import ModelForm
 from leaflet.forms.widgets import LeafletWidget
 
-from P365.settings import MAX_LENGTH
+from google_api.elevation import get_elevation
 from .models import POIModel, RouteModel
 
 
 class POIForm(ModelForm):
     class Meta:
         model = POIModel
-        fields = ['name', 'description', 'geom']
+        fields = ['name', 'description', 'tag', 'geom']
         widgets = {'geom': LeafletWidget()}
 
-    tag = CharField(max_length=MAX_LENGTH['tag'], required=False)
+    def clean_geom(self):
+        return Point(*get_elevation(self.cleaned_data['geom']))
 
 
 class RouteForm(ModelForm):
     class Meta:
         model = RouteModel
-        fields = ['name', 'description', 'geom']
+        fields = ['name', 'description', 'tag', 'geom']
         widgets = {'geom': LeafletWidget()}
-
-    tag = CharField(max_length=MAX_LENGTH['tag'], required=False)

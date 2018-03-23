@@ -18,12 +18,12 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth.views import logout_then_login
 
-from profile import urls as urls_profile
-from calendar_year import urls as urls_calendar
+import calendar_year.urls
+import profile.urls
+import story.urls
+import table.urls
+import tag.urls
 from map import urls_map, urls_poi, urls_route, urls_track
-from table import urls as urls_table
-from story import urls as urls_story
-
 from profile.views import LoginView, ProfileRedirect, SignUpView, IndexView
 
 urlpatterns = [
@@ -37,13 +37,14 @@ urlpatterns = [
     # redirection
     url(r'^accounts/profile/$', ProfileRedirect.as_view()),
     # tabs
-    url(r'^calendar/', include(urls_calendar)),
+    url(r'^calendar/', include(calendar_year.urls)),
     url(r'^map/', include(urls_map)),
-    url(r'^table/', include(urls_table)),
-    url(r'^story/', include(urls_story)),
+    url(r'^table/', include(table.urls)),
+    url(r'^story/', include(story.urls)),
     # other
-    url(r'^user/', include(urls_profile)),
+    url(r'^user/', include(profile.urls)),
     url(r'^poi/', include(urls_poi)),
     url(r'^route/', include(urls_route)),
     url(r'^track/', include(urls_track)),
+    url(r'^tag/', include(tag.urls)),
 ]

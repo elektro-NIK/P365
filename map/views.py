@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.views import View
 
 from google_api.elevation import get_elevation
-from hashtag.models import TagModel
+from tag.models import TagModel
 
 from .forms import POIForm, RouteForm
 from .models import TrackModel, POIModel, RouteModel
@@ -52,37 +52,23 @@ class TrackView(View):
 class POIEditView(View):
     @staticmethod
     def get(request, id=None):
-        user = User.objects.get(username=request.user.username)
         if id:
             poi = POIModel.objects.get(id=id)
-            if poi.user != user:
-                return HttpResponseForbidden()
-            form = POIForm(instance=poi, initial={'tag': poi.tag})
-            return render(request, 'editor.html', {'title': poi.name, 'form': form})
-        else:
-            form = POIForm()
-            return render(request, 'editor.html', {'title': 'New POI', 'form': form})
+            if poi.user == request.user:
+                form = POIForm(instance=poi)
+                return render(request, 'editor.html', {'title': poi.name, 'form': form})
+            return HttpResponseForbidden()
+        form = POIForm()
+        return render(request, 'editor.html', {'title': 'New POI', 'form': form})
 
     @staticmethod
     def post(request, id=None):
         form = POIForm(request.POST)
         title = form['name'].value()
         if form.is_valid():
-            name = form.cleaned_data['name']
-            description = form.cleaned_data['description']
-            user = User.objects.get(username=request.user.username)
-            tag, _ = TagModel.objects.get_or_create(name=form.cleaned_data['tag'])
-            # Add altitude data
-            geom = Point(*get_elevation(form.cleaned_data['geom']))
-            if id:
-                poi = POIModel.objects.get(id=id)
-                if poi.user == user:
-                    poi.name, poi.description, poi.tag, poi.geom = name, description, tag, geom
-                    poi.save()
-                else:
-                    return HttpResponseForbidden()
-            else:
-                POIModel(name=name, description=description, user=user, tag=tag, geom=geom).save()
+            poi = form.save(commit=False)
+            poi.user = request.user
+            poi.save()
             return HttpResponseRedirect(reverse('table'))
         else:
             return render(request, 'editor.html', {'title': title, 'form': form})

@@ -39,10 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'leaflet',
     'bootstrap3',
+    'tagulous',
 
     'calendar_year',
     'gpx',
-    'hashtag',
+    'tag',
     'map',
     'profile',
     'story',

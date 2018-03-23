@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User
 from django.contrib.gis.db import models
+from tagulous.models import SingleTagField
 
 from P365.settings import MAX_LENGTH
-from hashtag.models import TagModel
+from tag.models import TagModel
 
 
 class POIModel(models.Model):
@@ -11,7 +12,7 @@ class POIModel(models.Model):
     description = models.TextField(max_length=MAX_LENGTH['description'], null=True)
     # Relations
     user = models.ForeignKey(User)
-    tag = models.ForeignKey(TagModel, null=True, blank=True)
+    tag = SingleTagField(TagModel)
     # Datetime
     created = models.DateTimeField(auto_now_add=True)
     # Flags
@@ -44,7 +45,7 @@ class RouteModel(models.Model):
     description = models.TextField(max_length=MAX_LENGTH['description'], blank=True)
     # Relations
     user = models.ForeignKey(User)
-    tag = models.ForeignKey(TagModel, null=True, blank=True)
+    tag = SingleTagField(force_lowercase=True, autocomplete_view='poi_tag_autocomplete')
     # Datetime
     created = models.DateTimeField(auto_now_add=True)
     # Distance
@@ -72,7 +73,7 @@ class TrackModel(models.Model):
     description = models.TextField(max_length=MAX_LENGTH['description'], null=True)
     # Relations
     user = models.ForeignKey(User)
-    tag = models.ForeignKey(TagModel, null=True, blank=True)
+    tag = SingleTagField(force_lowercase=True, autocomplete_view='poi_tag_autocomplete')
     # Datetime
     created = models.DateTimeField(auto_now_add=True)
     start_date = models.DateTimeField()

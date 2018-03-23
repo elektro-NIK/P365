@@ -103,6 +103,6 @@ venv.bak/
 .mypy_cache/
 .directory
 .idea
-db.sqlite3
+*.sqlite3
 *TODO*
 /google_api/api_keys.py
