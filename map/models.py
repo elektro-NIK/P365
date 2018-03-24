@@ -9,10 +9,10 @@ from tag.models import TagModel
 class POIModel(models.Model):
     # Basic
     name = models.CharField(max_length=MAX_LENGTH['name'])
-    description = models.TextField(max_length=MAX_LENGTH['description'], null=True)
+    description = models.TextField(max_length=MAX_LENGTH['description'], null=True, blank=True)
     # Relations
     user = models.ForeignKey(User)
-    tag = SingleTagField(TagModel)
+    tag = SingleTagField(TagModel, blank=True)
     # Datetime
     created = models.DateTimeField(auto_now_add=True)
     # Flags
@@ -42,10 +42,10 @@ class POIModel(models.Model):
 class RouteModel(models.Model):
     # Basic
     name = models.CharField(max_length=MAX_LENGTH['name'])
-    description = models.TextField(max_length=MAX_LENGTH['description'], blank=True)
+    description = models.TextField(max_length=MAX_LENGTH['description'], null=True, blank=True)
     # Relations
     user = models.ForeignKey(User)
-    tag = SingleTagField(TagModel)
+    tag = SingleTagField(TagModel, blank=True)
     # Datetime
     created = models.DateTimeField(auto_now_add=True)
     # Distance
@@ -70,10 +70,10 @@ class RouteModel(models.Model):
 class TrackModel(models.Model):
     # Basic
     name = models.CharField(max_length=MAX_LENGTH['name'])
-    description = models.TextField(max_length=MAX_LENGTH['description'], null=True)
+    description = models.TextField(max_length=MAX_LENGTH['description'], null=True, blank=True)
     # Relations
     user = models.ForeignKey(User)
-    tag = SingleTagField(TagModel)
+    tag = SingleTagField(TagModel, blank=True)
     # Datetime
     created = models.DateTimeField(auto_now_add=True)
     start_date = models.DateTimeField()

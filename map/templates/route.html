@@ -8,9 +8,9 @@
         <br>
         <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
             <center><b>{{ route.name }}</b></center>
-            <center><span class="label label-default">{{ route.activity }}</span></center>
+            <center><span class="label label-default">{{ route.tag }}</span></center>
             <br><p>{{ route.description|default:'' }}</p>
-            <div class="thumbnail text-center col-xs-12 col-sm-12">
+            <div class="thumbnail text-center col-xs-12">
                 Distance
                 <h4>{{ route.length|floatformat|default:'-' }} km</h4>
                 <hr class="slim">
@@ -20,7 +20,6 @@
                     <hr class="slim">
                     Max altitude
                     <h4>{{ route.altitude_max|floatformat|default:'-' }} m</h4>
-                    <hr class="slim">
                 </div>
                 <div class="col-xs-6">
                     Altitude loss
@@ -28,7 +27,6 @@
                     <hr class="slim">
                     Min altitude
                     <h4>{{ route.altitude_min|floatformat|default:'-' }} m</h4>
-                    <hr class="slim">
                 </div>
             </div>
         </div>
