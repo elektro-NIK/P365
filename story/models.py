@@ -19,7 +19,7 @@ class ArticleModel(models.Model):
 
 
 class StoryModel(models.Model):
-    track = models.ForeignKey(TrackModel, null=True)
+    track = models.ForeignKey(TrackModel, null=True, blank=True)
     article = models.OneToOneField(ArticleModel)
     event = models.OneToOneField(EventModel)
     created = models.DateTimeField(auto_now_add=True)
