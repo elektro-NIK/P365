@@ -1,4 +1,4 @@
-from django.contrib.gis.geos import Point
+from django.contrib.gis.geos import Point, LineString
 from django.forms import ModelForm
 from leaflet.forms.widgets import LeafletWidget
 
@@ -21,3 +21,6 @@ class RouteForm(ModelForm):
         model = RouteModel
         fields = ['name', 'description', 'tag', 'geom']
         widgets = {'geom': LeafletWidget()}
+
+    def clean_geom(self):
+        return LineString(*get_elevation(self.cleaned_data['geom']))

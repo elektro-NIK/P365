@@ -45,7 +45,7 @@ class RouteModel(models.Model):
     description = models.TextField(max_length=MAX_LENGTH['description'], blank=True)
     # Relations
     user = models.ForeignKey(User)
-    tag = SingleTagField(force_lowercase=True, autocomplete_view='poi_tag_autocomplete')
+    tag = SingleTagField(TagModel)
     # Datetime
     created = models.DateTimeField(auto_now_add=True)
     # Distance
@@ -73,7 +73,7 @@ class TrackModel(models.Model):
     description = models.TextField(max_length=MAX_LENGTH['description'], null=True)
     # Relations
     user = models.ForeignKey(User)
-    tag = SingleTagField(force_lowercase=True, autocomplete_view='poi_tag_autocomplete')
+    tag = SingleTagField(TagModel)
     # Datetime
     created = models.DateTimeField(auto_now_add=True)
     start_date = models.DateTimeField()

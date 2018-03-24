@@ -64,14 +64,12 @@ class POIEditView(View):
     @staticmethod
     def post(request, id=None):
         form = POIForm(request.POST)
-        title = form['name'].value()
         if form.is_valid():
             poi = form.save(commit=False)
             poi.user = request.user
             poi.save()
             return HttpResponseRedirect(reverse('table'))
-        else:
-            return render(request, 'editor.html', {'title': title, 'form': form})
+        return render(request, 'editor.html', {'title': form['name'].value(), 'form': form})
 
 
 class RouteEditView(View):
@@ -80,65 +78,33 @@ class RouteEditView(View):
         user = User.objects.get(username=request.user.username)
         if id:
             route = RouteModel.objects.get(id=id)
-            if route.user != user:
-                return HttpResponseForbidden()
-            form = RouteForm(instance=route, initial={'tag': route.tag})
-            return render(request, 'editor.html', {'title': route.name, 'form': form})
-        else:
-            form = RouteForm()
-            return render(request, 'editor.html', {'title': 'New route', 'form': form})
+            if route.user == request.user:
+                form = RouteForm(instance=route, initial={'tag': route.tag})
+                return render(request, 'editor.html', {'title': route.name, 'form': form})
+            return HttpResponseForbidden()
+        form = RouteForm()
+        return render(request, 'editor.html', {'title': 'New route', 'form': form})
 
     @staticmethod
     def post(request, id=None):
         form = RouteForm(request.POST)
-        title = form['name'].value()
         if form.is_valid():
-            name = form.cleaned_data['name']
-            description = form.cleaned_data['description']
-            user = User.objects.get(username=request.user.username)
-            tag, _ = TagModel.objects.get_or_create(name=form.cleaned_data['tag'])
-            # Add altitude data
-            geom = LineString(*get_elevation(form.cleaned_data['geom']))
+            route = form.save(commit=False)
+            route.user = request.user
+            route.length = form.cleaned_data['geom'].length * 100
             # Calculate min, max, loss, gain altitude
-            alt = [i[2] for i in geom]
-            loss, gain = 0, 0
-            last_alt = geom[0][2]
-            for point in geom:
-                if last_alt > point[2]:
-                    loss += last_alt - point[2]
-                elif last_alt < point[2]:
-                    gain += point[2] - last_alt
-                last_alt = point[2]
-            if id:
-                route = RouteModel.objects.get(id=id)
-                if route.user == user:
-                    route.name = name
-                    route.description = description
-                    route.tag = tag
-                    route.length = geom.length * 100
-                    route.altitude_max = max(alt)
-                    route.altitude_min = min(alt)
-                    route.altitude_gain = gain
-                    route.altitude_loss = loss
-                    route.geom = geom
-                    route.save()
-                else:
-                    return HttpResponseForbidden()
-            else:
-                RouteModel(
-                    name=name,
-                    description=description,
-                    user=user,
-                    tag=tag,
-                    length=geom.length * 100,
-                    altitude_max=max(alt),
-                    altitude_min=min(alt),
-                    altitude_gain=gain,
-                    altitude_loss=loss,
-                    geom=geom
-                ).save()
+            alts = [i[2] for i in form.cleaned_data['geom']]
+            diffs = [alts[i] - alts[i-1] for i in range(1, len(alts))]
+            gain, loss = [i for i in diffs if i > 0], [-i for i in diffs if i < 0]
+            #
+            route.altitude_max = max(alts)
+            route.altitude_min = min(alts)
+            route.altitude_gain = sum(gain)
+            route.altitude_loss = sum(loss)
+            route.save()
             return HttpResponseRedirect(reverse('table'))
         else:
+            title = form['name'].value()
             return render(request, 'editor.html', {'title': title, 'form': form})
 
 

@@ -12,6 +12,7 @@
                 {% bootstrap_form_errors form %}
                 {% bootstrap_field form.name %}
                 {% bootstrap_field form.description %}
+                {% bootstrap_label form.tag.label %} <br>
                 {{ form.tag }}<br><br>
                 <div class="col-xs-12 form-group center-block text-center">
                     {% bootstrap_button 'Save' button_type='submit' button_class='btn-success' %}
