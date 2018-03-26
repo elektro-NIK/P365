@@ -1,9 +1,11 @@
 from django.contrib.auth.models import User
 from django.db import models
+from tagulous.models import TagField
 
 from P365.settings import MAX_LENGTH
 from calendar_year.models import EventModel
 from map.models import TrackModel
+from tag.models import TagModel
 
 
 class ArticleModel(models.Model):
@@ -23,10 +25,10 @@ class StoryModel(models.Model):
     article = models.OneToOneField(ArticleModel)
     event = models.OneToOneField(EventModel)
     created = models.DateTimeField(auto_now_add=True)
-    # tags = models.ManyToManyField(TagModel)
+    tags = TagField(TagModel)
     user = models.ForeignKey(User)
 
     objects = models.Manager()
 
     def __str__(self):
-        return '{} {} {}'.format(self.event, self.article, self.track)
+        return f'{self.event} {self.article} {self.track}'
