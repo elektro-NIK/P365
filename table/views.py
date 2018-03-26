@@ -16,10 +16,9 @@ from map.models import TrackModel, RouteModel, POIModel
 class TableView(View):
     @staticmethod
     def get(request):
-        user = User.objects.get(username=request.user.username)
-        pois = POIModel.objects.filter(user=user, is_active=True).order_by('-created')
-        routes = RouteModel.objects.filter(user=user, is_active=True).order_by('-created')
-        tracks = TrackModel.objects.filter(user=user, is_active=True).order_by('-created')
+        pois = POIModel.objects.filter(user=request.user, is_active=True).order_by('-created')
+        routes = RouteModel.objects.filter(user=request.user, is_active=True).order_by('-created')
+        tracks = TrackModel.objects.filter(user=request.user, is_active=True).order_by('-created')
         return render(request, 'table.html', {
             'title':  'Table',
             'active': 'table',
@@ -32,14 +31,13 @@ class TableView(View):
     def post(request):
         file = request.FILES['gpx_file']
         ext, mime, size = splitext(file.name)[1][1:].lower(), mimetypes.guess_type(file.name)[0], len(file)
-        if ext == 'gpx' and mime is None and size < 25 * 1024 * 1024:
-            user = User.objects.get(username=request.user.username)
+        if ext == 'gpx' and mime is None and size < 25 * 1024 * 1024:                   # check limits
             parser = GPXParser(file.read().decode())
             tracks, routes, pois = parser.tracks(), parser.routes(), parser.pois()
             for key, value in tracks.items():
                 TrackModel(
                     name=key,
-                    user=user,
+                    user=request.user,
                     start_date=value['start_date'],
                     finish_date=value['finish_date'],
                     length=value['length'],
@@ -53,31 +51,25 @@ class TableView(View):
                 ).save()
             for key, value in routes.items():
                 geom = get_elevation(value['geom'])
-                alt = [i[2] for i in geom]
-                loss, gain = 0, 0
-                last_alt = geom[0][2]
-                for point in geom:
-                    if last_alt > point[2]:
-                        loss += last_alt - point[2]
-                    elif last_alt < point[2]:
-                        gain += point[2] - last_alt
-                    last_alt = point[2]
+                alts = [i[2] for i in geom]
+                diffs = [alts[i] - alts[i - 1] for i in range(1, len(alts))]
+                gain, loss = [i for i in diffs if i > 0], [-i for i in diffs if i < 0]
                 RouteModel(
                     name=key,
                     description=value['description'],
-                    user=user,
+                    user=request.user,
                     length=value['length'],
-                    altitude_max=max(alt),
-                    altitude_min=min(alt),
-                    altitude_gain=gain,
-                    altitude_loss=loss,
+                    altitude_max=max(alts),
+                    altitude_min=min(alts),
+                    altitude_gain=sum(gain),
+                    altitude_loss=sum(loss),
                     geom=LineString(*geom),
                 ).save()
             for key, value in pois.items():
                 POIModel(
                     name=key,
                     description=value['description'],
-                    user=user,
+                    user=request.user,
                     geom=Point(*get_elevation(value['geom'])),
                 ).save()
         return HttpResponseRedirect(reverse('table'))
@@ -86,10 +78,9 @@ class TableView(View):
 class UpdateTablesView(View):
     @staticmethod
     def get(request):
-        user = User.objects.get(username=request.user.username)
-        pois = POIModel.objects.filter(user=user, is_active=True).order_by('-created')
-        routes = RouteModel.objects.filter(user=user, is_active=True).order_by('-created')
-        tracks = TrackModel.objects.filter(user=user, is_active=True).order_by('-start_date')
+        pois = POIModel.objects.filter(user=request.user, is_active=True).order_by('-created')
+        routes = RouteModel.objects.filter(user=request.user, is_active=True).order_by('-created')
+        tracks = TrackModel.objects.filter(user=request.user, is_active=True).order_by('-start_date')
         return render(request, '_tables.html', {
             'title': 'Table',
             'active': 'table',
@@ -102,6 +93,5 @@ class UpdateTablesView(View):
 class UpdateTableView(View):
     @staticmethod
     def get(request, model, template, temp_var_name):
-        user = User.objects.get(username=request.user.username)
-        objs = model.objects.filter(user=user, is_active=True).order_by('-created')
+        objs = model.objects.filter(user=request.user, is_active=True).order_by('-created')
         return render(request, template, {temp_var_name: objs})
