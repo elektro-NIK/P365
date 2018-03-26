@@ -1,13 +1,8 @@
-from django.contrib.auth.models import User
-from django.contrib.gis.geos import Point, LineString
 from django.core.serializers import serialize
 from django.http import HttpResponseForbidden, JsonResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import View
-
-from google_api.elevation import get_elevation
-from tag.models import TagModel
 
 from .forms import POIForm, RouteForm
 from .models import TrackModel, POIModel, RouteModel
@@ -22,9 +17,8 @@ class MapView(View):
 class POIView(View):
     @staticmethod
     def get(request, id):
-        user = User.objects.get(username=request.user.username)
-        poi = POIModel.objects.get(id=id)
-        if poi.public or poi.user == user:
+        poi = get_object_or_404(POIModel, id=id)
+        if poi.user == request.user or poi.public:
             return render(request, 'poi.html', {'title': poi.name, 'poi': poi})
         return HttpResponseForbidden()
 
@@ -32,9 +26,8 @@ class POIView(View):
 class RouteView(View):
     @staticmethod
     def get(request, id):
-        user = User.objects.get(username=request.user.username)
-        route = RouteModel.objects.get(id=id)
-        if route.public or route.user == user:
+        route = get_object_or_404(RouteModel, id=id)
+        if route.user == request.user or route.public:
             return render(request, 'route.html', {'title': route.name, 'route': route})
         return HttpResponseForbidden()
 
@@ -42,9 +35,8 @@ class RouteView(View):
 class TrackView(View):
     @staticmethod
     def get(request, id):
-        user = User.objects.get(username=request.user.username)
-        track = TrackModel.objects.get(id=id)
-        if track.public or track.user == user:
+        track = get_object_or_404(TrackModel, id=id)
+        if track.user == request.user or track.public:
             return render(request, 'track.html', {'title': track.name, 'track': track})
         return HttpResponseForbidden()
 
@@ -52,21 +44,25 @@ class TrackView(View):
 class POIEditView(View):
     @staticmethod
     def get(request, id=None):
-        if id:
-            poi = POIModel.objects.get(id=id)
-            if poi.user == request.user:
-                form = POIForm(instance=poi)
-                return render(request, 'editor.html', {'title': poi.name, 'form': form})
+        poi = get_object_or_404(POIModel, id=id) if id else None
+        if poi and poi.user != request.user:
             return HttpResponseForbidden()
-        form = POIForm()
-        return render(request, 'editor.html', {'title': 'New POI', 'form': form})
+        form = POIForm(instance=poi)
+        return render(request, 'editor.html', {'title': poi.name if poi else 'New POI', 'form': form})
 
     @staticmethod
     def post(request, id=None):
         form = POIForm(request.POST)
         if form.is_valid():
-            poi = form.save(commit=False)
-            poi.user = request.user
+            if id:                                                  # update POI
+                poi = get_object_or_404(POIModel, id=id)
+                poi.name = form.cleaned_data['name']
+                poi.description = form.cleaned_data['description']
+                poi.tag = form.cleaned_data['tag']
+                poi.geom = form.cleaned_data['geom']
+            else:                                                   # create POI
+                poi = form.save(commit=False)
+                poi.user = request.user
             poi.save()
             return HttpResponseRedirect(reverse('table'))
         return render(request, 'editor.html', {'title': form['name'].value(), 'form': form})
@@ -75,22 +71,25 @@ class POIEditView(View):
 class RouteEditView(View):
     @staticmethod
     def get(request, id=None):
-        user = User.objects.get(username=request.user.username)
-        if id:
-            route = RouteModel.objects.get(id=id)
-            if route.user == request.user:
-                form = RouteForm(instance=route, initial={'tag': route.tag})
-                return render(request, 'editor.html', {'title': route.name, 'form': form})
+        route = get_object_or_404(RouteModel, id=id) if id else None
+        if route and route.user != request.user:
             return HttpResponseForbidden()
-        form = RouteForm()
-        return render(request, 'editor.html', {'title': 'New route', 'form': form})
+        form = RouteForm(instance=route)
+        return render(request, 'editor.html', {'title': route.name if route else 'New route', 'form': form})
 
     @staticmethod
     def post(request, id=None):
         form = RouteForm(request.POST)
         if form.is_valid():
-            route = form.save(commit=False)
-            route.user = request.user
+            if id:                                                  # update route
+                route = get_object_or_404(RouteModel, id=id)
+                route.name = form.cleaned_data['name']
+                route.description = form.cleaned_data['description']
+                route.tag = form.cleaned_data['tag']
+                route.geom = form.cleaned_data['geom']
+            else:
+                route = form.save(commit=False)
+                route.user = request.user
             route.length = form.cleaned_data['geom'].length * 100
             # Calculate min, max, loss, gain altitude
             alts = [i[2] for i in form.cleaned_data['geom']]
@@ -103,26 +102,21 @@ class RouteEditView(View):
             route.altitude_loss = sum(loss)
             route.save()
             return HttpResponseRedirect(reverse('table'))
-        else:
-            title = form['name'].value()
-            return render(request, 'editor.html', {'title': title, 'form': form})
+        return render(request, 'editor.html', {'title': form['name'].value(), 'form': form})
 
 
 class JSONFeatureIdsView(View):
     @staticmethod
     def get(request, model):
-        user = User.objects.get(username=request.user.username)
-        objs = model.objects.filter(user=user, is_active=True)
-        ids = [obj.id for obj in objs]
-        return JsonResponse(ids, safe=False)
+        objs = model.objects.filter(user=request.user, is_active=True)
+        return JsonResponse([obj.id for obj in objs], safe=False)
 
 
 class JSONFeatureView(View):
     @staticmethod
     def get(request, id, model):
-        user = User.objects.get(username=request.user.username)
-        obj = model.objects.get(id=id)
-        if obj.public or obj.user == user:
+        obj = get_object_or_404(model, id=id)
+        if obj.user == request.user or obj.public:
             data = serialize('geojson', [obj], geometry_field='geom')
             return JsonResponse(data, safe=False)
         return HttpResponseForbidden()
@@ -131,8 +125,7 @@ class JSONFeatureView(View):
 class JSONFeaturesView(View):
     @staticmethod
     def get(request, model):
-        user = User.objects.get(username=request.user.username)
-        objs = model.objects.filter(user=user, is_active=True)
+        objs = model.objects.filter(user=request.user, is_active=True)
         data = serialize('geojson', objs, geometry_field='geom')
         return JsonResponse(data, safe=False)
 
@@ -140,22 +133,20 @@ class JSONFeaturesView(View):
 class JSONFeatureChangeStatusView(View):
     @staticmethod
     def post(request, id, model):
-        user = User.objects.get(username=request.user.username)
-        obj = model.objects.get(id=id)
-        if obj.user == user:
+        obj = get_object_or_404(model, id=id)
+        if obj.user == request.user:
             obj.public = not obj.public
             obj.save()
-            return JsonResponse({})
+            return JsonResponse({'Status': 'OK'})
         return HttpResponseForbidden()
 
 
 class JSONFeatureDeleteView(View):
     @staticmethod
     def post(request, id, model):
-        user = User.objects.get(username=request.user.username)
-        obj = model.objects.get(id=id)
-        if obj.user == user and not obj.public:
+        obj = get_object_or_404(model, id=id)
+        if obj.user == request.user and not obj.public:
             obj.is_active = False
             obj.save()
-            return JsonResponse({})
+            return JsonResponse({'Status': 'OK'})
         return HttpResponseForbidden()
