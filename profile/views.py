@@ -31,7 +31,8 @@ class LoginView(View):
         form = AuthenticationForm(data=request.POST)
         nexturl = request.GET.get('next')
         if form.is_valid():
-            login(request, request.user)
+            user = User.objects.get(username=form.cleaned_data['username'])
+            login(request, user)
             return HttpResponseRedirect(nexturl or reverse('profile', kwargs={'username': request.user}))
         else:
             return render(request, 'login.html', {'title': 'Login', 'form': form, 'next': nexturl})
