@@ -5,9 +5,8 @@ function parseData (map, data, url, url_edit) {
             var popup =
             '<p>' +
                 '<a href="' + url.replace('0', feature.properties.pk) + '">' +
-                    '<b>' + feature.properties.name + ' </b>' +
-                '</a>' + '<br>' +
-                '<span class="label label-default">' + feature.properties.tag + '</span>';
+                    '<b>' + feature.properties.name + '</b>' +
+                '</a>';
             if (url_edit)
                 popup += ' <a href="' + url_edit.replace('0', feature.properties.pk) + '" class="glyphicon glyphicon-pencil"></a>'
             popup += '<br>' + feature.properties.description + '</p>'
