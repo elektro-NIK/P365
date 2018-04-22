@@ -21,7 +21,11 @@
                     <td>{{ track.start_date|naturaltime }}</td>
                     <td>{{ track.length|floatformat }} km</td>
                     <td class="center">
-                        <span class="label label-default">{{ track.tag|default:'' }}</span>
+                        {% if track.tag.slug %}
+                            <a href="{% url 'tag_url' track.tag.slug %}">
+                                <span class="label label-default">{{ track.tag|default:'' }}</span>
+                            </a>
+                        {% endif %}
                     </td>
                     <td class="center status">
                         {% if track.public %}

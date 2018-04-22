@@ -21,7 +21,11 @@
                     <td>{{ route.created|naturaltime }}</td>
                     <td>{{ route.length|floatformat }} km</td>
                     <td class="center">
-                        <span class="label label-default">{{ route.tag|default:'' }}</span>
+                        {% if route.tag.slug %}
+                            <a href="{% url 'tag_url' route.tag.slug %}">
+                                <span class="label label-default">{{ route.tag|default:'' }}</span>
+                            </a>
+                        {% endif %}
                     </td>
                     <td class="center status">
                         {% if route.public %}
