@@ -19,7 +19,7 @@
                     </td>
                     <td>{{ poi.created|naturaltime }}</td>
                     <td class="center">
-                        <span class="label label-default">{{ poi.tag }}</span>
+                        <span class="label label-default">{{ poi.tag|default:'' }}</span>
                     </td>
                     <td class="center status">
                         {% if poi.public %}
