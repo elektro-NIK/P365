@@ -12,13 +12,13 @@ function parseData (map, data, url, url_edit) {
             popup += '<br>' + feature.properties.description + '</p>'
             layer.bindPopup(popup);
             layer.on('click', function() {
-                map.fitBounds(this.getBounds());
-             });
+                this.feature.geometry.type != 'Point' ? map.fitBounds(this.getBounds()) : {};
+            });
         }
     });
     b.addTo(map);
-    bounds ? bounds.extend(b.getBounds()) : bounds = b.getBounds()
-    bounds.isValid() ? map.fitBounds(bounds) : {}
+    bounds ? bounds.extend(b.getBounds()) : bounds = b.getBounds();
+    bounds.isValid() ? map.fitBounds(bounds) : {};
 }
 
 function get_all (map, url_ids, url_get, url_show, url_edit) {

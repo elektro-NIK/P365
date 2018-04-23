@@ -26,7 +26,7 @@
 
         function map_init_basic (map, options) {
             map.on('click', function() {
-                bounds && bounds.isValid() ? map.fitBounds(bounds) : {}
+                bounds && bounds.isValid() ? map.fitBounds(bounds) : {};
             });
             progress = 0;
             get_all(map, "{% url 'json_track_ids' %}", "{% url 'json_track' id=0 %}", "{% url 'track' id=0 %}");
