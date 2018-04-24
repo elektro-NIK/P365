@@ -1,9 +1,10 @@
 import json
-
 from datetime import datetime
+
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render
+from django.utils import timezone
 from django.views import View
 
 from calendar_year.models import EventModel
@@ -46,22 +47,23 @@ class UpdateCreateEventView(View):
     def post(request):
         user = User.objects.get(username=request.user.username)
         event_json = json.loads(request.POST['event'])
-        print(event_json['startDate'])
+        start = datetime.strptime(event_json['startDate'][:-5], '%Y-%m-%dT%H:%M:%S')
+        finish = datetime.strptime(event_json['endDate'][:-5], '%Y-%m-%dT%H:%M:%S')
         if event_json['id']:                                                                            # Update event
             event = EventModel.objects.get(id=int(event_json['id']))
             if event.user == user:
                 event.name = event_json['name']
                 event.description = event_json['description']
-                event.start_date = datetime.strptime(event_json['startDate'], '%Y-%m-%dT%H:%M:%S.%fZ')
-                event.finish_date = datetime.strptime(event_json['endDate'], '%Y-%m-%dT%H:%M:%S.%fZ')
+                event.start_date = timezone.make_aware(start)
+                event.finish_date = timezone.make_aware(finish)
             else:
                 return HttpResponseForbidden()
         else:                                                                                           # Create event
             event = EventModel(
                 name=event_json['name'],
                 description=event_json['description'],
-                start_date=datetime.strptime(event_json['startDate'], '%Y-%m-%dT%H:%M:%S.%fZ'),
-                finish_date=datetime.strptime(event_json['endDate'], '%Y-%m-%dT%H:%M:%S.%fZ'),
+                start_date=timezone.make_aware(start),
+                finish_date=timezone.make_aware(finish),
                 user=user
             )
         event.save()
