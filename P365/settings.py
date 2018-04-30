@@ -83,7 +83,8 @@ WSGI_APPLICATION = 'P365.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-SPATIALITE_LIBRARY_PATH = 'mod_spatialite'
+# mod_spatialite: No such file or directory. WTF?
+SPATIALITE_LIBRARY_PATH = '/usr/lib/x86_64-linux-gnu/mod_spatialite.so'
 
 DATABASES = {
     'default': {
