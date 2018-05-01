@@ -19,7 +19,11 @@
                     </td>
                     <td>{{ poi.created|naturaltime }}</td>
                     <td class="center">
-                        <span class="label label-default">{{ poi.tag }}</span>
+                        {% if poi.tag.slug %}
+                            <a href="{% url 'tag_url' poi.tag.slug %}">
+                                <span class="label label-default">{{ poi.tag|default:'' }}</span>
+                            </a>
+                        {% endif %}
                     </td>
                     <td class="center status">
                         {% if poi.public %}

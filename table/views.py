@@ -18,7 +18,7 @@ class TableView(View):
     def get(request):
         pois = POIModel.objects.filter(user=request.user, is_active=True).order_by('-created')
         routes = RouteModel.objects.filter(user=request.user, is_active=True).order_by('-created')
-        tracks = TrackModel.objects.filter(user=request.user, is_active=True).order_by('-created')
+        tracks = TrackModel.objects.filter(user=request.user, is_active=True).order_by('-start_date')
         return render(request, 'table.html', {
             'title':  'Table',
             'active': 'table',
@@ -93,5 +93,6 @@ class UpdateTablesView(View):
 class UpdateTableView(View):
     @staticmethod
     def get(request, model, template, temp_var_name):
-        objs = model.objects.filter(user=request.user, is_active=True).order_by('-created')
+        order = '-created' if isinstance(model, TrackModel) else '-start_date'              # Tracks order by start date
+        objs = model.objects.filter(user=request.user, is_active=True).order_by(order)
         return render(request, template, {temp_var_name: objs})
