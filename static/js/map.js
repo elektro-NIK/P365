@@ -2,19 +2,23 @@ function parseData (map, data, url, url_edit) {
     var json = JSON.parse(data);
     b = L.geoJson(json, {
         onEachFeature: function (feature, layer) {
-            var popup = '<p>' + '<a href="' + url.replace('0', feature.properties.pk) + '">' + '<b>' + feature.properties.name + ' </b>' + '</a>';
+            var popup =
+            '<p>' +
+                '<a href="' + url.replace('0', feature.properties.pk) + '">' +
+                    '<b>' + feature.properties.name + '</b>' +
+                '</a>';
             if (url_edit)
-                popup += '<a href="' + url_edit.replace('0', feature.properties.pk) + '" class="glyphicon glyphicon-pencil"></a>'
+                popup += ' <a href="' + url_edit.replace('0', feature.properties.pk) + '" class="glyphicon glyphicon-pencil"></a>'
             popup += '<br>' + feature.properties.description + '</p>'
             layer.bindPopup(popup);
             layer.on('click', function() {
-                map.fitBounds(this.getBounds());
-             });
+                this.feature.geometry.type != 'Point' ? map.fitBounds(this.getBounds()) : {};
+            });
         }
     });
     b.addTo(map);
-    bounds ? bounds.extend(b.getBounds()) : bounds = b.getBounds()
-    bounds.isValid() ? map.fitBounds(bounds) : {}
+    bounds ? bounds.extend(b.getBounds()) : bounds = b.getBounds();
+    bounds.isValid() ? map.fitBounds(bounds) : {};
 }
 
 function get_all (map, url_ids, url_get, url_show, url_edit) {
