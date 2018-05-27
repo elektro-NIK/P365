@@ -10,9 +10,9 @@
         <div class="table-responsive col-xs-12 col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
             <div class="multitable">
                 <ul class="nav nav-tabs">
-                    <li class="active tracks"><a href="#" data-toggle="tab" role="tab" data-target="#table-tracks">Tracks</a></li>
-                    <li class="routes"><a href="#" data-toggle="tab" role="tab" data-target="#table-routes">Routes</a></li>
-                    <li class="pois"><a href="#" data-toggle="tab" role="tab" data-target="#table-pois">POIs</a></li>
+                    <li class="tracks"><a href="#tracks" data-toggle="tab" role="tab" data-target="#table-tracks">Tracks</a></li>
+                    <li class="routes"><a href="#routes" data-toggle="tab" role="tab" data-target="#table-routes">Routes</a></li>
+                    <li class="pois"><a href="#pois" data-toggle="tab" role="tab" data-target="#table-pois">POIs</a></li>
                     <form class="form" method="post" enctype="multipart/form-data" action="{% url 'table' %}">
                         {% csrf_token %}
                         <label class="btn btn-success pull-right">
