@@ -9,7 +9,7 @@ function parseData (map, data, url, url_edit) {
                 '</a>';
             if (url_edit)
                 popup += ' <a href="' + url_edit.replace('0', feature.properties.pk) + '" class="glyphicon glyphicon-pencil"></a>'
-            popup += '<br>' + feature.properties.description + '</p>'
+            popup += '<br>' + (feature.properties.description || '') + '</p>';
             layer.bindPopup(popup);
             layer.on('click', function() {
                 this.feature.geometry.type != 'Point' ? map.fitBounds(this.getBounds()) : {};
