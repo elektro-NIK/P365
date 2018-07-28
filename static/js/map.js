@@ -9,7 +9,7 @@ function parseData (map, data, url, url_edit) {
                 '</a>';
             if (url_edit)
                 popup += ' <a href="' + url_edit.replace('0', feature.properties.pk) + '" class="glyphicon glyphicon-pencil"></a>'
-            popup += '<br>' + feature.properties.description + '</p>'
+            popup += '<br>' + (feature.properties.description || '') + '</p>';
             layer.bindPopup(popup);
             layer.on('click', function() {
                 this.feature.geometry.type != 'Point' ? map.fitBounds(this.getBounds()) : {};
@@ -25,8 +25,10 @@ function get_all (map, url_ids, url_get, url_show, url_edit) {
     $.getJSON(url_ids)
     .done(function(data) {
         if (data.length > 0) {
-            if (progress == 0)
+            if (progress == -1) {
+                progress = 0;
                 $('.leaflet-container').height($('.leaflet-container').height() - 5);
+            }
             $('.progress').show();
             for (i = 0; i < data.length; i++) {
                 var id = data[i];
