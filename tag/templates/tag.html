@@ -10,7 +10,7 @@
             <div class="list-group">
                 <div class="list-group-item active">POIs:</div>
                 {% for poi in pois %}
-                    <a href="{% url 'poi' poi.pk %}" class="list-group-item list-group-item-action">{{ poi.name }}</a>
+                    <a href="{% url 'poi' poi.pk %}" class="list-group-item list-group-item-action" title="by {{ poi.user }}">{{ poi.name }}</a>
                 {% empty %}
                     <div class="list-group-item disabled">There is nothing to show</div>
                 {% endfor %}
@@ -20,7 +20,7 @@
             <div class="list-group">
                 <div class="list-group-item active">Routes:</div>
                 {% for route in routes %}
-                    <a href="{% url 'route' route.pk %}" class="list-group-item list-group-item-action">{{ route.name }}</a>
+                    <a href="{% url 'route' route.pk %}" class="list-group-item list-group-item-action" title="by {{ route.user }}">{{ route.name }}</a>
                 {% empty %}
                     <div class="list-group-item disabled">There is nothing to show</div>
                 {% endfor %}
@@ -30,7 +30,7 @@
             <div class="list-group">
                 <div class="list-group-item active">Tracks:</div>
                 {% for track in tracks %}
-                    <a href="{% url 'track' track.pk %}" class="list-group-item list-group-item-action">{{ track.name }}</a>
+                    <a href="{% url 'track' track.pk %}" class="list-group-item list-group-item-action" title="by {{ track.user }}">{{ track.name }}</a>
                 {% empty %}
                     <div class="list-group-item disabled">There is nothing to show</div>
                 {% endfor %}
@@ -40,7 +40,7 @@
             <div class="list-group">
                 <div class="list-group-item active">Stories:</div>
                 {% for story in stories %}
-                    <a href="#" class="list-group-item list-group-item-action">{{ story.article.title }}</a>
+                    <a href="#" class="list-group-item list-group-item-action" title="by {{ story.user }}">{{ story.article.title }}</a>
                 {% empty %}
                     <div class="list-group-item disabled">There is nothing to show</div>
                 {% endfor %}
