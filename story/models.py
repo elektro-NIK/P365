@@ -1,18 +1,16 @@
 from django.contrib.auth.models import User
 from django.db import models
-from tagulous.models import TagField
 
 from P365.settings import MAX_LENGTH
 from calendar_year.models import EventModel
 from map.models import TrackModel
-from tag.models import TagModel
 
 
 class ArticleModel(models.Model):
     title = models.CharField(max_length=MAX_LENGTH['title'])
     text = models.TextField(max_length=MAX_LENGTH['text'])
     created = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     objects = models.Manager()
 
@@ -21,12 +19,12 @@ class ArticleModel(models.Model):
 
 
 class StoryModel(models.Model):
-    track = models.ForeignKey(TrackModel, null=True, blank=True)
-    article = models.OneToOneField(ArticleModel)
-    event = models.OneToOneField(EventModel)
+    track = models.ForeignKey(TrackModel, on_delete=models.CASCADE, null=True, blank=True)
+    article = models.OneToOneField(ArticleModel, on_delete=models.CASCADE)
+    event = models.OneToOneField(EventModel, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
-    tags = TagField(TagModel)
-    user = models.ForeignKey(User)
+    #tags = TagField(TagModel)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     objects = models.Manager()
 

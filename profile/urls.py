@@ -1,7 +1,7 @@
-from django.conf.urls import url
+from django.urls import path
 
 from .views import ProfileView
 
 urlpatterns = [
-    url(r'^(?P<username>\w+)/$', ProfileView.as_view(), name='profile'),
+    path('<slug:username>/', ProfileView.as_view(), name='profile'),
 ]

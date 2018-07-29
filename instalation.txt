@@ -1,2 +1,12 @@
+1. Create virtualenv
+2. Install Django, GeoDjango
+3. Create DB
+4. Create superuser
+5. Run server
+
 sudo apt install binutils libproj-dev gdal-bin      # https://docs.djangoproject.com/en/1.11/ref/contrib/gis/install/geolibs/
 sudo apt install libsqlite3-mod-spatialite          # https://docs.djangoproject.com/en/1.11/ref/contrib/gis/install/spatialite/
+
+./manage.py makemigrations
+./manage.py migrate
+./manage.py createsuperuser

@@ -9,7 +9,7 @@ class EventModel(models.Model):
     description = models.TextField(max_length=MAX_LENGTH['description'], blank=True)
     start_date = models.DateTimeField()
     finish_date = models.DateTimeField()
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
 
     objects = models.Manager()

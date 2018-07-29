@@ -37,13 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django.contrib.gis',
+
     'leaflet',
     'bootstrap3',
-    'tagulous',
 
     'calendar_year',
     'gpx',
-    'tag',
     'map',
     'profile',
     'story',
