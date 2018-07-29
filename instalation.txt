@@ -1,0 +1,2 @@
+sudo apt install binutils libproj-dev gdal-bin      # https://docs.djangoproject.com/en/1.11/ref/contrib/gis/install/geolibs/
+sudo apt install libsqlite3-mod-spatialite          # https://docs.djangoproject.com/en/1.11/ref/contrib/gis/install/spatialite/
