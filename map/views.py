@@ -1,19 +1,23 @@
+from django.contrib.auth.decorators import login_required
 from django.core.serializers import serialize
 from django.http import HttpResponseForbidden, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.views import View
 
 from .forms import POIForm, RouteForm
 from .models import TrackModel, POIModel, RouteModel
 
 
+@method_decorator(login_required, name='dispatch')
 class MapView(View):
     @staticmethod
     def get(request):
         return render(request, 'map.html', {'title': 'Map', 'active': 'map'})
 
 
+@method_decorator(login_required, name='dispatch')
 class POIView(View):
     @staticmethod
     def get(request, id):
@@ -23,6 +27,7 @@ class POIView(View):
         return HttpResponseForbidden()
 
 
+@method_decorator(login_required, name='dispatch')
 class RouteView(View):
     @staticmethod
     def get(request, id):
@@ -32,6 +37,7 @@ class RouteView(View):
         return HttpResponseForbidden()
 
 
+@method_decorator(login_required, name='dispatch')
 class TrackView(View):
     @staticmethod
     def get(request, id):
@@ -41,6 +47,7 @@ class TrackView(View):
         return HttpResponseForbidden()
 
 
+@method_decorator(login_required, name='dispatch')
 class POIEditView(View):
     @staticmethod
     def get(request, id=None):
@@ -68,6 +75,7 @@ class POIEditView(View):
         return render(request, 'editor.html', {'title': form['name'].value(), 'form': form})
 
 
+@method_decorator(login_required, name='dispatch')
 class RouteEditView(View):
     @staticmethod
     def get(request, id=None):
@@ -105,6 +113,7 @@ class RouteEditView(View):
         return render(request, 'editor.html', {'title': form['name'].value(), 'form': form})
 
 
+@method_decorator(login_required, name='dispatch')
 class JSONFeatureIdsView(View):
     @staticmethod
     def get(request, model):
@@ -112,6 +121,7 @@ class JSONFeatureIdsView(View):
         return JsonResponse([obj.id for obj in objs], safe=False)
 
 
+@method_decorator(login_required, name='dispatch')
 class JSONFeatureView(View):
     @staticmethod
     def get(request, id, model):
@@ -122,6 +132,7 @@ class JSONFeatureView(View):
         return HttpResponseForbidden()
 
 
+@method_decorator(login_required, name='dispatch')
 class JSONFeaturesView(View):
     @staticmethod
     def get(request, model):
@@ -130,6 +141,7 @@ class JSONFeaturesView(View):
         return JsonResponse(data, safe=False)
 
 
+@method_decorator(login_required, name='dispatch')
 class JSONFeatureChangeStatusView(View):
     @staticmethod
     def post(request, id, model):
@@ -141,6 +153,7 @@ class JSONFeatureChangeStatusView(View):
         return HttpResponseForbidden()
 
 
+@method_decorator(login_required, name='dispatch')
 class JSONFeatureDeleteView(View):
     @staticmethod
     def post(request, id, model):

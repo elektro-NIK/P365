@@ -1,10 +1,12 @@
 import mimetypes
 from os.path import splitext
 
+from django.contrib.auth.decorators import login_required
 from django.contrib.gis.geos import LineString, Point
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.views import View
 
 from google_api.elevation import get_elevation
@@ -12,6 +14,7 @@ from gpx.parser.GPXParser import GPXParser
 from map.models import TrackModel, RouteModel, POIModel
 
 
+@method_decorator(login_required, name='dispatch')
 class TableView(View):
     @staticmethod
     def get(request):
@@ -89,6 +92,7 @@ class UpdateTablesView(View):
         })
 
 
+@method_decorator(login_required, name='dispatch')
 class UpdateTableView(View):
     @staticmethod
     def get(request, model, template, temp_var_name):

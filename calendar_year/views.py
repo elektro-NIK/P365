@@ -1,21 +1,25 @@
 import json
 from datetime import datetime
 
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render
 from django.utils import timezone
+from django.utils.decorators import method_decorator
 from django.views import View
 
 from calendar_year.models import EventModel
 
 
+@method_decorator(login_required, name='dispatch')
 class CalendarView(View):
     @staticmethod
     def get(request):
         return render(request, 'calendar.html', {'title': 'Calendar', 'active': 'calendar'})
 
 
+@method_decorator(login_required, name='dispatch')
 class GetAllEventsView(View):
     @staticmethod
     def get(request):
@@ -29,6 +33,7 @@ class GetAllEventsView(View):
         return HttpResponse(json.dumps(result), content_type='application/json')
 
 
+@method_decorator(login_required, name='dispatch')
 class DeleteEventView(View):
     @staticmethod
     def post(request):
@@ -42,6 +47,7 @@ class DeleteEventView(View):
             return HttpResponseForbidden()
 
 
+@method_decorator(login_required, name='dispatch')
 class UpdateCreateEventView(View):
     @staticmethod
     def post(request):
