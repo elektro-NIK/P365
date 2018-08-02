@@ -1,13 +1,16 @@
-from django.urls import path, include
+from django.urls import path, include, register_converter
 
+from P365.converters import UintWithoutZero
 from map.models import POIModel
 from map.views import POIView, JSONFeatureIdsView, JSONFeatureView, JSONFeaturesView, JSONFeatureChangeStatusView, \
     JSONFeatureDeleteView, POIEditView
 
+register_converter(UintWithoutZero, 'uint_id')
+
 urlpatterns = [
-    path('<int:id>/',               POIView.as_view(),                      name='poi'),
-    path('<int:id>/edit/',          POIEditView.as_view(),                  name='poi_edit'),
-    path('<int:id>/', include([
+    path('<uint_id:id>/',               POIView.as_view(),                      name='poi'),
+    path('<uint_id:id>/edit/',          POIEditView.as_view(),                  name='poi_edit'),
+    path('<uint_id:id>/', include([
         path('json_get/',           JSONFeatureView.as_view(),              name='json_poi'),
         path('json_change_status/', JSONFeatureChangeStatusView.as_view(),  name='json_poi_change_status'),
         path('json_delete/',        JSONFeatureDeleteView.as_view(),        name='json_poi_delete'),
