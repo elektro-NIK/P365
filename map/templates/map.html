@@ -29,11 +29,11 @@
                 bounds && bounds.isValid() ? map.fitBounds(bounds) : {};
             });
             progress = -1;
-            get_all(map, "{% url 'json_track_ids' %}", "{% url 'json_track' id=0 %}", "{% url 'track' id=0 %}");
-            get_all(map, "{% url 'json_route_ids' %}", "{% url 'json_route' id=0 %}",
-                         "{% url 'route' id=0 %}", "{% url 'route_edit' id=0 %}");
-            get_all(map, "{% url 'json_poi_ids' %}", "{% url 'json_poi' id=0 %}",
-                         "{% url 'poi' id=0 %}", "{% url 'poi_edit' id=0 %}");
+            get_all(map, "{% url 'track:json_ids' %}", "{% url 'track:json' id=0 %}", "{% url 'track:view' id=0 %}");
+            get_all(map, "{% url 'route:json_ids' %}", "{% url 'route:json' id=0 %}",
+                         "{% url 'route:view' id=0 %}", "{% url 'route:edit' id=0 %}");
+            get_all(map, "{% url 'poi:json_ids' %}", "{% url 'poi:json' id=0 %}",
+                         "{% url 'poi:view' id=0 %}", "{% url 'poi:edit' id=0 %}");
         }
     </script>
 {% endblock %}

@@ -65,13 +65,13 @@ class POIEditView(View):
                 poi = get_object_or_404(POIModel, id=id)
                 poi.name = form.cleaned_data['name']
                 poi.description = form.cleaned_data['description']
-                poi.tag = form.cleaned_data['tag']
+                # poi.tag = form.cleaned_data['tag']
                 poi.geom = form.cleaned_data['geom']
             else:                                                   # create POI
                 poi = form.save(commit=False)
                 poi.user = request.user
             poi.save()
-            return HttpResponseRedirect(reverse('table'))
+            return HttpResponseRedirect(reverse('table:view'))
         return render(request, 'editor.html', {'title': form['name'].value(), 'form': form})
 
 
@@ -93,7 +93,7 @@ class RouteEditView(View):
                 route = get_object_or_404(RouteModel, id=id)
                 route.name = form.cleaned_data['name']
                 route.description = form.cleaned_data['description']
-                route.tag = form.cleaned_data['tag']
+                # route.tag = form.cleaned_data['tag']
                 route.geom = form.cleaned_data['geom']
             else:
                 route = form.save(commit=False)
@@ -109,7 +109,7 @@ class RouteEditView(View):
             route.altitude_gain = sum(gain)
             route.altitude_loss = sum(loss)
             route.save()
-            return HttpResponseRedirect(reverse('table'))
+            return HttpResponseRedirect(reverse('table:view'))
         return render(request, 'editor.html', {'title': form['name'].value(), 'form': form})
 
 

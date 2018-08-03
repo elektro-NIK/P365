@@ -52,7 +52,7 @@
             $('div.leaflet-container').height(height);
             map.invalidateSize();
 
-            $.getJSON("{% url 'json_route' route.id %}")
+            $.getJSON("{% url 'route:json' route.id %}")
             .done(function (data) {
                 var elevation = L.control.elevation({
                     position: 'bottomleft',

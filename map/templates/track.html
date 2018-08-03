@@ -71,7 +71,7 @@
             $('div.leaflet-container').height(height);
             map.invalidateSize();
 
-            $.getJSON("{% url 'json_track' track.id %}")
+            $.getJSON("{% url 'track:json' track.id %}")
             .done(function (data) {
                 var elevation = L.control.elevation({
                     position: 'bottomleft',

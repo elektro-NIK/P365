@@ -1,7 +1,9 @@
 from django.urls import path
 
-from story.views import StoriesView
+from .views import StoriesView
+
+app_name = 'story'
 
 urlpatterns = [
-    path('', StoriesView.as_view(), name='stories'),
+    path('', StoriesView.as_view(), name='view'),
 ]

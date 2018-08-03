@@ -20,7 +20,7 @@ class LoginView(View):
     @staticmethod
     def get(request):
         if request.user.is_authenticated:
-            return HttpResponseRedirect(reverse('profile', kwargs={'username': request.user}))
+            return HttpResponseRedirect(reverse('user:profile', kwargs={'username': request.user}))
         else:
             form = AuthenticationForm()
             nexturl = request.GET.get('next') or ''
@@ -33,7 +33,7 @@ class LoginView(View):
         if form.is_valid():
             user = User.objects.get(username=form.cleaned_data['username'])
             login(request, user)
-            return HttpResponseRedirect(nexturl or reverse('profile', kwargs={'username': request.user}))
+            return HttpResponseRedirect(nexturl or reverse('user:profile', kwargs={'username': request.user}))
         else:
             return render(request, 'login.html', {'title': 'Login', 'form': form, 'next': nexturl})
 
@@ -42,7 +42,7 @@ class SignUpView(View):
     @staticmethod
     def get(request):
         if request.user.is_authenticated:
-            return HttpResponseRedirect(reverse('profile', kwargs={'username': request.user}))
+            return HttpResponseRedirect(reverse('user:profile', kwargs={'username': request.user}))
         else:
             form = SignUpForm()
             nexturl = request.GET.get('next') or ''
@@ -57,7 +57,7 @@ class SignUpView(View):
             user = authenticate(request, username=request.POST['username'], password=request.POST['password1'])
             if user:
                 login(request, user)
-            return HttpResponseRedirect(nexturl or reverse('profile', kwargs={'username': user.username}))
+            return HttpResponseRedirect(nexturl or reverse('user:profile', kwargs={'username': user.username}))
         else:
             return render(request, 'register.html', {'title': 'Sign Up', 'form': form, 'next': nexturl})
 
@@ -65,7 +65,7 @@ class SignUpView(View):
 class ProfileRedirect(LoginRequiredMixin, View):
     @staticmethod
     def get(request):
-        return HttpResponseRedirect(reverse('profile', kwargs={'username': request.user}))
+        return HttpResponseRedirect(reverse('user:profile', kwargs={'username': request.user}))
 
 
 class ProfileView(LoginRequiredMixin, View):

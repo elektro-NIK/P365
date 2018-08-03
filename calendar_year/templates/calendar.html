@@ -27,7 +27,7 @@
         function deleteEvent(event) {
             $.ajax({
                 type: "POST",
-                url: "{% url 'delete_event' %}",
+                url: "{% url 'calendar:delete_event' %}",
                 data: {
                     csrfmiddlewaretoken: "{{ csrf_token }}",
                     id: event.id,
@@ -52,7 +52,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "{% url 'update_event' %}",
+                url: "{% url 'calendar:update_event' %}",
                 data: {
                     csrfmiddlewaretoken: "{{ csrf_token }}",
                     event: JSON.stringify(update_event)
@@ -69,7 +69,7 @@
 
         function updateAllEvents() {
             $.ajax({
-                url: "{% url 'get_all_events' %}",
+                url: "{% url 'calendar:get_all_events' %}",
                 success: function (data) {
                     for (var i in data) {
                         data[i].startDate = new Date(data[i].startDate);

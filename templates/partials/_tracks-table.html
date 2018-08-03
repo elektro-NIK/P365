@@ -16,16 +16,16 @@
             {% for track in tracks %}
                 <tr id="track{{ track.id }}">
                     <td>
-                        <a href="{% url 'track' track.id %}">{{ track.name }}</a>
+                        <a href="{% url 'track:view' track.id %}">{{ track.name }}</a>
                     </td>
                     <td>{{ track.start_date|naturaltime }}</td>
                     <td>{{ track.length|floatformat }} km</td>
                     <td class="center">
-                        {% if track.tag.slug %}
-                            <a href="{% url 'tag_url' track.tag.slug %}">
-                                <span class="label label-default">{{ track.tag|default:'' }}</span>
-                            </a>
-                        {% endif %}
+                        <!--{% if track.tag.slug %}-->
+                            <!--<a href="{% url 'tag_url' track.tag.slug %}">-->
+                                <!--<span class="label label-default">{{ track.tag|default:'' }}</span>-->
+                            <!--</a>-->
+                        <!--{% endif %}-->
                     </td>
                     <td class="center status">
                         {% if track.public %}

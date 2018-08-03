@@ -74,7 +74,7 @@ class TableView(View):
                     user=request.user,
                     geom=Point(*get_elevation(value['geom'])),
                 ).save()
-        return HttpResponseRedirect(reverse('table'))
+        return HttpResponseRedirect(reverse('table:view'))
 
 
 class UpdateTablesView(View):

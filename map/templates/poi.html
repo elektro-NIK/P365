@@ -48,7 +48,7 @@
             $('div.leaflet-container').height(height);
             map.invalidateSize();
 
-            $.getJSON("{% url 'json_poi' poi.id %}")
+            $.getJSON("{% url 'poi:json' poi.id %}")
             .done(function (data) {
                 var poi = L.geoJson(JSON.parse(data)).addTo(map);
                 map.fitBounds(poi.getBounds());
