@@ -96,6 +96,6 @@ class UpdateTablesView(View):
 class UpdateTableView(View):
     @staticmethod
     def get(request, model, template, temp_var_name):
-        order = '-created' if isinstance(model, TrackModel) else '-start_date'              # Tracks order by start date
+        order = '-start_date' if isinstance(model, TrackModel) else '-created'              # Tracks order by start date
         objs = model.objects.filter(user=request.user, is_active=True).order_by(order)
         return render(request, template, {temp_var_name: objs})
