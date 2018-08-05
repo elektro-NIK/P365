@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from taggit.managers import TaggableManager
 
 from P365.settings import MAX_LENGTH
 from calendar_year.models import EventModel
@@ -23,7 +24,7 @@ class StoryModel(models.Model):
     article = models.OneToOneField(ArticleModel, on_delete=models.CASCADE)
     event = models.OneToOneField(EventModel, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
-    #tags = TagField(TagModel)
+    tags = TaggableManager(blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     objects = models.Manager()

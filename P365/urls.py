@@ -11,12 +11,12 @@ from profile.views import LoginView, ProfileRedirect, SignUpView, IndexView
 
 urlpatterns = [
     # main
-    path('', IndexView.as_view(),                   name='index'),
-    path('admin/', admin.site.urls,                 name='admin'),
+    path('',            IndexView.as_view(),        name='index'),
+    path('admin/',      admin.site.urls,            name='admin'),
     # auth
-    path('login/', LoginView.as_view(),             name='login'),
-    path('register/', SignUpView.as_view(),         name='signup'),
-    path('logout/', logout_then_login,              name='logout'),
+    path('login/',      LoginView.as_view(),        name='login'),
+    path('register/',   SignUpView.as_view(),       name='signup'),
+    path('logout/',     logout_then_login,          name='logout'),
     # redirection
     path('accounts/profile/', ProfileRedirect.as_view()),
     # tabs

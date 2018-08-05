@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.contrib.gis.db import models
+from taggit.managers import TaggableManager
 
 from P365.settings import MAX_LENGTH
 
@@ -10,7 +11,7 @@ class POIModel(models.Model):
     description = models.TextField(max_length=MAX_LENGTH['description'], null=True, blank=True)
     # Relations
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    # tag = SingleTagField(TagModel, blank=True)
+    tags = TaggableManager(blank=True)
     # Datetime
     created = models.DateTimeField(auto_now_add=True)
     # Flags
@@ -43,7 +44,7 @@ class RouteModel(models.Model):
     description = models.TextField(max_length=MAX_LENGTH['description'], null=True, blank=True)
     # Relations
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    # tag = SingleTagField(TagModel, blank=True)
+    tags = TaggableManager(blank=True)
     # Datetime
     created = models.DateTimeField(auto_now_add=True)
     # Distance
@@ -71,7 +72,7 @@ class TrackModel(models.Model):
     description = models.TextField(max_length=MAX_LENGTH['description'], null=True, blank=True)
     # Relations
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    #tag = SingleTagField(TagModel, blank=True)
+    tags = TaggableManager(blank=True)
     # Datetime
     created = models.DateTimeField(auto_now_add=True)
     start_date = models.DateTimeField()

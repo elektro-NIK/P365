@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'leaflet',
     'bootstrap3',
+    'taggit',
 
     'calendar_year',
     'gpx',
@@ -194,6 +195,8 @@ LEAFLET_CONFIG = {
          }),
     ],
 }
+
+TAGGIT_CASE_INSENSITIVE = True
 
 MAX_LENGTH = {
     'name': 30,
