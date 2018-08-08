@@ -18,4 +18,5 @@ $(window).on('map:init', function (e) {
     }
     $('div.leaflet-container').height(height);
     detail.map.invalidateSize();
+    detail.map.setZoom(13);
 });

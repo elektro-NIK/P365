@@ -52,6 +52,7 @@
             .done(function (data) {
                 var poi = L.geoJson(JSON.parse(data)).addTo(map);
                 map.fitBounds(poi.getBounds());
+                map.setZoom(13);
             }).fail(function() {setErrorMsg()});
         }
     </script>
