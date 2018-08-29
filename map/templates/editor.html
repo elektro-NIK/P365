@@ -26,14 +26,12 @@
 {% endblock %}
 
 {% block css %}
-    {% bootstrap_css %}
     {% leaflet_css plugins="forms" %}
     {{ form.media.css }}
     <link href="{% static 'css/editor.css' %}" rel="stylesheet" media="screen">
 {% endblock %}
 
 {% block js %}
-    {% bootstrap_javascript %}
     {% leaflet_js plugins="forms" %}
     {{ form.media.js }}
     <script src="{% static 'js/editor.js' %}"></script>

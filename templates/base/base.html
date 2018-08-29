@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+{% load bootstrap3 %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
-    <link href="{% static 'bootstrap/css/bootstrap-sticky-footer.css' %}" rel="stylesheet" media="screen">
+    {% bootstrap_css %}
     <link href="{% static 'css/main.css' %}" rel="stylesheet" media="screen">
     {% block css %}{% endblock %}
     <title>{{ title }} - P365</title>
@@ -30,7 +30,7 @@
         </div>
     </nav>
     <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
-    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    {% bootstrap_javascript %}
     {% block js %}{% endblock %}
 </body>
 </html>

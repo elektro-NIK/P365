@@ -56,13 +56,10 @@
 {% endblock %}
 
 {% block css %}
-    {% bootstrap_css %}
     {% leaflet_css plugins='elevation' %}
-    <!--<link href="{% static 'css/track.css' %}" rel="stylesheet" media="screen">-->
 {% endblock %}
 
 {% block js %}
-    {% bootstrap_javascript %}
     {% leaflet_js plugins='elevation' %}
     <script src="{% static 'js/msg_wrong.js' %}"></script>
     <script>
