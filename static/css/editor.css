@@ -2,6 +2,7 @@
   resize: none;
 }
 
+/*
 @media (max-width: 768px) {
     .leaflet-container {
         margin-top: 15px;
@@ -15,3 +16,4 @@
 .thumbnail {
     margin-bottom: 0;
 }
+*/

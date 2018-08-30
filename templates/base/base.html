@@ -24,11 +24,11 @@
         </div>
         {% block content %}{% endblock %}
     </div>
-    <nav class="footer navbar-inverse navbar-static-bottom" id="footer_container">
-        <div class="container-fluid">
+    <footer>
+        <div class="container-fluid navbar-inverse">
             {% include "base/footer.html" %}
         </div>
-    </nav>
+    </footer>
     <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
     {% bootstrap_javascript %}
     {% block js %}{% endblock %}
