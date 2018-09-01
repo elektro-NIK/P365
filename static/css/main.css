@@ -24,6 +24,21 @@ footer {
   width: 100%;
 }
 
+.copyright {
+    margin-bottom: 0px;
+}
+
+h1.fa {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+a.fa {
+    padding-bottom: 6px !important;
+    padding-top: 7px !important;
+    color: #9d9d9d;
+}
+
 /* PROGRESSBAR */
 div.progress-bar-thin {
     height: 5px;
