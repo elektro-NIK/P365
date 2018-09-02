@@ -1,4 +1,4 @@
-function parseData (map, data, url, url_edit) {
+function parseData (map, data, url, url_edit, url_delete) {
     var json = JSON.parse(data);
     b = L.geoJson(json, {
         onEachFeature: function (feature, layer) {
@@ -9,6 +9,8 @@ function parseData (map, data, url, url_edit) {
                 '</a>';
             if (url_edit)
                 popup += ' <a href="' + url_edit.replace('0', feature.properties.pk) + '" class="glyphicon glyphicon-pencil"></a>'
+            if (url_delete)
+                popup += ' <a href="#" class="glyphicon glyphicon-trash"></a>'
             popup += '<br>' + (feature.properties.description || '') + '</p>';
             layer.bindPopup(popup);
             layer.on('click', function() {
@@ -21,7 +23,7 @@ function parseData (map, data, url, url_edit) {
     bounds.isValid() ? map.fitBounds(bounds) : {};
 }
 
-function get_all (map, url_ids, url_get, url_show, url_edit) {
+function get_all (map, url_ids, url_get, url_show, url_edit, url_delete) {
     $.getJSON(url_ids)
     .done(function(data) {
         if (data.length > 0) {
@@ -42,7 +44,7 @@ function get_all (map, url_ids, url_get, url_show, url_edit) {
                         $('.progress').hide();
                         $('.leaflet-container').height('100%');
                     }
-                    parseData(map, data, url_show, url_edit);
+                    parseData(map, data, url_show, url_edit, url_delete);
                 })
                 .fail(function()     {setErrorMsg()});
             }
