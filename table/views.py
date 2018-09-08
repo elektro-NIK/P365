@@ -6,6 +6,7 @@ from django.contrib.gis.geos import LineString, Point
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views import View
 
@@ -40,8 +41,8 @@ class TableView(View):
                 TrackModel(
                     name=key,
                     user=request.user,
-                    start_date=value['start_date'],
-                    finish_date=value['finish_date'],
+                    start_date=timezone.make_aware(value['start_date']),
+                    finish_date=timezone.make_aware(value['finish_date']),
                     length=value['length'],
                     speed=value['speed'],
                     speed_max=value['speed_max'],
