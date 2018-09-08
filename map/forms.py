@@ -9,7 +9,6 @@ from .models import POIModel, RouteModel
 class POIForm(ModelForm):
     class Meta:
         model = POIModel
-        # fields = ['name', 'description', 'geom']
         fields = ['name', 'description', 'tags', 'geom']
         widgets = {'geom': LeafletWidget()}
 
@@ -20,8 +19,7 @@ class POIForm(ModelForm):
 class RouteForm(ModelForm):
     class Meta:
         model = RouteModel
-        fields = ['name', 'description', 'geom']
-        # fields = ['name', 'description', 'tag', 'geom']
+        fields = ['name', 'description', 'tags', 'geom']
         widgets = {'geom': LeafletWidget()}
 
     def clean_geom(self):
