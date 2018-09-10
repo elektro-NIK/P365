@@ -66,11 +66,12 @@ class POIEditView(View):
                 poi.name = form.cleaned_data['name']
                 poi.description = form.cleaned_data['description']
                 poi.geom = form.cleaned_data['geom']
+                poi.tags.set(*form.cleaned_data['tags'])
             else:                                                   # create POI
                 poi = form.save(commit=False)
                 poi.user = request.user
-            poi.tags.set(*form.cleaned_data['tags'])
             poi.save()
+            form.save_m2m() if not id else None
             return HttpResponseRedirect(reverse('table:view'))
         return render(request, 'editor.html', {'title': form['name'].value(), 'form': form})
 
@@ -94,11 +95,11 @@ class RouteEditView(View):
                 route.name = form.cleaned_data['name']
                 route.description = form.cleaned_data['description']
                 route.geom = form.cleaned_data['geom']
+                route.tags.set(*form.cleaned_data['tags'])
             else:
                 route = form.save(commit=False)
                 route.user = request.user
             route.length = form.cleaned_data['geom'].length * 100
-            route.tags.set(*form.cleaned_data['tags'])
             # Calculate min, max, loss, gain altitude
             alts = [i[2] for i in form.cleaned_data['geom']]
             diffs = [alts[i] - alts[i-1] for i in range(1, len(alts))]
@@ -108,7 +109,9 @@ class RouteEditView(View):
             route.altitude_min = min(alts)
             route.altitude_gain = sum(gain)
             route.altitude_loss = sum(loss)
+            #
             route.save()
+            form.save_m2m() if not id else None
             return HttpResponseRedirect(reverse('table:view'))
         return render(request, 'editor.html', {'title': form['name'].value(), 'form': form})
 
