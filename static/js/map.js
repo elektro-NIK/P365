@@ -48,9 +48,11 @@ function parseData (map, data, url, url_edit, url_delete) {
 function get_all (map, url_ids, url_get, url_show, url_edit, url_delete) {
     $.getJSON(url_ids)
     .done(function(data) {
+        console.log('starting: ' + progress);
+        console.log('data: ' + data.length);
         if (data.length > 0) {
-            if (progress == -1) {
-                progress = 0;
+            if (progress < 0) {
+                progress += 1;
                 $('.leaflet-container').height($('.leaflet-container').height() - 5);
             }
             $('.progress').show();
