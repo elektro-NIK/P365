@@ -6,6 +6,7 @@ import calendar_year.urls
 import profile.urls
 import story.urls
 import table.urls
+import tag.urls
 from map import urls_map, urls_poi, urls_route, urls_track
 from profile.views import LoginView, ProfileRedirect, SignUpView, IndexView
 
@@ -29,4 +30,5 @@ urlpatterns = [
     path('poi/',        include(urls_poi,           namespace='poi')),
     path('route/',      include(urls_route,         namespace='route')),
     path('track/',      include(urls_track,         namespace='track')),
+    path('tag/',        include(tag.urls,           namespace='tag')),
 ]
