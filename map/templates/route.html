@@ -10,7 +10,7 @@
             <center><b>{{ route.name }}</b></center>
             <center>
                 {% for tag in route.tags.names %}
-                    <span class="label label-default">{{ tag }}</span>
+                    <a href="#" class="label label-default">{{ tag }}</a>
                 {% endfor %}
             </center>
             <br><p>{{ route.description|default:'' }}</p>
