@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'profile',
     'story',
     'table',
+    'tag',
 ]
 
 MIDDLEWARE = [

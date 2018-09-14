@@ -6,5 +6,5 @@ app_name = 'tag'
 
 urlpatterns = [
     path('',            TagCloudView.as_view(), name='tag_cloud'),
-    path('<slug:tag>/', TagView.as_view(),      name='tag'),
+    path('<slug:tagname>/', TagView.as_view(),      name='tag'),
 ]
