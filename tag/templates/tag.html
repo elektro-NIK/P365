@@ -6,9 +6,9 @@
         <div class="table-responsive col-xs-12 col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
             <div class="multitable">
                 <ul class="nav nav-tabs">
-                    <li class="tracks"><a href="#tracks" data-toggle="tab" role="tab" data-target="#table-tracks">Tracks</a></li>
-                    <li class="routes"><a href="#routes" data-toggle="tab" role="tab" data-target="#table-routes">Routes</a></li>
-                    <li class="pois"><a href="#pois" data-toggle="tab" role="tab" data-target="#table-pois">POIs</a></li>
+                    {% if tracks %} <li class="tracks"><a href="#tracks" data-toggle="tab" role="tab" data-target="#table-tracks">Tracks</a></li> {% endif %}
+                    {% if routes %} <li class="routes"><a href="#routes" data-toggle="tab" role="tab" data-target="#table-routes">Routes</a></li> {% endif %}
+                    {% if pois %}   <li class="pois">  <a href="#pois"   data-toggle="tab" role="tab" data-target="#table-pois">  POIs  </a></li> {% endif %}
                 </ul>
                 <div class="tab-content" id="tables">
                     {% include 'partials/_tag-table.html' %}

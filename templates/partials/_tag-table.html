@@ -1,121 +1,118 @@
 {% load humanize %}
-<div id="table-tracks" class="tab-pane fade in active" role="tabpanel">
-    {% if tracks %}
-        <table class="table table-hover table-condensed">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>User</th>
-                    <th>Length</th>
-                    <th>Created</th>
-                    <th class="center">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for track in tracks %}
-                    <tr id="track{{ track.id }}">
-                        <td>
-                            <a href="{% url 'track:view' track.id %}">{{ track.name }}</a>
-                        </td>
-                        <td>
-                            <a href="{% url 'user:profile' track.user %}">{{ track.user }}</a>
-                        </td>
-                        <td>{{ track.length|floatformat }} km</td>
-                        <td>{{ track.start_date|naturaltime }}</td>
-                        <td class="center status">
-                            {% if track.public %}
-                                <i class="glyphicon glyphicon-globe" title="public"></i>
-                            {% else %}
-                                <i class="glyphicon glyphicon-user" title="private"></i>
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <div class="alert alert-info" role="alert">
-            You don't have Tracks yet. Try to import your first Track.
-        </div>
-    {% endif %}
-</div>
 
-<div id="table-routes" class="tab-pane fade in" role="tabpanel">
-    {% if routes %}
-        <table class="table table-hover table-condensed">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>User</th>
-                    <th>Length</th>
-                    <th>Created</th>
-                    <th class="center">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for route in routes %}
-                    <tr id="route{{ route.id }}">
-                        <td>
-                            <a href="{% url 'route:view' route.id %}">{{ route.name }}</a>
-                        </td>
-                        <td>
-                            <a href="{% url 'user:profile' route.user %}">{{ route.user }}</a>
-                        </td>
-                        <td>{{ route.length|floatformat }} km</td>
-                        <td>{{ route.created|naturaltime }}</td>
-                        <td class="center status">
-                            {% if route.public %}
-                                <i class="glyphicon glyphicon-globe" title="public"></i>
-                            {% else %}
-                                <i class="glyphicon glyphicon-user" title="private"></i>
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
+{% if not tracks and not routes and not pois %}
+    <div class="tab-pane fade in active" role="tabpanel">
         <div class="alert alert-info" role="alert">
-            You don't have routes yet. Try to create your first route.
+            There is nothing to show. Tag any item
         </div>
-    {% endif %}
-</div>
+    </div>
+{% else %}
+    <div id="table-tracks" class="tab-pane fade in {% if tracks %} active {% endif %}" role="tabpanel">
+        {% if tracks %}
+            <table class="table table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>User</th>
+                        <th>Length</th>
+                        <th>Created</th>
+                        <th class="center">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for track in tracks %}
+                        <tr id="track{{ track.id }}">
+                            <td>
+                                <a href="{% url 'track:view' track.id %}">{{ track.name }}</a>
+                            </td>
+                            <td>
+                                <a href="{% url 'user:profile' track.user %}">{{ track.user }}</a>
+                            </td>
+                            <td>{{ track.length|floatformat }} km</td>
+                            <td>{{ track.start_date|naturaltime }}</td>
+                            <td class="center status">
+                                {% if track.public %}
+                                    <i class="glyphicon glyphicon-globe" title="public"></i>
+                                {% else %}
+                                    <i class="glyphicon glyphicon-user" title="private"></i>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
 
-<div id="table-pois" class="tab-pane fade in" role="tabpanel">
-    {% if pois %}
-        <table class="table table-hover table-condensed">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>User</th>
-                    <th>Created</th>
-                    <th class="center">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for poi in pois %}
-                    <tr id="poi{{ poi.id }}">
-                        <td>
-                            <a href="{% url 'poi:view' poi.id %}">{{ poi.name }}</a>
-                        </td>
-                        <td>
-                            <a href="{% url 'user:profile' poi.user %}">{{ poi.user }}</a>
-                        </td>
-                        <td>{{ poi.created|naturaltime }}</td>
-                        <td class="center status">
-                            {% if poi.public %}
-                                <i class="glyphicon glyphicon-globe" title="public"></i>
-                            {% else %}
-                                <i class="glyphicon glyphicon-user" title="private"></i>
-                            {% endif %}
-                        </td>
+    <div id="table-routes" class="tab-pane fade in  {% if not tracks and routes%} active {% endif %}" role="tabpanel">
+        {% if routes %}
+            <table class="table table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>User</th>
+                        <th>Length</th>
+                        <th>Created</th>
+                        <th class="center">Status</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <div class="alert alert-info" role="alert">
-            You don't have pois yet. Try to create your first poi.
-        </div>
-    {% endif %}
-</div>
+                </thead>
+                <tbody>
+                    {% for route in routes %}
+                        <tr id="route{{ route.id }}">
+                            <td>
+                                <a href="{% url 'route:view' route.id %}">{{ route.name }}</a>
+                            </td>
+                            <td>
+                                <a href="{% url 'user:profile' route.user %}">{{ route.user }}</a>
+                            </td>
+                            <td>{{ route.length|floatformat }} km</td>
+                            <td>{{ route.created|naturaltime }}</td>
+                            <td class="center status">
+                                {% if route.public %}
+                                    <i class="glyphicon glyphicon-globe" title="public"></i>
+                                {% else %}
+                                    <i class="glyphicon glyphicon-user" title="private"></i>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+
+    <div id="table-pois" class="tab-pane fade in {% if not tracks and not routes and pois%} active {% endif %}" role="tabpanel">
+        {% if pois %}
+            <table class="table table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>User</th>
+                        <th>Created</th>
+                        <th class="center">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for poi in pois %}
+                        <tr id="poi{{ poi.id }}">
+                            <td>
+                                <a href="{% url 'poi:view' poi.id %}">{{ poi.name }}</a>
+                            </td>
+                            <td>
+                                <a href="{% url 'user:profile' poi.user %}">{{ poi.user }}</a>
+                            </td>
+                            <td>{{ poi.created|naturaltime }}</td>
+                            <td class="center status">
+                                {% if poi.public %}
+                                    <i class="glyphicon glyphicon-globe" title="public"></i>
+                                {% else %}
+                                    <i class="glyphicon glyphicon-user" title="private"></i>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endif %}

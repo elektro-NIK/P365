@@ -1,6 +1,7 @@
 {% extends "base/base.html" %}
 {% load bootstrap3 %}
 {% load leaflet_tags %}
+{% load taggit_templatetags2_tags %}
 {% load staticfiles %}
 
 {% block content %}
@@ -9,8 +10,9 @@
         <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
             <center><b>{{ track.name }}</b></center>
             <center>
-                {% for tag in track.tags.names %}
-                    <a href="#" class="label label-default">{{ tag }}</a>
+                {% get_tags_for_object track as "tags" %}
+                {% for tag in tags %}
+                    <a href="{% url 'tag:tag' tag.slug %}" class="label label-default">{{ tag }}</a>
                 {% endfor %}
             </center>
             <br><p>{{ track.description|default:'' }}</p>

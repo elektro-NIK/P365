@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'leaflet',
     'bootstrap3',
     'taggit',
+    'taggit_templatetags2',
 
     'calendar_year',
     'gpx',
