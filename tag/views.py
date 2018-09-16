@@ -9,7 +9,9 @@ from map.models import POIModel, RouteModel, TrackModel
 class TagCloudView(View):
     @staticmethod
     def get(request):
-        return HttpResponseNotFound(404)
+        return render(request, 'tag-cloud.html', {
+            'title': 'Tagcloud',
+        })
 
 
 class TagView(View):
