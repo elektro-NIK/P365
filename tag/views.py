@@ -16,29 +16,29 @@ class TagCloudView(View):
 
 class TagView(View):
     @staticmethod
-    def get(request, tagname):
+    def get(request, tagslug):
         if request.user.is_anonymous:
             pois = POIModel.objects.filter(
-                Q(tags__slug=tagname), Q(is_active=True), Q(public=True)
+                Q(tags__slug=tagslug), Q(is_active=True), Q(public=True)
             ).order_by('-created')
             routes = RouteModel.objects.filter(
-                Q(tags__slug=tagname), Q(is_active=True), Q(public=True)
+                Q(tags__slug=tagslug), Q(is_active=True), Q(public=True)
             ).order_by('-created')
             tracks = TrackModel.objects.filter(
-                Q(tags__slug=tagname), Q(is_active=True), Q(public=True)
+                Q(tags__slug=tagslug), Q(is_active=True), Q(public=True)
             ).order_by('-start_date')
         else:
             pois = POIModel.objects.filter(
-                Q(tags__slug=tagname), Q(is_active=True), Q(user=request.user) | Q(public=True)
+                Q(tags__slug=tagslug), Q(is_active=True), Q(user=request.user) | Q(public=True)
             ).order_by('-created')
             routes = RouteModel.objects.filter(
-                Q(tags__slug=tagname), Q(is_active=True), Q(user=request.user) | Q(public=True)
+                Q(tags__slug=tagslug), Q(is_active=True), Q(user=request.user) | Q(public=True)
             ).order_by('-created')
             tracks = TrackModel.objects.filter(
-                Q(tags__slug=tagname), Q(is_active=True), Q(user=request.user) | Q(public=True)
+                Q(tags__slug=tagslug), Q(is_active=True), Q(user=request.user) | Q(public=True)
             ).order_by('-start_date')
         return render(request, 'tag.html', {
-            'title': '#' + tagname,
+            'title': '#' + tagslug,
             'pois': pois,
             'routes': routes,
             'tracks': tracks,

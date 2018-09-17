@@ -5,20 +5,13 @@
 {% block content %}
     <div class="row">
         <div class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
-            {% get_taglist as tags %}
-            <ul>
-                {% for tag in tags %}
-                    <li>{{tag}} [{{ tag.slug }}] ({{tag.num_times}})</li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
+            <center><h1>Most popular tags</h1></center>
             {% get_tagcloud as tags %}
-            <ul>
-                {% for tag in tags %}
-                    <li>{{tag}} [{{ tag.slug }}] ({{tag.weight}})</li>
-                {% endfor %}
-            </ul>
+            {% for tag in tags %}
+                <font size={{tag.weight|floatformat:0}}>
+                    <a href="{% url 'tag:tag' tag.slug %}" class="label label-default">{{ tag }}</a>
+                </font>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}
