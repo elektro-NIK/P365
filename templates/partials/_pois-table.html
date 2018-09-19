@@ -1,4 +1,5 @@
 {% load humanize %}
+{% load taggit_templatetags2_tags %}
 
 {% if pois %}
     <table class="table table-hover table-condensed">
@@ -6,7 +7,7 @@
             <tr>
                 <th>Name</th>
                 <th>Created</th>
-                <th class="center">Tag</th>
+                <th class="center">Tags</th>
                 <th class="center">Status</th>
                 <th class="center">Edit</th>
             </tr>
@@ -18,12 +19,11 @@
                         <a href="{% url 'poi:view' poi.id %}">{{ poi.name }}</a>
                     </td>
                     <td>{{ poi.created|naturaltime }}</td>
-                    <td class="center">
-                        <!--{% if poi.tag.slug %}-->
-                            <!--<a href="{% url 'tag_url' poi.tag.slug %}">-->
-                                <!--<span class="label label-default">{{ poi.tag|default:'' }}</span>-->
-                            <!--</a>-->
-                        <!--{% endif %}-->
+                    <td>
+                        {% get_tags_for_object poi as "tags" %}
+                        {% for tag in tags %}
+                            <a href="{% url 'tag:tag' tag.slug %}" class="label label-default">{{ tag }}</a>
+                        {% endfor %}
                     </td>
                     <td class="center status">
                         {% if poi.public %}
