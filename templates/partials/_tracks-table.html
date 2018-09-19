@@ -1,4 +1,5 @@
 {% load humanize %}
+{% load taggit_templatetags2_tags %}
 
 {% if tracks %}
     <table class="table table-hover table-condensed">
@@ -7,7 +8,7 @@
                 <th>Name</th>
                 <th>Started</th>
                 <th>Length</th>
-                <th class="center">Tag</th>
+                <th class="center">Tags</th>
                 <th class="center">Status</th>
                 <th class="center">Edit</th>
             </tr>
@@ -20,7 +21,11 @@
                     </td>
                     <td>{{ track.start_date|naturaltime }}</td>
                     <td>{{ track.length|floatformat }} km</td>
-                    <td class="center">
+                    <td>
+                        {% get_tags_for_object track as "tags" %}
+                        {% for tag in tags %}
+                            <a href="{% url 'tag:tag' tag.slug %}" class="label label-default">{{ tag }}</a>
+                        {% endfor %}
                         <!--{% if track.tag.slug %}-->
                             <!--<a href="{% url 'tag_url' track.tag.slug %}">-->
                                 <!--<span class="label label-default">{{ track.tag|default:'' }}</span>-->
