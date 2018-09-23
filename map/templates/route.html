@@ -51,7 +51,14 @@
     <script src="{% static 'js/msg_wrong.js' %}"></script>
     <script>
         function map_init_basic (map, options) {
-            var height = $(window).height() > $(document).height() ? $(window).height()-180 : $(window).height() * 2 - $(document).height() - 125; // <--- Fixme
+            // FIXME!!!!
+            if ($(window).height() > $(document).height())
+                var height = $(window).height() - 180;
+            else if ($(window).height() == $(document).height())
+                var height = $(window).height() - 140;
+            else
+                var height = $(window).height() - 90;
+
             $('div.leaflet-container').height(height);
             map.invalidateSize();
 
