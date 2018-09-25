@@ -38,7 +38,7 @@
                         {% endif %}
                     </td>
                     <td class="center edit">
-                        <a href="#" class="glyphicon glyphicon-edit" title="edit"></a>
+                        <a href="{% url 'track:edit' track.id %}" class="glyphicon glyphicon-edit" title="edit"></a>
                         {% if not track.public %}
                             <a href="#" class="glyphicon glyphicon-trash" title="delete"></a>
                         {% endif %}

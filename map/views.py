@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
 
-from .forms import POIForm, RouteForm
+from .forms import POIForm, RouteForm, TrackForm
 from .models import TrackModel, POIModel, RouteModel
 
 
@@ -114,6 +114,39 @@ class RouteEditView(View):
             form.save_m2m() if not id else None
             return HttpResponseRedirect(reverse('table:view'))
         return render(request, 'editor.html', {'title': form['name'].value(), 'form': form})
+
+
+@method_decorator(login_required, name='dispatch')
+class TrackEditView(View):
+    @staticmethod
+    def get(request, id=None):
+        track = get_object_or_404(TrackModel, id=id) if id else None
+        if not track or track.user != request.user:
+            return HttpResponseForbidden()
+        form = TrackForm(instance=track)
+        return render(request, 'editor.html', {'title': track.name, 'form': form})
+
+    @staticmethod
+    def post(request, id=None):
+        form = TrackForm(request.POST)
+        if form.is_valid():
+            track = get_object_or_404(TrackModel, id=id)
+            track.name = form.cleaned_data['name']
+            track.description = form.cleaned_data['description']
+            track.tags.set(*form.cleaned_data['tags'])
+            # track.length = form.cleaned_data['geom'].length * 100
+            # Calculate min, max, loss, gain altitude
+            # alts = [i[2] for i in form.cleaned_data['geom']]
+            # diffs = [alts[i] - alts[i-1] for i in range(1, len(alts))]
+            # gain, loss = [i for i in diffs if i > 0], [-i for i in diffs if i < 0]
+            # track.altitude_max = max(alts)
+            # track.altitude_min = min(alts)
+            # track.altitude_gain = sum(gain)
+            # track.altitude_loss = sum(loss)
+            track.save()
+            return HttpResponseRedirect(reverse('table:view'))
+        return render(request, 'editor.html', {'title': form['name'].value(), 'form': form})
+
 
 
 @method_decorator(login_required, name='dispatch')

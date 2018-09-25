@@ -3,7 +3,7 @@ from django.forms import ModelForm
 from leaflet.forms.widgets import LeafletWidget
 
 from google_api.elevation import get_elevation
-from .models import POIModel, RouteModel
+from .models import POIModel, RouteModel, TrackModel
 
 
 class POIForm(ModelForm):
@@ -24,3 +24,12 @@ class RouteForm(ModelForm):
 
     def clean_geom(self):
         return LineString(*get_elevation(self.cleaned_data['geom']))
+
+
+class TrackForm(ModelForm):
+    class Meta:
+        model = TrackModel
+        fields = ['name', 'description', 'tags', 'geom']
+        geom = LeafletWidget()
+        geom.modifiable = False
+        widgets = {'geom': geom}
