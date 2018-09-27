@@ -7,7 +7,7 @@
 {% block content %}
     <div class="row">
         <br>
-        <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
+        <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3" id="info">
             <center><b>{{ poi.name }}</b></center>
             <center>
                 {% get_tags_for_object poi as "tags" %}
@@ -47,14 +47,17 @@
     <script src="{% static 'js/msg_wrong.js' %}"></script>
     <script>
         function map_init_basic (map, options) {
-            // FIXME!!!!
-            if ($(window).height() > $(document).height())
-                var height = $(window).height() - 180;
-            else if ($(window).height() == $(document).height())
-                var height = $(window).height() - 140;
+            var info_height = $('#info').height();
+            var page_height = $(document).height();
+            var window_height = $(window).height();
+            var header_height = $('#header_container').height() + parseInt($('#header_container').css('margin-bottom').replace('px', ''));
+            var footer_height = $('footer').height();
+            if (info_height + header_height >= window_height)
+                var height = window_height - header_height;
+            else if (info_height + header_height + footer_height <= window_height)
+                var height = page_height - header_height - footer_height - parseInt($('#header_container').css('margin-bottom').replace('px', '')) - 2;
             else
-                var height = $(window).height() - 90;
-
+                var height = info_height;
             $('div.leaflet-container').height(height);
             map.invalidateSize();
 
