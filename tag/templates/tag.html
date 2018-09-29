@@ -7,21 +7,21 @@
             <div class="multitable">
                 <ul class="nav nav-tabs">
                     {% if tracks %}
-                        <li class="tracks">
+                        <li class="tracks {% if tracks %} active {% endif %}">
                             <a href="#tracks" data-toggle="tab" role="tab" data-target="#table-tracks">
                                 Tracks <span class="badge">{{ tracks|length }}</span>
                             </a>
                         </li>
                     {% endif %}
                     {% if routes %}
-                        <li class="routes">
+                        <li class="routes {% if not tracks and routes%} active {% endif %}">
                             <a href="#routes" data-toggle="tab" role="tab" data-target="#table-routes">
                                 Routes <span class="badge">{{ routes|length }}</span>
                             </a>
                         </li>
                     {% endif %}
                     {% if pois %}
-                        <li class="pois">
+                        <li class="pois {% if not tracks and not routes and pois%} active {% endif %}">
                             <a href="#pois" data-toggle="tab" role="tab" data-target="#table-pois">
                                 POIs <span class="badge">{{ pois|length }}</span>
                             </a>
