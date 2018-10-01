@@ -49,6 +49,6 @@
     </table>
 {% else %}
     <div class="alert alert-info" role="alert">
-        You don't have routes yet. Try to create your first route.
+        You don't have routes yet. Try to <a href="{% url 'route:create' %}" class="alert-link">create your first route</a>
     </div>
 {% endif %}
