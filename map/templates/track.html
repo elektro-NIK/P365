@@ -8,7 +8,12 @@
     <div class="row">
         <br>
         <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3" id="info">
-            <center><b>{{ track.name }}</b></center>
+            <center>
+                <b>
+                    {{ track.name }}
+                    <a href="{% url 'track:edit' id=track.pk%}"><i class="glyphicon glyphicon-pencil"></i></a>
+                </b>
+            </center>
             <center>
                 {% get_tags_for_object track as "tags" %}
                 {% for tag in tags %}
