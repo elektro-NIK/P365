@@ -9,7 +9,7 @@ from .models import POIModel, RouteModel, TrackModel
 class POIForm(ModelForm):
     class Meta:
         model = POIModel
-        fields = ['name', 'description', 'tags', 'geom']
+        fields = ['name', 'description', 'tags', 'public', 'geom']
         widgets = {'geom': LeafletWidget()}
 
     def clean_geom(self):
@@ -19,7 +19,7 @@ class POIForm(ModelForm):
 class RouteForm(ModelForm):
     class Meta:
         model = RouteModel
-        fields = ['name', 'description', 'tags', 'geom']
+        fields = ['name', 'description', 'tags', 'public', 'geom']
         widgets = {'geom': LeafletWidget()}
 
     def clean_geom(self):
@@ -29,7 +29,7 @@ class RouteForm(ModelForm):
 class TrackForm(ModelForm):
     class Meta:
         model = TrackModel
-        fields = ['name', 'description', 'tags', 'geom']
+        fields = ['name', 'description', 'tags', 'public', 'geom']
         geom = LeafletWidget()
         geom.modifiable = False
         widgets = {'geom': geom}
