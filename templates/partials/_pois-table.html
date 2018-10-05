@@ -47,6 +47,6 @@
     </table>
 {% else %}
     <div class="alert alert-info" role="alert">
-        You don't have pois yet. Try to create your first poi.
+        You don't have pois yet. Try to <a href="{% url 'poi:create' %}" class="alert-link">create your first poi</a>
     </div>
 {% endif %}

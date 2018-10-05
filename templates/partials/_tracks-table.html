@@ -49,6 +49,13 @@
     </table>
 {% else %}
     <div class="alert alert-info" role="alert">
-        You don't have Tracks yet. Try to import your first Track.
+        <form class="form" method="post" enctype="multipart/form-data" action="{% url 'table:view' %}">
+            {% csrf_token %}
+            You don't have Tracks yet. Try to
+            <label>
+                <input type="file" accept=".gpx" onchange="$('div.progress').show(); this.form.submit()" hidden name="gpx_file">
+                <a  class="alert-link">import your first Track</a>
+            </label>
+        </form>
     </div>
 {% endif %}
