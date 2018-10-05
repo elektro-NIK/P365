@@ -67,6 +67,7 @@ class POIEditView(View):
                 poi.description = form.cleaned_data['description']
                 poi.geom = form.cleaned_data['geom']
                 poi.tags.set(*form.cleaned_data['tags'])
+                poi.public = form.cleaned_data['public']
             else:                                                   # create POI
                 poi = form.save(commit=False)
                 poi.user = request.user
@@ -96,6 +97,7 @@ class RouteEditView(View):
                 route.description = form.cleaned_data['description']
                 route.geom = form.cleaned_data['geom']
                 route.tags.set(*form.cleaned_data['tags'])
+                route.public = form.cleaned_data['public']
             else:
                 route = form.save(commit=False)
                 route.user = request.user
@@ -134,6 +136,7 @@ class TrackEditView(View):
             track.name = form.cleaned_data['name']
             track.description = form.cleaned_data['description']
             track.tags.set(*form.cleaned_data['tags'])
+            track.public = form.cleaned_data['public']
             # track.length = form.cleaned_data['geom'].length * 100
             # Calculate min, max, loss, gain altitude
             # alts = [i[2] for i in form.cleaned_data['geom']]
