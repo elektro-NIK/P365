@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import include, path
 from django.contrib import admin
 from django.contrib.auth.views import logout_then_login
@@ -13,7 +15,8 @@ from profile.views import LoginView, ProfileRedirect, SignUpView, IndexView
 urlpatterns = [
     # main
     path('',            IndexView.as_view(),        name='index'),
-    path('admin/',      admin.site.urls,            name='admin'),
+    path('admin/',      admin.site.urls,),
+    path('summernote/', include('django_summernote.urls')),
     # auth
     path('login/',      LoginView.as_view(),        name='login'),
     path('register/',   SignUpView.as_view(),       name='signup'),
@@ -32,3 +35,6 @@ urlpatterns = [
     path('track/',      include(urls_track,         namespace='track')),
     path('tag/',        include(tag.urls,           namespace='tag')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,9 +1,11 @@
 from django.contrib import admin
+from django_summernote.admin import SummernoteModelAdmin
 
 from . import models
 
 
-class ArticleAdmin(admin.ModelAdmin):
+class ArticleAdmin(SummernoteModelAdmin):
+    summernote_fields = ('text',)
     list_display = ('title', 'created', 'user',)
     list_filter = ('user',)
     ordering = ('-created',)

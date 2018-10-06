@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'bootstrap3',
     'taggit',
     'taggit_templatetags2',
+    'django_summernote',
 
     'calendar_year',
     'gpx',
@@ -131,6 +132,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join('static'),)
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Auth settings
 LOGIN_URL = '/login/'
