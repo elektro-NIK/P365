@@ -106,3 +106,4 @@ venv.bak/
 *.sqlite3
 *TODO*
 /google_api/api_keys.py
+media/
