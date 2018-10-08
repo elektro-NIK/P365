@@ -1,0 +1,67 @@
+{% extends "base/base.html" %}
+{% load bootstrap3 %}
+{% load leaflet_tags %}
+{% load staticfiles %}
+
+{% block content %}
+    <div class="row">
+        <br>
+        <div class="col-xs-12 col-sm-6 col-md-4 fixed">
+            {% leaflet_map "mainmap" callback="window.map_init_basic" %}
+        </div>
+        <div class="col-xs-12 col-xs-offset-12 col-sm-6 col-sm-offset-6 col-md-8 col-md-offset-4">
+            <h3 align="center">{{ story.article.title }}</h3>
+            <p align="center"><b>{{ story.event.start_date|date }} - {{ story.event.finish_date|date }}</b></p>
+            <div id="text">{{ story.article.text|safe }}</div>
+        </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block css %}
+    {% leaflet_css plugins='elevation' %}
+    <link href="{% static 'css/story.css' %}" rel="stylesheet" media="screen">
+{% endblock %}
+
+{% block js %}
+    {% leaflet_js plugins='elevation' %}
+    <script src="{% static 'js/msg_wrong.js' %}"></script>
+    <script>
+        function map_init_basic (map, options) {
+            var info_height = $('#info').height();
+            var page_height = $(document).height();
+            var window_height = $(window).height();
+            var header_height = $('#header_container').height() + parseInt($('#header_container').css('margin-bottom').replace('px', ''));
+            var footer_height = $('footer').height();
+            if (info_height + header_height >= window_height)
+                var height = window_height - header_height;
+            else if (info_height + header_height + footer_height <= window_height)
+                var height = page_height - header_height - footer_height - parseInt($('#header_container').css('margin-bottom').replace('px', '')) - 2;
+            else
+                var height = info_height;
+            var height = window_height - header_height - parseInt($('#header_container').css('margin-bottom').replace('px', ''));
+            $('div.leaflet-container').height(height);
+            map.invalidateSize();
+
+            $.getJSON("{% url 'track:json' story.track.id %}")
+            .done(function (data) {
+                var elevation = L.control.elevation({
+                    position: 'bottomleft',
+                    width: $('div.leaflet-container').width() - 20,
+                    height: 100,
+                    margins: {
+                        top: 10,
+                        right: 60,
+                        bottom: 20,
+                        left: 60
+                    },
+                    useHeightIndicator: true,
+                }).addTo(map);
+                var track = L.geoJson(JSON.parse(data), {
+                    onEachFeature: elevation.addData.bind(elevation)
+                }).addTo(map);
+                map.fitBounds(track.getBounds());
+            }).fail(function() {setErrorMsg()});
+        }
+    </script>
+{% endblock %}
