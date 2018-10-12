@@ -213,3 +213,40 @@ MAX_LENGTH = {
     'text': 5000,
     'tag': 30,
 }
+
+SUMMERNOTE_THEME = 'bs4'
+SUMMERNOTE_CONFIG = {
+    'iframe': True,
+    'dialogsFade': True,
+    'summernote': {
+        'airMode': False,
+        'toolbar': [
+            ['style', ['style']],
+            ['font', ['color', 'fontname', 'fontsize']],
+            ['text', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+            ['para', ['ul', 'ol', 'paragraph', 'height']],
+            ['insert', ['link', 'picture', 'video', 'table', 'hr']],
+            ['additions', ['superscript', 'subscript']],
+            ['control', ['undo', 'redo', 'fullscreen', 'help']],
+        ],
+        'popover': {
+            'air': [
+                ['style', ['style']],
+                ['font', ['color', 'fontname', 'fontsize']],
+                ['text', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+                ['para', ['ul', 'ol', 'paragraph', 'height']],
+                ['insert', ['link', 'picture', 'video', 'table', 'hr']],
+                ['additions', ['superscript', 'subscript']],
+                ['control', ['undo', 'redo', 'fullscreen', 'help']],
+            ],
+            'image': [
+                ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                ['remove', ['removeMedia']]
+            ],
+            'link': [
+                ['link', ['linkDialogShow', 'unlink']]
+            ],
+        },
+    },
+}
