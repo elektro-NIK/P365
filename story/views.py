@@ -21,7 +21,7 @@ class StoryView(View):
     def get(request, id):
         story = get_object_or_404(StoryModel, id=id)
         if story.user == story.user or story.public:
-            return render(request, 'view.html', {'title': story.article.title, 'story': story})
+            return render(request, 'view.html', {'title': story.title, 'story': story})
         return HttpResponseForbidden()
 
 
@@ -33,4 +33,4 @@ class StoryEditView(View):
         if story and story.user != request.user:
             return HttpResponseForbidden()
         form = StoryForm(instance=story)
-        return render(request, 'editor.html', {'title': story.article.title if story else 'New story', 'form': form})
+        return render(request, 'editor.html', {'title': story.title if story else 'New story', 'form': form})

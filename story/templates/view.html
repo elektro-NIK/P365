@@ -10,9 +10,9 @@
             {% leaflet_map "mainmap" callback="window.map_init_basic" %}
         </div>
         <div class="col-xs-12 col-xs-offset-12 col-sm-6 col-sm-offset-6 col-md-8 col-md-offset-4">
-            <h3 align="center">{{ story.article.title }}</h3>
+            <h3 align="center">{{ story.title }}</h3>
             <p align="center"><b>{{ story.event.start_date|date }} - {{ story.event.finish_date|date }}</b></p>
-            <div id="text">{{ story.article.text|safe }}</div>
+            <div id="text">{{ story.text|safe }}</div>
         </div>
         </form>
     </div>
