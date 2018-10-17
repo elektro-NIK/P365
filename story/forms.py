@@ -1,4 +1,5 @@
 from django.forms import ModelForm
+from django_summernote.widgets import SummernoteWidget
 
 from story.models import StoryModel
 
@@ -7,3 +8,6 @@ class StoryForm(ModelForm):
     class Meta:
         model = StoryModel
         exclude = ()
+        widgets = {
+            'text': SummernoteWidget(),
+        }
