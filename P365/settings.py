@@ -220,6 +220,7 @@ SUMMERNOTE_CONFIG = {
     'dialogsFade': True,
     'summernote': {
         'airMode': False,
+        'width': '100%',
         'toolbar': [
             ['style', ['style']],
             ['font', ['color', 'fontname', 'fontsize']],

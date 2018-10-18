@@ -9,19 +9,24 @@
         <form action="" method="post" class="form">
             {% csrf_token %}
             <div class="col-xs-12 col-sm-6 col-md-4">
-                {% bootstrap_field form.geom show_label=False %}
+                {% bootstrap_field form.track show_label=False %}
+                {% leaflet_map "mainmap" callback="window.map_init_basic" %}
             </div>
-            <div class="col-xs-12 col-sm-6 col-md-8" id="info">
+            <div class="col-xs-12 col-sm-6 col-md-8">
                 {% bootstrap_form_errors form %}
-                {% bootstrap_field form.name %}
-                {% bootstrap_field form.description %}
-                {% bootstrap_field form.tags %}
-                {% bootstrap_field form.public %}
+                {% bootstrap_field form.title show_label=False %}
+                <div class="row">
+                    <div class="col-xs-6">
+                        {% bootstrap_field form.event show_label=False %}
+                    </div>
+                    <div class="col-xs-6" id="event-dates"></div>
+                </div>
+                {{ form.text }}
+                {% bootstrap_field form.tags show_label=False %}
                 <div class="col-xs-12 form-group center-block text-center">
                     {% bootstrap_button 'Save' button_type='submit' button_class='btn-success' %}
                 </div>
             </div>
-
         </form>
     </div>
 {% endblock %}
@@ -29,6 +34,7 @@
 {% block css %}
     {% leaflet_css plugins="forms" %}
     {{ form.media.css }}
+    <link href="{% static 'css/story-editor.css' %}" rel="stylesheet" media="screen">
 {% endblock %}
 
 {% block js %}
