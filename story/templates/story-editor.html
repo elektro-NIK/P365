@@ -32,12 +32,18 @@
 {% endblock %}
 
 {% block css %}
-    {% leaflet_css plugins="forms" %}
+    {% leaflet_css %}
     {{ form.media.css }}
     <link href="{% static 'css/story-editor.css' %}" rel="stylesheet" media="screen">
 {% endblock %}
 
 {% block js %}
-    {% leaflet_js plugins="forms" %}
+    {% leaflet_js %}
     {{ form.media.js }}
+    <script>
+        var mapsPlaceholder = [];
+        function map_init_basic (map, options) {
+            mapsPlaceholder.push(map);
+        }
+    </script>
 {% endblock %}
