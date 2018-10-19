@@ -40,10 +40,25 @@
 {% block js %}
     {% leaflet_js %}
     {{ form.media.js }}
+    <script src="{% static 'js/msg_wrong.js' %}"></script>
+    <script src="{% static 'js/story-editor.js' %}"></script>
     <script>
-        var mapsPlaceholder = [];
-        function map_init_basic (map, options) {
+        $("select[name='track']").on('change', function() {
+            var map = mapsPlaceholder.pop();
+            map.eachLayer(function (layer) {
+                if (!layer._url)
+                    map.removeLayer(layer);
+            });
+            if (this.value) {
+                url = "{% url 'track:json' 0 %}".replace("0", this.value)
+                $.getJSON(url)
+                .done(function (data) {
+                    var track = L.geoJson(JSON.parse(data)).addTo(map);
+                    map.fitBounds(track.getBounds());
+                })
+                .fail(function() {setErrorMsg()});
+            }
             mapsPlaceholder.push(map);
-        }
+        });
     </script>
 {% endblock %}
