@@ -6,4 +6,5 @@ function map_init_basic (map, options) {
 
 $(window).on('load', function() {
     $("select[name='track']").change();
+    $("select[name='event']").change();
 });

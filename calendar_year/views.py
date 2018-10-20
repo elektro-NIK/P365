@@ -3,8 +3,9 @@ from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponse, HttpResponseForbidden
-from django.shortcuts import render
+from django.core.serializers import serialize
+from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
+from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views import View
@@ -17,6 +18,16 @@ class CalendarView(View):
     @staticmethod
     def get(request):
         return render(request, 'calendar.html', {'title': 'Calendar', 'active': 'calendar'})
+
+
+@method_decorator(login_required, name='dispatch')
+class DatesEventView(View):
+    @staticmethod
+    def get(request, id):
+        obj = get_object_or_404(EventModel, id=id)
+        if obj.user == request.user or obj.public:
+            return render(request, 'partials/_event-dates.html', {'event': obj})
+        return HttpResponseForbidden()
 
 
 @method_decorator(login_required, name='dispatch')

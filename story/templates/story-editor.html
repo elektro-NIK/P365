@@ -60,5 +60,19 @@
             }
             mapsPlaceholder.push(map);
         });
+
+        $("select[name='event']").on('change', function() {
+            $("#event-dates").html("");
+            if (this.value) {
+                url = "{% url 'calendar:dates_event' 0 %}".replace("0", this.value)
+                $.ajax({
+                    url: url,
+                    success: function (data) {
+                        $("#event-dates").html(data);
+                    },
+                    error: function() {setErrorMsg()}
+                });
+            }
+        });
     </script>
 {% endblock %}
