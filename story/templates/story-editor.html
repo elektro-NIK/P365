@@ -8,11 +8,11 @@
         <br>
         <form action="" method="post" class="form">
             {% csrf_token %}
-            <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="col-xs-12 col-sm-6 col-md-4" id="map">
                 {% bootstrap_field form.track show_label=False %}
                 {% leaflet_map "mainmap" callback="window.map_init_basic" %}
             </div>
-            <div class="col-xs-12 col-sm-6 col-md-8">
+            <div class="col-xs-12 col-sm-6 col-md-8" id="other">
                 {% bootstrap_form_errors form %}
                 {% bootstrap_field form.title show_label=False %}
                 <div class="row">
