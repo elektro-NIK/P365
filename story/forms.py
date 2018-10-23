@@ -7,7 +7,7 @@ from story.models import StoryModel
 class StoryForm(ModelForm):
     class Meta:
         model = StoryModel
-        exclude = ()
+        exclude = ('user',)
         widgets = {
             'text': SummernoteWidget(),
         }
