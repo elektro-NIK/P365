@@ -8,7 +8,7 @@ P365 is the web site where you can share your travel experiences.
 5. Setting up GoogleAPI key
 6. Create DB
 7. Create superuser
-8. Run server
+8. Run dev server
 
 ## Clone project ##
 
