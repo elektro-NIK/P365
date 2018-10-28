@@ -39,7 +39,6 @@ class StoryEditView(View):
     @staticmethod
     def post(request, id=None):
         form = StoryForm(request.POST)
-        print(form.errors)
         if form.is_valid():
             if id:
                 story = get_object_or_404(StoryModel, id=id)

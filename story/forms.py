@@ -11,3 +11,7 @@ class StoryForm(ModelForm):
         widgets = {
             'text': SummernoteWidget(),
         }
+
+    def clean(self):
+        # Bad way to fix one-to-one field without changing error. FIXME!
+        return self.cleaned_data
