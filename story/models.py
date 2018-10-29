@@ -15,6 +15,7 @@ class StoryModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     tags = TaggableManager(blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=True)
 
     objects = models.Manager()
 

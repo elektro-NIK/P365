@@ -1,13 +1,18 @@
 {% for story in stories %}
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
         <div class="well">
-            <h3>{{ story.title }}</h3>
-            {{ story.description }}
-            <p><a href="#" class="btn btn-primary" role="button">Кнопка</a> <a href="#" class="btn btn-default" role="button">Кнопка</a></p>
+            <h3 align="center">{{ story.title }}</h3>
+            <p align="center"><b>{{ story.event.start_date|date }} - {{ story.event.finish_date|date }}</b></p>
+            <div>{{ story.text|truncatewords_html:20|safe }}</div>
+            <p>
+                <a href="{% url 'story:view' story.id %}" class="btn btn-primary" role="button">Read</a>
+                <a href="#" class="btn btn-default" role="button">Edit</a>
+                <a href="#" class="btn btn-default" role="button">Delete</a>
+            </p>
         </div>
     </div>
 {% empty %}
     <div class="alert alert-info" role="alert">
-        You don't have Stories yet. Try to <a href="#" class="alert-link">create your first Story</a>.
+        You don't have Stories yet. Try to <a href="{% url 'story:create' %}" class="alert-link">create your first Story</a>.
     </div>
 {% endfor %}
