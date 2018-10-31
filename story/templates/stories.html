@@ -1,4 +1,5 @@
 {% extends "base/base.html" %}
+{% load staticfiles %}
 
 {% block content %}
     <div class="row">
@@ -7,4 +8,8 @@
             {% include 'partials/_stories-feed.html' %}
         </div>
     </div>
+{% endblock %}
+
+{% block css %}
+    <link href="{% static 'css/stories.css' %}" rel="stylesheet" media="screen">
 {% endblock %}

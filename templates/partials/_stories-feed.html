@@ -6,8 +6,10 @@
             <div>{{ story.text|truncatewords_html:20|safe }}</div>
             <p>
                 <a href="{% url 'story:view' story.id %}" class="btn btn-primary" role="button">Read</a>
-                <a href="#" class="btn btn-default" role="button">Edit</a>
-                <a href="#" class="btn btn-default" role="button">Delete</a>
+                <span class="btn-group pull-right" role="group">
+                    <a href="{% url 'story:edit' story.id %}" class="btn btn-default" role="button"><i class="glyphicon glyphicon-edit"></i></a>
+                    <a href="#" class="btn btn-default" role="button"><i class="glyphicon glyphicon-trash"></i></a>
+                </span>
             </p>
         </div>
     </div>
