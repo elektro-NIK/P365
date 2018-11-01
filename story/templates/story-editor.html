@@ -33,13 +33,11 @@
 
 {% block css %}
     {% leaflet_css %}
-    {{ form.media.css }}
     <link href="{% static 'css/story-editor.css' %}" rel="stylesheet" media="screen">
 {% endblock %}
 
 {% block js %}
     {% leaflet_js %}
-    {{ form.media.js }}
     <script src="{% static 'js/msg_wrong.js' %}"></script>
     <script src="{% static 'js/story-editor.js' %}"></script>
     <script>
