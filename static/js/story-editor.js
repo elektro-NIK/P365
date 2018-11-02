@@ -1,4 +1,5 @@
 var mapsPlaceholder = [];
+var bounds;
 
 function map_init_basic (map, options) {
     mapsPlaceholder.push(map);
@@ -16,6 +17,10 @@ function map_init_basic (map, options) {
         var height = form_height;
     $('div.leaflet-container').height(height - selector_height);
     map.invalidateSize();
+    bounds = map.getBounds();
+    map.on('click', function() {
+        bounds && bounds.isValid() ? map.fitBounds(bounds) : {};
+    });
 }
 
 $(window).on('load', function() {

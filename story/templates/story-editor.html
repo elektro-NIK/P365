@@ -52,7 +52,8 @@
                 $.getJSON(url)
                 .done(function (data) {
                     var track = L.geoJson(JSON.parse(data)).addTo(map);
-                    map.fitBounds(track.getBounds());
+                    bounds = track.getBounds()
+                    map.fitBounds(bounds);
                 })
                 .fail(function() {setErrorMsg()});
             }
