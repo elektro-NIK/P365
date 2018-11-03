@@ -41,6 +41,10 @@
             var height = window_height - header_height - parseInt($('#header_container').css('margin-bottom').replace('px', ''));
             $('div.leaflet-container').height(height);
             map.invalidateSize();
+            bounds = map.getBounds();
+            map.on('click', function() {
+                bounds && bounds.isValid() ? map.fitBounds(bounds) : {};
+            });
 
             $.getJSON("{% url 'track:json' story.track.id %}")
             .done(function (data) {
@@ -59,7 +63,8 @@
                 var track = L.geoJson(JSON.parse(data), {
                     onEachFeature: elevation.addData.bind(elevation)
                 }).addTo(map);
-                map.fitBounds(track.getBounds());
+                bounds = track.getBounds();
+                map.fitBounds(bounds);
             }).fail(function() {setErrorMsg()});
         }
     </script>
