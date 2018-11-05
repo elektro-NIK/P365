@@ -51,8 +51,12 @@
                 url = "{% url 'track:json' 0 %}".replace("0", this.value)
                 $.getJSON(url)
                 .done(function (data) {
-                    var track = L.geoJson(JSON.parse(data)).addTo(map);
-                    bounds = track.getBounds()
+                    var track = L.geoJson(JSON.parse(data), {
+                        onEachFeature: function(feature, layer) {
+                            layer.bindPopup(feature.properties.description || '');
+                        }
+                    }).addTo(map);
+                    bounds = track.getBounds();
                     map.fitBounds(bounds);
                 })
                 .fail(function() {setErrorMsg()});
