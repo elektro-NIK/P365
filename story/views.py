@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden, HttpResponseRedirect
+from django.http import HttpResponseForbidden, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.utils.decorators import method_decorator
@@ -55,3 +55,15 @@ class StoryEditView(View):
             form.save_m2m() if not id else None
             return HttpResponseRedirect(reverse('story:stories'))
         return render(request, 'story-editor.html', {'title': form['title'].value(), 'form': form})
+
+
+@method_decorator(login_required, name='dispatch')
+class JSONStoryDeleteView(View):
+    @staticmethod
+    def post(request, id):
+        story = get_object_or_404(StoryModel, id=id)
+        if story.user == request.user:
+            story.is_active = False
+            story.save()
+            return JsonResponse({'Status': 'OK'})
+        return HttpResponseForbidden()

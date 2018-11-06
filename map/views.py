@@ -151,7 +151,6 @@ class TrackEditView(View):
         return render(request, 'editor.html', {'title': form['name'].value(), 'form': form})
 
 
-
 @method_decorator(login_required, name='dispatch')
 class JSONFeatureIdsView(View):
     @staticmethod

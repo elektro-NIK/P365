@@ -13,3 +13,27 @@
 {% block css %}
     <link href="{% static 'css/stories.css' %}" rel="stylesheet" media="screen">
 {% endblock %}
+
+{% block js %}
+    <script>
+        $('div.well').on('click', 'a.btn-delete', function(){
+            var well = $(this).parent().parent().parent();
+                id = well.attr('id').replace('story', ''),
+                url = "{% url 'story:json_delete' 0 %}";
+            $.ajax({
+                type: "POST",
+                url: url.replace('0', id),
+                data: {
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                },
+                success: function() {
+                    well.parent().addClass('hidden');
+                },
+                error: function() {
+                    setErrorMsg();
+                }
+            });
+            return false;
+        });
+    </script>
+{% endblock %}
