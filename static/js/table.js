@@ -40,9 +40,9 @@ function updateTable(url, id) {
 }
 
 function updateAllTables() {
-    updateTracksTable();
-    updateRoutesTable();
-    updatePoisTable();
+    updateTable(url_update_tracks, "#table-tracks");
+    updateTable(url_update_routes, "#table-routes");
+    updateTable(url_update_pois,   "#table-pois");
 }
 
 function changeFeature(url, id, token, url_upd, id_upd) {

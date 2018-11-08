@@ -44,19 +44,13 @@
 
 {% block js %}
     <script src="{% static 'js/msg_wrong.js' %}"></script>
+    <script>
+        var url_update_tracks = "{% url 'table:update_tracks' %}";
+        var url_update_routes = "{% url 'table:update_routes' %}";
+        var url_update_poi    = "{% url 'table:update_pois' %}";
+    </script>
     <script src="{% static 'js/table.js' %}"></script>
     <script>
-        function updateTracksTable() {
-            updateTable("{% url 'table:update_tracks' %}", "#table-tracks");
-        }
-        function updateRoutesTable() {
-            updateTable("{% url 'table:update_routes' %}", "#table-routes");
-        }
-
-        function updatePoisTable() {
-            updateTable("{% url 'table:update_pois' %}", "#table-pois");
-        }
-
         $('#table-tracks').on('click', 'td.status a', function() {
             var id = $(this).parent().parent().attr('id').replace('track', ''),
                 url = "{% url 'track:json_change_status' 0 %}",
