@@ -9,13 +9,13 @@
         <form action="" method="post" class="form">
             {% csrf_token %}
             <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3" id="info">
-                {{ form }}
+                {% bootstrap_form form exclude='geom' %}
                 <div class="col-xs-12 form-group center-block text-center">
                     {% bootstrap_button 'Save' button_type='submit' button_class='btn-success' %}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
-                <!--{ bootstrap_field form.geom show_label=False }-->
+                {% bootstrap_field form.geom show_label=False %}
             </div>
         </form>
     </div>
