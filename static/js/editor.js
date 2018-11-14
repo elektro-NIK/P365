@@ -15,4 +15,22 @@ $(window).on('map:init', function (e) {
     $('div.leaflet-container').height(height);
     detail.map.invalidateSize();
     detail.map.setZoom(13);
+
+    detail.map.on('click', function(e) {
+        var layers = [];
+        var poi = null;
+        detail.map.eachLayer(function(layer) {
+            if (layer instanceof L.Polyline)
+                layers.push(layer);
+            if (layer instanceof L.Marker)
+                poi = layer
+        })
+        if (layers.length > 0)
+            detail.map.fitBounds(L.featureGroup(layers).getBounds());
+        if (poi) {
+            var zoom = detail.map.getZoom()
+            detail.map.fitBounds(L.latLngBounds([poi.getLatLng()]));
+            detail.map.setZoom(zoom);
+        }
+    })
 });
