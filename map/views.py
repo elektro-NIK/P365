@@ -22,7 +22,7 @@ class POIView(View):
     @staticmethod
     def get(request, id):
         poi = get_object_or_404(POIModel, id=id)
-        if poi.user == request.user or poi.public:
+        if (poi.user == request.user or poi.public) and poi.is_active:
             return render(request, 'poi.html', {'title': poi.name, 'poi': poi})
         return HttpResponseForbidden()
 
@@ -32,7 +32,7 @@ class RouteView(View):
     @staticmethod
     def get(request, id):
         route = get_object_or_404(RouteModel, id=id)
-        if route.user == request.user or route.public:
+        if (route.user == request.user or route.public) and route.is_active:
             return render(request, 'route.html', {'title': route.name, 'route': route})
         return HttpResponseForbidden()
 
@@ -42,7 +42,7 @@ class TrackView(View):
     @staticmethod
     def get(request, id):
         track = get_object_or_404(TrackModel, id=id)
-        if track.user == request.user or track.public:
+        if (track.user == request.user or track.public) and track.is_active:
             return render(request, 'track.html', {'title': track.name, 'track': track})
         return HttpResponseForbidden()
 
@@ -52,7 +52,7 @@ class POIEditView(View):
     @staticmethod
     def get(request, id=None):
         poi = get_object_or_404(POIModel, id=id) if id else None
-        if poi and poi.user != request.user:
+        if poi and poi.user != request.user and poi.is_active:
             return HttpResponseForbidden()
         form = POIForm(instance=poi)
         return render(request, 'editor.html', {'title': poi.name if poi else 'New POI', 'form': form})
@@ -82,7 +82,7 @@ class RouteEditView(View):
     @staticmethod
     def get(request, id=None):
         route = get_object_or_404(RouteModel, id=id) if id else None
-        if route and route.user != request.user:
+        if route and route.user != request.user and route.is_active:
             return HttpResponseForbidden()
         form = RouteForm(instance=route)
         return render(request, 'editor.html', {'title': route.name if route else 'New route', 'form': form})
@@ -123,7 +123,7 @@ class TrackEditView(View):
     @staticmethod
     def get(request, id=None):
         track = get_object_or_404(TrackModel, id=id) if id else None
-        if not track or track.user != request.user:
+        if not track or track.user != request.user and track.is_active:
             return HttpResponseForbidden()
         form = TrackForm(instance=track)
         return render(request, 'editor.html', {'title': track.name, 'form': form})
@@ -137,6 +137,7 @@ class TrackEditView(View):
             track.description = form.cleaned_data['description']
             track.tags.set(*form.cleaned_data['tags'])
             track.public = form.cleaned_data['public']
+            # TODO:
             # track.length = form.cleaned_data['geom'].length * 100
             # Calculate min, max, loss, gain altitude
             # alts = [i[2] for i in form.cleaned_data['geom']]
@@ -164,7 +165,7 @@ class JSONFeatureView(View):
     @staticmethod
     def get(request, id, model):
         obj = get_object_or_404(model, id=id)
-        if obj.user == request.user or obj.public:
+        if (obj.user == request.user or obj.public) and obj.is_active:
             data = serialize('geojson', [obj], geometry_field='geom')
             return JsonResponse(data, safe=False)
         return HttpResponseForbidden()
@@ -184,7 +185,7 @@ class JSONFeatureChangeStatusView(View):
     @staticmethod
     def post(request, id, model):
         obj = get_object_or_404(model, id=id)
-        if obj.user == request.user:
+        if obj.user == request.user and obj.is_active:
             obj.public = not obj.public
             obj.save()
             return JsonResponse({'Status': 'OK'})
@@ -196,7 +197,7 @@ class JSONFeatureDeleteView(View):
     @staticmethod
     def post(request, id, model):
         obj = get_object_or_404(model, id=id)
-        if obj.user == request.user and not obj.public:
+        if obj.user == request.user and not obj.public and obj.is_active:
             obj.is_active = False
             obj.save()
             return JsonResponse({'Status': 'OK'})

@@ -22,7 +22,7 @@ class StoryView(View):
     @staticmethod
     def get(request, id):
         story = get_object_or_404(StoryModel, id=id)
-        if story.user == story.user or story.public:
+        if (story.user == story.user or story.public) and story.is_active:
             return render(request, 'story-viewer.html', {'title': story.title, 'story': story})
         return HttpResponseForbidden()
 
@@ -32,7 +32,7 @@ class StoryEditView(View):
     @staticmethod
     def get(request, id=None):
         story = get_object_or_404(StoryModel, id=id) if id else None
-        if story and story.user != request.user:
+        if story and story.user != request.user and story.is_active:
             return HttpResponseForbidden()
         form = StoryForm(instance=story)
         return render(request, 'story-editor.html', {'title': story.title if story else 'New story', 'form': form})
@@ -62,7 +62,7 @@ class JSONStoryDeleteView(View):
     @staticmethod
     def post(request, id):
         story = get_object_or_404(StoryModel, id=id)
-        if story.user == request.user:
+        if story.user == request.user and story.is_active:
             story.is_active = False
             story.save()
             return JsonResponse({'Status': 'OK'})

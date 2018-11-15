@@ -3,8 +3,7 @@ from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.core.serializers import serialize
-from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.utils.decorators import method_decorator
@@ -25,7 +24,7 @@ class DatesEventView(View):
     @staticmethod
     def get(request, id):
         obj = get_object_or_404(EventModel, id=id)
-        if obj.user == request.user or obj.public:
+        if (obj.user == request.user or obj.public) and obj.is_active:
             return render(request, 'partials/_event-dates.html', {'event': obj})
         return HttpResponseForbidden()
 
@@ -50,10 +49,10 @@ class DeleteEventView(View):
     def post(request):
         event = EventModel.objects.get(id=request.POST['id'])
         user = User.objects.get(username=request.user.username)
-        if event.user == user:
+        if event.user == user and event.is_active:
             event.is_active = False
             event.save()
-            return HttpResponse(json.dumps(''), content_type='application/json')
+            return HttpResponse(json.dumps('OK'), content_type='application/json')
         else:
             return HttpResponseForbidden()
 
@@ -68,7 +67,7 @@ class UpdateCreateEventView(View):
         finish = datetime.strptime(event_json['endDate'][:-5], '%Y-%m-%dT%H:%M:%S')
         if event_json['id']:                                                                            # Update event
             event = EventModel.objects.get(id=int(event_json['id']))
-            if event.user == user:
+            if event.user == user and event.is_active:
                 event.name = event_json['name']
                 event.description = event_json['description']
                 event.start_date = timezone.make_aware(start)
