@@ -1,10 +1,3 @@
-function setErrorMsg() {
-    $('#msg-wrong').html('<div class="alert alert-warning alert-dismissable fade in">' +
-        '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
-        '<strong>Something went wrong!</strong> Please try again.' +
-        '</div>')
-}
-
 function editEvent(event) {
     $('#event-modal input[name="event-index"]').val(event.id ? event.id : '');
     $('#event-modal input[name="event-name"]').val(event.name ? event.name : '');
@@ -12,6 +5,67 @@ function editEvent(event) {
     $('#event-modal input[name="event-start-date"]').datepicker('update', event.startDate ? event.startDate : '');
     $('#event-modal input[name="event-end-date"]').datepicker('update', event.endDate ? event.endDate : '');
     $('#event-modal').modal();
+}
+
+function deleteEvent(event) {
+    var csrf_token = $("input[name='csrfmiddlewaretoken']")[0].value
+    $.ajax({
+        type: "POST",
+        url: url_delete,
+        data: {
+            csrfmiddlewaretoken: csrf_token,
+            id: event.id,
+        },
+        success: function() {
+            updateAllEvents()
+        },
+        error: function() {
+            setErrorMsg()
+        }
+    })
+}
+
+function saveEvent() {
+    var update_event = {
+        id: $('#event-modal input[name="event-index"]').val(),
+        name: $('#event-modal input[name="event-name"]').val(),
+        description: $('#event-modal textarea[name="event-description"]').val(),
+        startDate: $('#event-modal input[name="event-start-date"]').datepicker('getDate'),
+        endDate: $('#event-modal input[name="event-end-date"]').datepicker('getDate')
+    }
+
+    var csrf_token = $("input[name='csrfmiddlewaretoken']")[0].value
+    $.ajax({
+        type: "POST",
+        url: url_save,
+        data: {
+            csrfmiddlewaretoken: csrf_token,
+            event: JSON.stringify(update_event)
+        },
+        success: function() {
+            updateAllEvents();
+        },
+        error: function() {
+            setErrorMsg();
+        }
+    })
+    $('#event-modal').modal('hide');
+}
+
+function updateAllEvents() {
+    $.ajax({
+        url: url_update,
+        success: function (data) {
+            for (var i in data) {
+                data[i].startDate = new Date(data[i].startDate);
+                data[i].endDate = new Date(data[i].endDate);
+            }
+            $('#calendar').data('calendar').setDataSource(data);
+        },
+        error: function() {
+            setErrorMsg();
+        }
+    })
 }
 
 $(function() {
