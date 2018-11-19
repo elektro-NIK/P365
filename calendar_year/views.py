@@ -9,7 +9,7 @@ from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views import View
 
-from calendar_year.models import EventModel
+from .models import EventModel
 
 
 @method_decorator(login_required, name='dispatch')
@@ -25,7 +25,7 @@ class DatesEventView(View):
     def get(request, id):
         obj = get_object_or_404(EventModel, id=id)
         if (obj.user == request.user or obj.public) and obj.is_active:
-            return render(request, 'partials/_event-dates.html', {'event': obj})
+            return render(request, '_event-dates.html', {'event': obj})
         return HttpResponseForbidden()
 
 

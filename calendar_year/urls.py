@@ -1,7 +1,7 @@
 from django.urls import path, register_converter
 
 from P365.converters import UintWithoutZero
-from calendar_year.views import CalendarView, DatesEventView, GetAllEventsView, DeleteEventView, UpdateCreateEventView
+from .views import CalendarView, DatesEventView, GetAllEventsView, DeleteEventView, UpdateCreateEventView
 
 app_name = 'calendar'
 
