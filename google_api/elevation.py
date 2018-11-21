@@ -1,11 +1,16 @@
 import googlemaps
 
-from google_api.api_keys import ELEVATION_KEY
+from .api_keys import ELEVATION_KEY
 
 
 def normalize_lng(lng):
-    # normalize longitude (-360...360 --> -180...180)
-    return lng + 360 if lng < -180 else lng - 360 if lng > 180 else lng
+    # # normalize longitude:
+    # # -inf...inf ===> 0...360
+    # res = lng % 360
+    # # 0...360 ===> -180...180
+    # res = res - 360 if res > 180 else res
+    # return res
+    return lng % 360 - 360 if lng % 360 > 180 else lng % 360
 
 
 def get_elevation(geom, step=512):
