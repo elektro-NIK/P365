@@ -51,7 +51,7 @@
     {% leaflet_js %}
     <script src="{% static 'js/msg_wrong.js' %}"></script>
     <script>
-        var url_poi = "{% url 'poi:json' poi.id %}"
+        var url_poi = "{% url 'poi:json' poi.id %}";
     </script>
     <script src="{% static 'js/poi.js %}"></script>
 {% endblock %}
