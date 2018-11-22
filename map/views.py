@@ -137,7 +137,7 @@ class TrackEditView(View):
             track.description = form.cleaned_data['description']
             track.tags.set(*form.cleaned_data['tags'])
             track.public = form.cleaned_data['public']
-            # TODO:
+            # TODO: calculating track data
             # track.length = form.cleaned_data['geom'].length * 100
             # Calculate min, max, loss, gain altitude
             # alts = [i[2] for i in form.cleaned_data['geom']]
