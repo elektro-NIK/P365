@@ -20,22 +20,27 @@
 {% block js %}
     {% leaflet_js %}
     <script src="{% static 'js/msg_wrong.js' %}"></script>
-    <script src="{% static 'js/map.js' %}"></script>
     <script>
         var bounds;
         var progress;
 
-        function map_init_basic (map, options) {
-            map.on('click', function() {
-                bounds && bounds.isValid() ? map.fitBounds(bounds) : {};
-            });
-            progress = -1;
-            get_all(map, "{% url 'track:json_ids' %}", "{% url 'track:json' id=0 %}",
-                         "{% url 'track:view' id=0 %}", "{% url 'track:edit' id=0 %}", "{% url 'track:json_delete' id=0 %}");
-            get_all(map, "{% url 'route:json_ids' %}", "{% url 'route:json' id=0 %}",
-                         "{% url 'route:view' id=0 %}", "{% url 'route:edit' id=0 %}", "{% url 'route:json_delete' id=0 %}");
-            get_all(map, "{% url 'poi:json_ids' %}", "{% url 'poi:json' id=0 %}",
-                         "{% url 'poi:view' id=0 %}", "{% url 'poi:edit' id=0 %}", "{% url 'poi:json_delete' id=0 %}");
-        }
+        var url_track_ids    = "{% url 'track:json_ids' %}",
+            url_track_json   = "{% url 'track:json' id=0 %}",
+            url_track_view   = "{% url 'track:view' id=0 %}",
+            url_track_edit   = "{% url 'track:edit' id=0 %}",
+            url_track_delete = "{% url 'track:json_delete' id=0 %}";
+
+        var url_route_ids    = "{% url 'route:json_ids' %}",
+            url_route_json   = "{% url 'route:json' id=0 %}",
+            url_route_view   = "{% url 'route:view' id=0 %}",
+            url_route_edit   = "{% url 'route:edit' id=0 %}",
+            url_route_delete = "{% url 'route:json_delete' id=0 %}";
+
+        var url_poi_ids    = "{% url 'poi:json_ids' %}",
+            url_poi_json   = "{% url 'poi:json' id=0 %}",
+            url_poi_view   = "{% url 'poi:view' id=0 %}",
+            url_poi_edit   = "{% url 'poi:edit' id=0 %}",
+            url_poi_delete = "{% url 'poi:json_delete' id=0 %}";
     </script>
+    <script src="{% static 'js/map.js' %}"></script>
 {% endblock %}

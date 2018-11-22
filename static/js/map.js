@@ -75,3 +75,13 @@ function get_all (map, url_ids, url_get, url_show, url_edit, url_delete) {
     })
     .fail(function() {setErrorMsg()});
 }
+
+function map_init_basic (map, options) {
+    map.on('click', function() {
+        bounds && bounds.isValid() ? map.fitBounds(bounds) : {};
+    });
+    progress = -1;
+    get_all(map, url_track_ids, url_track_json, url_track_view, url_track_edit, url_track_delete);
+    get_all(map, url_route_ids, url_route_json, url_route_view, url_route_edit, url_route_delete);
+    get_all(map, url_poi_ids, url_poi_json, url_poi_view, url_poi_edit, url_poi_delete);
+}
