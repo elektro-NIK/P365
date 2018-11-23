@@ -11,7 +11,8 @@ function map_init_basic (map, options) {
     else
         var height = info_height;
     $('div.leaflet-container').height(height);
-    map.invalidate
+    map.invalidateSize();
+
     $.getJSON(url_track)
     .done(function (data) {
         var elevation = L.control.elevation({

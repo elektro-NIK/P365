@@ -8,6 +8,14 @@ body {
     padding-bottom: 51px;
 }
 
+.noresize {
+  resize: none;
+}
+
+.fixed {
+  position: fixed;
+}
+
 /* HEADER */
 @media (min-width: 768px) {
     .navbar-nav.navbar-center {

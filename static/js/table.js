@@ -6,7 +6,7 @@ if (activeTab) {
     $('a[href="' + activeTab + '"]').tab('show');
 }
 
-$('body').on('click', 'a[data-toggle=\'tab\']', function (e) {
+$('body').on('click', "a[data-toggle='tab']", function (e) {
     e.preventDefault()
     var tab_name = this.getAttribute('href')
     if (history.pushState) {
@@ -22,8 +22,8 @@ $('body').on('click', 'a[data-toggle=\'tab\']', function (e) {
 });
 
 $(window).on('popstate', function () {
-    var anchor = location.hash || $('a[data-toggle=\'tab\']').first().attr('href');
-    $('a[href=\'' + anchor + '\']').tab('show');
+    var anchor = location.hash || $("a[data-toggle='tab']").first().attr('href');
+    $("a[href='" + anchor + "']").tab('show');
 });
 
 function updateTable(url, id) {
