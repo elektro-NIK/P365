@@ -1,5 +1,5 @@
 function delete_feature (map, feature, url) {
-    var token = $('[name=csrfmiddlewaretoken]').val()
+    var token = $('[name=csrfmiddlewaretoken]').val();
     $.ajax({
         type: "POST",
         url: url,

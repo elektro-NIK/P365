@@ -5,6 +5,7 @@
     <div class="row">
         <br>
         <div class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
+            {% csrf_token %}
             {% include 'partials/_stories-feed.html' %}
         </div>
     </div>
@@ -16,24 +17,7 @@
 
 {% block js %}
     <script>
-        $('div.well').on('click', 'a.btn-delete', function(){
-            var well = $(this).parent().parent().parent();
-                id = well.attr('id').replace('story', ''),
-                url = "{% url 'story:json_delete' 0 %}";
-            $.ajax({
-                type: "POST",
-                url: url.replace('0', id),
-                data: {
-                    csrfmiddlewaretoken: "{{ csrf_token }}",
-                },
-                success: function() {
-                    well.parent().addClass('hidden');
-                },
-                error: function() {
-                    setErrorMsg();
-                }
-            });
-            return false;
-        });
+        var url_story_delete = "{% url 'story:json_delete' 0 %}";
     </script>
+    <script src="{% static 'js/stories.js' %}"></script>
 {% endblock %}
