@@ -49,60 +49,16 @@
         var url_update_routes = "{% url 'table:update_routes' %}";
         var url_update_poi    = "{% url 'table:update_pois' %}";
     </script>
-    <script src="{% static 'js/table.js' %}"></script>
     <script>
-        $('#table-tracks').on('click', 'td.status a', function() {
-            var id = $(this).parent().parent().attr('id').replace('track', ''),
-                url = "{% url 'track:json_change_status' 0 %}",
-                url_upd = "{% url 'table:update_tracks' %}",
-                id_upd = "#table-tracks";
-            changeFeature(url, id, "{{ csrf_token }}", url_upd, id_upd);
-            return false;
-        });
-
-        $('#table-routes').on('click', 'td.status a', function() {
-            var id = $(this).parent().parent().attr('id').replace('route', ''),
-                url = "{% url 'route:json_change_status' 0 %}",
-                url_upd = "{% url 'table:update_routes' %}",
-                id_upd = "#table-routes";
-            changeFeature(url, id, "{{ csrf_token }}", url_upd, id_upd);
-            return false;
-        });
-
-        $('#table-pois').on('click', 'td.status a', function() {
-            var id = $(this).parent().parent().attr('id').replace('poi', ''),
-                url = "{% url 'poi:json_change_status' 0 %}",
-                url_upd = "{% url 'table:update_pois' %}",
-                id_upd = "#table-pois";
-            changeFeature(url, id, "{{ csrf_token }}", url_upd, id_upd);
-            return false;
-        });
-
-        $('#table-tracks').on('click', 'td.edit a.glyphicon-trash', function(){
-            var id = $(this).parent().parent().attr('id').replace('track', ''),
-                url = "{% url 'track:json_delete' 0 %}",
-                url_upd = "{% url 'table:update_tracks' %}",
-                id_upd = "#table-tracks";
-            changeFeature(url, id, "{{ csrf_token }}", url_upd, id_upd);
-            return false;
-        });
-
-        $('#table-routes').on('click', 'td.edit a.glyphicon-trash', function(){
-            var id = $(this).parent().parent().attr('id').replace('route', ''),
-                url = "{% url 'route:json_delete' 0 %}",
-                url_upd = "{% url 'table:update_routes' %}",
-                id_upd = "#table-routes";
-            changeFeature(url, id, "{{ csrf_token }}", url_upd, id_upd);
-            return false;
-        });
-
-        $('#table-pois').on('click', 'td.edit a.glyphicon-trash', function(){
-            var id = $(this).parent().parent().attr('id').replace('poi', ''),
-                url = "{% url 'poi:json_delete' 0 %}",
-                url_upd = "{% url 'table:update_pois' %}",
-                id_upd = "#table-pois";
-            changeFeature(url, id, "{{ csrf_token }}", url_upd, id_upd);
-            return false;
-        });
+        var url_track_status = "{% url 'track:json_change_status' 0 %}",
+            url_track_delete = "{% url 'track:json_delete' 0 %}",
+            url_track_update = "{% url 'table:update_tracks' %}",
+            url_route_status = "{% url 'route:json_change_status' 0 %}",
+            url_route_delete = "{% url 'route:json_delete' 0 %}",
+            url_route_update = "{% url 'table:update_routes' %}",
+            url_poi_status = "{% url 'poi:json_change_status' 0 %}",
+            url_poi_delete = "{% url 'poi:json_delete' 0 %}",
+            url_poi_update = "{% url 'table:update_pois' %}";
     </script>
+    <script src="{% static 'js/table.js' %}"></script>
 {% endblock %}
