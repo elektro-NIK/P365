@@ -5,6 +5,9 @@ var activeTab = localStorage.getItem('activeTab');
 if (activeTab) {
     $('a[href="' + activeTab + '"]').tab('show');
 }
+else {
+    $('a[href="#tracks"]').tab('show');
+}
 
 $('body').on('click', "a[data-toggle='tab']", function (e) {
     e.preventDefault()
