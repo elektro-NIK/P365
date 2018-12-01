@@ -14,7 +14,7 @@ $(window).on('map:init', function (e) {
         var height = info_height;
     $('div.leaflet-container').height(height);
     detail.map.invalidateSize();
-    detail.map.setZoom(13);
+    detail.map.setZoom(7);
 
     detail.map.on('click', function(e) {
         var layers = [];
