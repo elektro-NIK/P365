@@ -48,7 +48,8 @@ function updateAllTables() {
     updateTable(url_update_pois,   "#table-pois");
 }
 
-function changeFeature(url, id, token, url_upd, id_upd) {
+function changeFeature(url, id, url_upd, id_upd) {
+    var token = $('[name=csrfmiddlewaretoken]').val();
     $.ajax({
         type: "POST",
         url: url.replace('0', id),
@@ -69,7 +70,7 @@ $('#table-tracks').on('click', 'td.status a', function() {
         url = url_track_status,
         url_upd = url_track_update,
         id_upd = "#table-tracks";
-    changeFeature(url, id, "{{ csrf_token }}", url_upd, id_upd);
+    changeFeature(url, id, url_upd, id_upd);
     return false;
 });
 
@@ -78,7 +79,7 @@ $('#table-routes').on('click', 'td.status a', function() {
         url = url_route_status,
         url_upd = url_route_update,
         id_upd = "#table-routes";
-    changeFeature(url, id, "{{ csrf_token }}", url_upd, id_upd);
+    changeFeature(url, id, url_upd, id_upd);
     return false;
 });
 
@@ -87,7 +88,7 @@ $('#table-pois').on('click', 'td.status a', function() {
         url = url_poi_status,
         url_upd = url_poi_update,
         id_upd = "#table-pois";
-    changeFeature(url, id, "{{ csrf_token }}", url_upd, id_upd);
+    changeFeature(url, id, url_upd, id_upd);
     return false;
 });
 
@@ -96,7 +97,7 @@ $('#table-tracks').on('click', 'td.edit a.glyphicon-trash', function(){
         url = url_track_delete,
         url_upd = url_track_update,
         id_upd = "#table-tracks";
-    changeFeature(url, id, "{{ csrf_token }}", url_upd, id_upd);
+    changeFeature(url, id, url_upd, id_upd);
     return false;
 });
 
@@ -105,7 +106,7 @@ $('#table-routes').on('click', 'td.edit a.glyphicon-trash', function(){
         url = url_route_delete,
         url_upd = url_route_update,
         id_upd = "#table-routes";
-    changeFeature(url, id, "{{ csrf_token }}", url_upd, id_upd);
+    changeFeature(url, id, url_upd, id_upd);
     return false;
 });
 
@@ -114,6 +115,6 @@ $('#table-pois').on('click', 'td.edit a.glyphicon-trash', function(){
         url = url_poi_delete,
         url_upd = url_poi_update,
         id_upd = "#table-pois";
-    changeFeature(url, id, "{{ csrf_token }}", url_upd, id_upd);
+    changeFeature(url, id, url_upd, id_upd);
     return false;
 });
