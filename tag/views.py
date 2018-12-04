@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.views import View
 
 from map.models import POIModel, RouteModel, TrackModel
+from story.models import StoryModel
 
 
 class TagCloudView(View):
@@ -16,6 +17,9 @@ class TagCloudView(View):
 class TagView(View):
     @staticmethod
     def get(request, tagslug):
+        stories = StoryModel.objects.filter(
+            Q(tags__slug=tagslug), Q(is_active=True)
+        ).order_by('-created')
         if request.user.is_anonymous:
             pois = POIModel.objects.filter(
                 Q(tags__slug=tagslug), Q(is_active=True), Q(public=True)
@@ -41,4 +45,5 @@ class TagView(View):
             'pois': pois,
             'routes': routes,
             'tracks': tracks,
+            'stories': stories,
         })

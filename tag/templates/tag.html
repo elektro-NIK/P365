@@ -2,26 +2,34 @@
 {% load staticfiles %}
 
 {% block content %}
+    <br>
     <div class="row">
         <div class="table-responsive col-xs-12 col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
             <div class="multitable">
                 <ul class="nav nav-tabs">
+                    {% if stories %}
+                        <li class="stories {% if stories %} active {% endif %}">
+                            <a href="#stories" data-toggle="tab" role="tab" data-target="#table-stories">
+                                Stories <span class="badge">{{ stories|length }}</span>
+                            </a>
+                        </li>
+                    {% endif %}
                     {% if tracks %}
-                        <li class="tracks {% if tracks %} active {% endif %}">
+                        <li class="tracks {% if not stories and tracks %} active {% endif %}">
                             <a href="#tracks" data-toggle="tab" role="tab" data-target="#table-tracks">
                                 Tracks <span class="badge">{{ tracks|length }}</span>
                             </a>
                         </li>
                     {% endif %}
                     {% if routes %}
-                        <li class="routes {% if not tracks and routes%} active {% endif %}">
+                        <li class="routes {% if not stories and not tracks and routes%} active {% endif %}">
                             <a href="#routes" data-toggle="tab" role="tab" data-target="#table-routes">
                                 Routes <span class="badge">{{ routes|length }}</span>
                             </a>
                         </li>
                     {% endif %}
                     {% if pois %}
-                        <li class="pois {% if not tracks and not routes and pois%} active {% endif %}">
+                        <li class="pois {% if not stories and not tracks and not routes and pois%} active {% endif %}">
                             <a href="#pois" data-toggle="tab" role="tab" data-target="#table-pois">
                                 POIs <span class="badge">{{ pois|length }}</span>
                             </a>

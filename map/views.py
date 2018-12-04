@@ -137,16 +137,6 @@ class TrackEditView(View):
             track.description = form.cleaned_data['description']
             track.tags.set(*form.cleaned_data['tags'])
             track.public = form.cleaned_data['public']
-            # TODO: calculating track data
-            # track.length = form.cleaned_data['geom'].length * 100
-            # Calculate min, max, loss, gain altitude
-            # alts = [i[2] for i in form.cleaned_data['geom']]
-            # diffs = [alts[i] - alts[i-1] for i in range(1, len(alts))]
-            # gain, loss = [i for i in diffs if i > 0], [-i for i in diffs if i < 0]
-            # track.altitude_max = max(alts)
-            # track.altitude_min = min(alts)
-            # track.altitude_gain = sum(gain)
-            # track.altitude_loss = sum(loss)
             track.save()
             return HttpResponseRedirect(reverse('table:view'))
         return render(request, 'editor.html', {'title': form['name'].value(), 'form': form})
