@@ -2,6 +2,14 @@ var mapsPlaceholder = [];
 var bounds;
 
 function map_init_basic (map, options) {
+    $("input[name='leaflet-base-layers']").on('click', function () {
+        var index = $("input[name='leaflet-base-layers']").index(this);
+        localStorage.setItem('map_index', index);
+    });
+    var index = localStorage.getItem('map_index');
+    if (index)
+        $("input[name='leaflet-base-layers']")[index].click();
+
     mapsPlaceholder.push(map);
     var form_height = $('#other').height();
     var page_height = $(document).height();

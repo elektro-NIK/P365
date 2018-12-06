@@ -1,4 +1,12 @@
 $(window).on('map:init', function (e) {
+    $("input[name='leaflet-base-layers']").on('click', function () {
+        var index = $("input[name='leaflet-base-layers']").index(this);
+        localStorage.setItem('map_index', index);
+    });
+    var index = localStorage.getItem('map_index');
+    if (index)
+        $("input[name='leaflet-base-layers']")[index].click();
+
     var detail = e.originalEvent ?
                  e.originalEvent.detail : e.detail;
     var info_height = $('#info').height();
@@ -32,5 +40,5 @@ $(window).on('map:init', function (e) {
             detail.map.fitBounds(L.latLngBounds([poi.getLatLng()]));
             detail.map.setZoom(zoom);
         }
-    })
+    });
 });
