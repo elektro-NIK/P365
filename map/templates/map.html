@@ -22,7 +22,7 @@
     <script src="{% static 'js/msg_wrong.js' %}"></script>
     <script>
         var bounds;
-        var progress;
+        var progress = -1;
 
         var url_track_ids    = "{% url 'track:json_ids' %}",
             url_track_json   = "{% url 'track:json' id=0 %}",
