@@ -13,7 +13,7 @@ from story.models import StoryModel
 class StoriesView(View):
     @staticmethod
     def get(request):
-        stories = StoryModel.objects.filter(user=request.user, is_active=True).order_by('event__start_date')
+        stories = StoryModel.objects.filter(user=request.user, is_active=True).order_by('-event__start_date')
         return render(request, 'stories.html', {'title': 'Stories', 'active': 'stories', 'stories': stories})
 
 

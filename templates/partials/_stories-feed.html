@@ -1,5 +1,5 @@
 {% for story in stories %}
-    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+    <div class="col-xs-12">
         <div class="well" id="story{{ story.id }}">
             <h3 align="center">{{ story.title }}</h3>
             <p align="center"><b>{{ story.event.start_date|date }} - {{ story.event.finish_date|date }}</b></p>

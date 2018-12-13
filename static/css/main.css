@@ -8,6 +8,11 @@ body {
     padding-bottom: 51px;
 }
 
+div.row.content {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
 .noresize {
   resize: none;
 }

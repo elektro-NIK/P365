@@ -2,10 +2,9 @@
 {% load staticfiles %}
 
 {% block content %}
-<div class="row">
-    <div class="col col-sm-12">
-        <br>
-        <big> {{ profile.username }} profile page. </big>
-    </div>
+<div class="col col-sm-12">
+    <br>
+    <img src="{{ profile.userpic }}"/>
+    <big> {{ profile.username }}</big>
 </div>
 {% endblock %}
