@@ -7,7 +7,8 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import View
 
-from profile.forms import SignUpForm
+from .forms import SignUpForm
+from .models import ProfileModel
 
 
 class IndexView(View):
@@ -71,5 +72,5 @@ class ProfileRedirect(LoginRequiredMixin, View):
 class ProfileView(LoginRequiredMixin, View):
     @staticmethod
     def get(request, username):
-        profile = get_object_or_404(User, username=username)
+        profile = get_object_or_404(ProfileModel, user__username=username)
         return render(request, 'profile.html', {'title': 'Profile', 'profile': profile})
