@@ -8,6 +8,7 @@ class ProfileModel(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     info = models.TextField(max_length=100, blank=True)
     location = models.CharField(max_length=30, blank=True)
+    pic = models.ImageField(upload_to='media/avatars/', default='media/avatars/default/default.png')
     fb_url = models.CharField(max_length=100, blank=True)
     tw_url = models.CharField(max_length=100, blank=True)
     ig_url = models.CharField(max_length=100, blank=True)

@@ -107,3 +107,4 @@ venv.bak/
 *TODO*
 /google_api/api_keys.py
 media/
+!/media/avatars/default/default.png
