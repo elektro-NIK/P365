@@ -30,6 +30,10 @@ div.row.content {
     }
 }
 
+.navbar-nav img {
+    height: 18px;
+}
+
 /* FOOTER */
 footer {
   position: absolute;
