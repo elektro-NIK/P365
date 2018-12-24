@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'taggit',
     'taggit_templatetags2',
     'django_summernote',
+    'django_cleanup.apps.CleanupConfig',
 
     'calendar_year',
     'gpx',

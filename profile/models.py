@@ -5,7 +5,7 @@ from django.dispatch import receiver
 
 
 def avatar_user_path(instance, filename):
-    return f'avatars/{instance.user.username}/{filename}'
+    return f'avatars/{instance.user.username}.{filename.split(".")[-1]}'
 
 
 class ProfileModel(models.Model):
