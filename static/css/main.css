@@ -21,6 +21,10 @@ div.row.content {
   position: fixed;
 }
 
+.avatar {
+    width: 100%;
+}
+
 /* HEADER */
 @media (min-width: 768px) {
     .navbar-nav.navbar-center {
