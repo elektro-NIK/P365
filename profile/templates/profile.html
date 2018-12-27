@@ -17,24 +17,30 @@
         {% if profile.location %} <i class="glyphicon glyphicon-map-marker"></i> {{ profile.location }} {% endif %}
     </div>
     <div id="counters">
-        <div class="thumbnail col-xs-4">
-            <center>
-                Tracks
-                <h4>13</h4>
-            </center>
-        </div>
-        <div class="thumbnail col-xs-4">
-            <center>
-                Routes
-                <h4>21</h4>
-            </center>
-        </div>
-        <div class="thumbnail col-xs-4">
-            <center>
-                Stories
-                <h4>3</h4>
-            </center>
-        </div>
+        <a href="#">
+            <div class="thumbnail col-xs-4">
+                <center>
+                    Tracks
+                    <h4>{{ counter.tracks|default:0 }}</h4>
+                </center>
+            </div>
+        </a>
+        <a href="#">
+            <div class="thumbnail col-xs-4">
+                <center>
+                    Routes
+                    <h4>{{ counter.routes|default:0 }}</h4>
+                </center>
+            </div>
+        </a>
+        <a href="#">
+            <div class="thumbnail col-xs-4">
+                <center>
+                    Stories
+                    <h4>{{ counter.stories|default:0 }}</h4>
+                </center>
+            </div>
+        </a>
     </div>
     <div id="socials">
         <center>
@@ -46,10 +52,10 @@
 </div>
 <div class="col col-xs-12 col-sm-12 col-md-9 col-lg-6">
     <div class="well">
-        Here was something
+        Statistics
     </div>
     <div class="well">
-        One other
+        Feed etc
     </div>
 </div>
 {% endblock %}
