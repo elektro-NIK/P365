@@ -24,11 +24,11 @@ class ProfileModel(models.Model):
 
 
 @receiver(post_save, sender=User)
-def create_user_profile(_, instance, created, **__):
+def create_user_profile(instance, created, **__):
     if created:
         ProfileModel.objects.create(user=instance)
 
 
 @receiver(post_save, sender=User)
-def save_user_profile(_, instance,  **__):
-    instance.profile.save()
+def save_user_profile(instance,  **__):
+    instance.profilemodel.save()
