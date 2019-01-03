@@ -34,12 +34,12 @@ class StoryEditView(View):
         story = get_object_or_404(StoryModel, id=id) if id else None
         if story and story.user != request.user and story.is_active:
             return HttpResponseForbidden()
-        form = StoryForm(instance=story)
+        form = StoryForm(request.user, instance=story)
         return render(request, 'story-editor.html', {'title': story.title if story else 'New story', 'form': form})
 
     @staticmethod
     def post(request, id=None):
-        form = StoryForm(request.POST)
+        form = StoryForm(request.user, request.POST)
         if form.is_valid():
             if id:
                 story = get_object_or_404(StoryModel, id=id)
