@@ -9,7 +9,7 @@ from .models import StoryModel
 class StoryForm(ModelForm):
     class Meta:
         model = StoryModel
-        exclude = ('user',)
+        exclude = ('user', 'is_active')
         widgets = {
             'text': SummernoteWidget(),
         }
