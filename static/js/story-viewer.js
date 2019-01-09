@@ -26,24 +26,26 @@ function map_init_basic (map, options) {
         bounds && bounds.isValid() ? map.fitBounds(bounds) : {};
     });
 
-    $.getJSON(url_track_json)
-    .done(function (data) {
-        var elevation = L.control.elevation({
-            position: 'bottomleft',
-            width: $('div.leaflet-container').width() - 20,
-            height: 100,
-            margins: {
-                top: 10,
-                right: 60,
-                bottom: 20,
-                left: 60
-            },
-            useHeightIndicator: true,
-        }).addTo(map);
-        var track = L.geoJson(JSON.parse(data), {
-            onEachFeature: elevation.addData.bind(elevation)
-        }).addTo(map);
-        bounds = track.getBounds();
-        map.fitBounds(bounds);
-    }).fail(function() {setErrorMsg()});
+    if (track_id) {
+        $.getJSON(url_track_json)
+        .done(function (data) {
+            var elevation = L.control.elevation({
+                position: 'bottomleft',
+                width: $('div.leaflet-container').width() - 20,
+                height: 100,
+                margins: {
+                    top: 10,
+                    right: 60,
+                    bottom: 20,
+                    left: 60
+                },
+                useHeightIndicator: true,
+            }).addTo(map);
+            var track = L.geoJson(JSON.parse(data), {
+                onEachFeature: elevation.addData.bind(elevation)
+            }).addTo(map);
+            bounds = track.getBounds();
+            map.fitBounds(bounds);
+        }).fail(function() {setErrorMsg()});
+    }
 }
