@@ -8,12 +8,21 @@ body {
     padding-bottom: 51px;
 }
 
+div.row.content {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
 .noresize {
   resize: none;
 }
 
 .fixed {
   position: fixed;
+}
+
+.avatar {
+    width: 100%;
 }
 
 /* HEADER */
@@ -23,6 +32,10 @@ body {
         left: 50%;
         transform: translatex(-50%);
     }
+}
+
+.navbar-nav img {
+    height: 18px;
 }
 
 /* FOOTER */

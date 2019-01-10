@@ -102,8 +102,9 @@ venv.bak/
 # mypy
 .mypy_cache/
 .directory
-.idea
+.idea/
 *.sqlite3
 *TODO*
 /google_api/api_keys.py
 media/
+!/media/avatars/default/default.png

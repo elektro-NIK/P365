@@ -25,7 +25,8 @@
     {% leaflet_js plugins='elevation' %}
     <script src="{% static 'js/msg_wrong.js' %}"></script>
     <script>
-        var url_track_json = "{% url 'track:json' story.track.id %}";
+        var track_id = {{ story.track.id|default:0 }};
+        var url_track_json = "{% url 'track:json' story.track.id|default:0 %}";
     </script>
     <script src="{% static 'js/story-viewer.js' %}"></script>
 {% endblock %}

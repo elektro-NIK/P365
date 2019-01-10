@@ -36,7 +36,6 @@ $(window).on('map:init', function (e) {
                 counter++;
             }
         })
-        console.log(poi, counter);
         if (layers.length > 0 && counter == 0)
             detail.map.fitBounds(L.featureGroup(layers).getBounds());
         if (poi && counter == 1) {

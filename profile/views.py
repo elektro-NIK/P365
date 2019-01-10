@@ -7,7 +7,10 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import View
 
-from profile.forms import SignUpForm
+from map.models import TrackModel, RouteModel
+from story.models import StoryModel
+from .forms import SignUpForm
+from .models import ProfileModel
 
 
 class IndexView(View):
@@ -71,5 +74,17 @@ class ProfileRedirect(LoginRequiredMixin, View):
 class ProfileView(LoginRequiredMixin, View):
     @staticmethod
     def get(request, username):
-        profile = get_object_or_404(User, username=username)
-        return render(request, 'profile.html', {'title': 'Profile', 'profile': profile})
+        profile = get_object_or_404(ProfileModel, user__username=username)
+        if request.user.username == username:
+            counter = {
+                'tracks': TrackModel.objects.filter(user__username=username, is_active=True).count(),
+                'routes': RouteModel.objects.filter(user__username=username, is_active=True).count(),
+                'stories': StoryModel.objects.filter(user__username=username, is_active=True).count(),
+            }
+        else:
+            counter = {
+                'tracks': TrackModel.objects.filter(user__username=username, public=True, is_active=True).count(),
+                'routes': RouteModel.objects.filter(user__username=username, public=True, is_active=True).count(),
+                'stories': StoryModel.objects.filter(user__username=username, is_active=True).count(),
+            }
+        return render(request, 'profile.html', {'title': 'Profile', 'profile': profile, 'counter': counter})
