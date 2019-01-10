@@ -11,7 +11,7 @@ class StoryModel(models.Model):
     title = models.CharField(max_length=MAX_LENGTH['title'])
     text = models.TextField(max_length=MAX_LENGTH['text'])
     track = models.ForeignKey(TrackModel, on_delete=models.CASCADE, null=True, blank=True)
-    event = models.OneToOneField(EventModel, on_delete=models.CASCADE)
+    event = models.ForeignKey(EventModel, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     tags = TaggableManager(blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -2,10 +2,64 @@
 {% load staticfiles %}
 
 {% block content %}
-<div class="row">
-    <div class="col col-sm-12">
-        <br>
-        <big> {{ profile.username }} profile page. </big>
+<br>
+<div class="well col col-xs-12 col-sm-12 col-md-3 col-lg-2 col-lg-offset-2">
+    <div id="avatar">
+        <img class="avatar" src="{{ profile.pic.url }}"/>
+    </div>
+    <div id="username">
+        <center><big> {{ profile.user }}</big></center>
+    </div>
+    <div id="info">
+        {% if profile.info %} {{ profile.info }} {% endif %}
+    </div>
+    <div id="location">
+        {% if profile.location %} <i class="glyphicon glyphicon-map-marker"></i> {{ profile.location }} {% endif %}
+    </div>
+    <div id="counters">
+        <a href="#">
+            <div class="thumbnail col-xs-4">
+                <center>
+                    Tracks
+                    <h4>{{ counter.tracks|default:0 }}</h4>
+                </center>
+            </div>
+        </a>
+        <a href="#">
+            <div class="thumbnail col-xs-4">
+                <center>
+                    Routes
+                    <h4>{{ counter.routes|default:0 }}</h4>
+                </center>
+            </div>
+        </a>
+        <a href="#">
+            <div class="thumbnail col-xs-4">
+                <center>
+                    Stories
+                    <h4>{{ counter.stories|default:0 }}</h4>
+                </center>
+            </div>
+        </a>
+    </div>
+    <div id="socials">
+        <center>
+            {% if profile.fb_url %} <a href="{{ profile.fb_url }}" target="_blank"><i class="fab fa-facebook-square fa-3x"></i></a> {% endif %}
+            {% if profile.tw_url %} <a href="{{ profile.tw_url }}" target="_blank"><i class="fab fa-twitter-square fa-3x"></i></a> {% endif %}
+            {% if profile.ig_url %} <a href="{{ profile.ig_url }}" target="_blank"><i class="fab fa-instagram fa-3x"></i></a> {% endif %}
+        </center>
     </div>
 </div>
+<div class="col col-xs-12 col-sm-12 col-md-9 col-lg-6">
+    <div class="well">
+        Statistics
+    </div>
+    <div class="well">
+        Feed etc
+    </div>
+</div>
+{% endblock %}
+
+{% block css %}
+    <link href="{% static 'css/profile.css' %}" rel="stylesheet" media="screen">
 {% endblock %}
