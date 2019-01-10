@@ -27,15 +27,19 @@ $(window).on('map:init', function (e) {
     detail.map.on('click', function(e) {
         var layers = [];
         var poi = null;
+        var counter = 0;
         detail.map.eachLayer(function(layer) {
             if (layer instanceof L.Polyline)
                 layers.push(layer);
-            if (layer instanceof L.Marker)
+            if (layer instanceof L.Marker) {
                 poi = layer
+                counter++;
+            }
         })
-        if (layers.length > 0)
+        console.log(poi, counter);
+        if (layers.length > 0 && counter == 0)
             detail.map.fitBounds(L.featureGroup(layers).getBounds());
-        if (poi) {
+        if (poi && counter == 1) {
             var zoom = detail.map.getZoom()
             detail.map.fitBounds(L.latLngBounds([poi.getLatLng()]));
             detail.map.setZoom(zoom);
