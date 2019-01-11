@@ -211,7 +211,7 @@ MAX_LENGTH = {
     'name': 30,
     'description': 250,
     'title': 50,
-    'text': 5000,
+    'text': 500000,
     'tag': 30,
 }
 
