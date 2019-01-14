@@ -3,7 +3,7 @@ from django.urls import path, include, register_converter
 from P365.converters import UintWithoutZero
 from map.models import TrackModel
 from map.views import TrackView, JSONFeatureIdsView, JSONFeatureView, JSONFeaturesView, JSONFeatureChangeStatusView, \
-    JSONFeatureDeleteView, TrackEditView
+    JSONFeatureDeleteView, TrackEditView, JSONFeatureHasStory
 
 app_name = 'track'
 
@@ -16,6 +16,7 @@ urlpatterns = [
         path('json_get/',           JSONFeatureView.as_view(),              name='json'),
         path('json_change_status/', JSONFeatureChangeStatusView.as_view(),  name='json_change_status'),
         path('json_delete/',        JSONFeatureDeleteView.as_view(),        name='json_delete'),
+        path('json_has_story/',     JSONFeatureHasStory.as_view(),          name='json_has_story'),
     ]), {'model': TrackModel}),
     path('json_ids/',               JSONFeatureIdsView.as_view(),   {'model': TrackModel},  name='json_ids'),
     path('json_get_all/',           JSONFeaturesView.as_view(),     {'model': TrackModel},  name='jsons'),

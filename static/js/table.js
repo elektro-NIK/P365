@@ -92,12 +92,26 @@ $('#table-pois').on('click', 'td.status a', function() {
     return false;
 });
 
+function trackHasStory(url, id) {
+    return $.ajax({
+        type: "GET",
+        url: url.replace('0', id),
+        async: false,
+    }).responseJSON.result;
+}
+
 $('#table-tracks').on('click', 'td.edit a.glyphicon-trash', function(){
     var id = $(this).parent().parent().attr('id').replace('track', ''),
         url = url_track_delete,
         url_upd = url_track_update,
         id_upd = "#table-tracks";
-    changeFeature(url, id, url_upd, id_upd);
+    if (trackHasStory(url_track_has_story, id)) {
+        if (confirm('The track has a related story. \nDelete anyway?')) {
+            changeFeature(url, id, url_upd, id_upd);
+        }
+    }
+    else
+        changeFeature(url, id, url_upd, id_upd);
     return false;
 });
 
