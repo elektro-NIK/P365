@@ -207,3 +207,17 @@ class JSONFeatureHasStory(View):
                 'result': bool(StoryModel.objects.filter(track=obj))
             }), content_type='application/json')
         return HttpResponseForbidden()
+
+
+@method_decorator(login_required, name='dispatch')
+class JSONFeatureClearStory(View):
+    @staticmethod
+    def post(request, id, model):
+        obj = get_object_or_404(model, id=id)
+        if obj.user == request.user and obj.is_active:
+            stories = StoryModel.objects.filter(track=obj)
+            for story in stories:
+                story.track = None
+                story.save()
+            return JsonResponse({'Status': 'OK'})
+        return HttpResponseForbidden()

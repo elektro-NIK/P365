@@ -70,7 +70,24 @@ $('#table-tracks').on('click', 'td.status a', function() {
         url = url_track_status,
         url_upd = url_track_update,
         id_upd = "#table-tracks";
-    changeFeature(url, id, url_upd, id_upd);
+    if ($(this).attr('title') == 'public' && trackHasStory(url_track_has_story, id)) {
+        if (confirm('The track has a related story. \nIf you make the track private - the story will be without the track. \nChange anyway?')) {
+            var token = $('[name=csrfmiddlewaretoken]').val();
+            $.ajax({
+                type: "POST",
+                url: url_track_clear_story.replace('0', id),
+                data: {
+                    csrfmiddlewaretoken: token,
+                },
+                error: function() {
+                    setErrorMsg();
+                }
+            });
+            changeFeature(url, id, url_upd, id_upd);
+        }
+    }
+    else
+        changeFeature(url, id, url_upd, id_upd);
     return false;
 });
 
@@ -105,13 +122,7 @@ $('#table-tracks').on('click', 'td.edit a.glyphicon-trash', function(){
         url = url_track_delete,
         url_upd = url_track_update,
         id_upd = "#table-tracks";
-    if (trackHasStory(url_track_has_story, id)) {
-        if (confirm('The track has a related story. \nDelete anyway?')) {
-            changeFeature(url, id, url_upd, id_upd);
-        }
-    }
-    else
-        changeFeature(url, id, url_upd, id_upd);
+    changeFeature(url, id, url_upd, id_upd);
     return false;
 });
 
