@@ -1,11 +1,14 @@
+import json
+
 from django.contrib.auth.decorators import login_required
 from django.core.serializers import serialize
-from django.http import HttpResponseForbidden, JsonResponse, HttpResponseRedirect
+from django.http import HttpResponseForbidden, JsonResponse, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
 
+from story.models import StoryModel
 from .forms import POIForm, RouteForm, TrackForm
 from .models import TrackModel, POIModel, RouteModel
 
@@ -190,5 +193,31 @@ class JSONFeatureDeleteView(View):
         if obj.user == request.user and not obj.public and obj.is_active:
             obj.is_active = False
             obj.save()
+            return JsonResponse({'Status': 'OK'})
+        return HttpResponseForbidden()
+
+
+@method_decorator(login_required, name='dispatch')
+class JSONFeatureHasStory(View):
+    @staticmethod
+    def get(request, id, model):
+        obj = get_object_or_404(model, id=id)
+        if obj.user == request.user and obj.is_active:
+            return HttpResponse(json.dumps({
+                'result': bool(StoryModel.objects.filter(track=obj))
+            }), content_type='application/json')
+        return HttpResponseForbidden()
+
+
+@method_decorator(login_required, name='dispatch')
+class JSONFeatureClearStory(View):
+    @staticmethod
+    def post(request, id, model):
+        obj = get_object_or_404(model, id=id)
+        if obj.user == request.user and obj.is_active:
+            stories = StoryModel.objects.filter(track=obj)
+            for story in stories:
+                story.track = None
+                story.save()
             return JsonResponse({'Status': 'OK'})
         return HttpResponseForbidden()
