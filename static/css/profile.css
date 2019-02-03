@@ -9,11 +9,13 @@
 
 #chart_label {
     position: relative;
-    width: 0;
-    height: 0;
-    top: -124px;
-    left: 126px;
+    width: 60px;
+    height: 60px;
+    top: -154px;
+    left: 96px;
     display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1;
     align-items: center;
     justify-content: center;
     cursor: default;
@@ -21,6 +23,10 @@
     font-size: 20pt;
     color: #8e8e8e;
     font-family: Arial;
+}
+
+#chart_label_km {
+    font-size: 12pt;
 }
 
 #chart_legend {

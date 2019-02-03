@@ -57,7 +57,10 @@
             <div id="chart_container" class="col col-xs-12 col-sm-8">
                 <div id="chart" class="col col-xs-8">
                     <div id="chart_div"></div>
-                    <div id="chart_label">0</div>
+                    <div id="chart_label">
+                        <div id="chart_label_dig">0</div>
+                        <div id="chart_label_km"> km</div>
+                    </div>
                 </div>
                 <div id="chart_legend" class="col col-xs-4">
                     <p>legend 1<br>legend 2<br>legend 3<br>legend 4<br>legend 5<br></p>
@@ -117,7 +120,7 @@
             var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
 
             function overHandler(x) {
-                $('#chart_label').text(data.getValue(x.row, 1) + ' km');
+                $('#chart_label_dig').text(data.getValue(x.row, 1));
             };
 
             function outHandler() {
@@ -125,7 +128,7 @@
                 for (var y = 0, max_rows = data.getNumberOfRows(); y < max_rows; y++) {
                     sum += data.getValue(y, 1);
                 }
-                $('#chart_label').text(sum + ' km');
+                $('#chart_label_dig').html(sum);
             };
 
             google.visualization.events.addListener(chart, 'onmouseover', overHandler);
