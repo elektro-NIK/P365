@@ -15,7 +15,6 @@
     left: 96px;
     display: flex;
     flex-wrap: wrap;
-    flex-grow: 1;
     align-items: center;
     justify-content: center;
     cursor: default;
@@ -25,8 +24,15 @@
     font-family: Arial;
 }
 
+#chart_label_dig {
+    margin-right: 4px;
+    margin-left: 4px;
+}
+
 #chart_label_km {
     font-size: 12pt;
+    margin-right: 4px;
+    margin-left: 4px;
 }
 
 #chart_legend {
