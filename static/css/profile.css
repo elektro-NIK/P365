@@ -40,7 +40,13 @@
     height: 250px;
 }
 
-#chart_legend :first-child {
+#chart_legend>ul {
     display: table-cell;
     vertical-align: middle;
+}
+
+.list-group-item {
+    padding: 3px 10px;
+    background: none;
+    border: none;
 }

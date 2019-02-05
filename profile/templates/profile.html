@@ -63,7 +63,28 @@
                     </div>
                 </div>
                 <div id="chart_legend" class="col col-xs-4">
-                    <p>legend 1<br>legend 2<br>legend 3<br>legend 4<br>legend 5<br></p>
+                    <ul class="list-group" style="max-height: 200px;overflow: auto;">
+                        <li class="list-group-item">
+                            <i class="fas fa-walking" style="color:#E25668"></i>
+                            <span>walking</span>
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-hiking" style="color:#E28956"></i>
+                            <span>hiking</span>
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-running" style="color:#E2CF56"></i>
+                            <span>running</span>
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-swimmer" style="color:#AEE256"></i>
+                            <span>swimming</span>
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-skiing" style="color:#68E256"></i>
+                            <span>skiing</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="col col-xs-12 col-sm-4">
@@ -92,10 +113,15 @@
             data.addColumn('number', 'Slices');
 
             data.addRows([
-                ['walking', 16],
-                ['hiking', 10],
-                ['runing', 5],
-                ['driving', 1.34],
+                ['walking', Math.round(Math.random()*10000)/100],
+                ['hiking', Math.round(Math.random()*10000)/100],
+                ['running', Math.round(Math.random()*10000)/100],
+                ['cycling', Math.round(Math.random()*10000)/100],
+                ['skiing', Math.round(Math.random()*10000)/100],
+                ['runing', Math.round(Math.random()*10000)/100],
+                ['runing', Math.round(Math.random()*10000)/100],
+                ['runing', Math.round(Math.random()*10000)/100],
+                ['runing', Math.round(Math.random()*10000)/100],
             ]);
 
             var options = {
@@ -114,7 +140,21 @@
                 legend: 'none',
                 tooltip: {
                     text: 'percentage',
-                }
+                },
+                colors: [
+                    '#E25668',
+                    '#E28956',
+                    '#E2CF56',
+                    '#AEE256',
+                    '#68E256',
+                    '#56E289',
+                    '#56E2CF',
+                    '#56AEE2',
+                    '#5668E2',
+                    '#8A56E2',
+                    '#CF56E2',
+                    '#E256AE',
+                ],
             };
 
             var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
@@ -128,6 +168,7 @@
                 for (var y = 0, max_rows = data.getNumberOfRows(); y < max_rows; y++) {
                     sum += data.getValue(y, 1);
                 }
+                sum = Math.round(sum*100)/100;
                 $('#chart_label_dig').html(sum);
             };
 

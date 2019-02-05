@@ -51,15 +51,16 @@ footer {
     margin-left: 0px;
 }
 
-h1.fa {
+h1.faicon {
     margin-top: 0px;
     margin-bottom: 0px;
 }
 
-a.fa {
+a.faicon {
     padding-bottom: 6px !important;
     padding-top: 7px !important;
     color: #9d9d9d;
+    display: inline-block;
 }
 
 /* PROGRESSBAR */
