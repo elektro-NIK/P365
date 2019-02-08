@@ -131,7 +131,7 @@
                 pieSliceText: 'none',
                 pieSliceBorderColor: 'none',
                 backgroundColor: 'none',
-                sliceVisibilityThreshold: 0.1,
+                <!--sliceVisibilityThreshold: 0.1,-->
                 pieResidueSliceLabel: 'other',
                 <!--legend: {-->
                     <!--position: 'right',-->
@@ -177,6 +177,17 @@
 
             outHandler();
             chart.draw(data, options);
+
+            $('#chart_legend>ul li').each(function(index, item) {
+                $(item).mouseover(function() {
+                    chart.setSelection([{row: index, column: null}]);
+                    overHandler({row: index});
+                });
+                $(item).mouseout(function() {
+                    chart.setSelection([]);
+                    outHandler();
+                });
+            });
         }
     </script>
 {% endblock %}
