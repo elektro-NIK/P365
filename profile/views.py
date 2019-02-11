@@ -87,4 +87,17 @@ class ProfileView(LoginRequiredMixin, View):
                 'routes': RouteModel.objects.filter(user__username=username, public=True, is_active=True).count(),
                 'stories': StoryModel.objects.filter(user__username=username, is_active=True).count(),
             }
-        return render(request, 'profile.html', {'title': 'Profile', 'profile': profile, 'counter': counter})
+        stat = {
+            'walking': 0.1,
+            'hiking': 0.1,
+            'running': 0.1,
+            'cycling': 0.1,
+            'swimming': 0.1,
+            'skiing': 0.1
+        }
+        return render(request, 'profile.html', {
+            'title': 'Profile',
+            'profile': profile,
+            'counter': counter,
+            'stat': stat,
+        })

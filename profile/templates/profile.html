@@ -77,11 +77,15 @@
                             <span>running</span>
                         </li>
                         <li class="list-group-item">
-                            <i class="fas fa-swimmer fa-fw" style="color:#AEE256"></i>
+                            <i class="fas fa-bicycle fa-fw" style="color:#AEE256"></i>
+                            <span>cycling</span>
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-swimmer fa-fw" style="color:#68E256"></i>
                             <span>swimming</span>
                         </li>
                         <li class="list-group-item">
-                            <i class="fas fa-skiing fa-fw" style="color:#68E256"></i>
+                            <i class="fas fa-skiing fa-fw" style="color:#56E289"></i>
                             <span>skiing</span>
                         </li>
                     </ul>
@@ -113,15 +117,13 @@
             data.addColumn('number', 'Slices');
 
             data.addRows([
-                ['walking', Math.round(Math.random()*10000)/100],
-                ['hiking', Math.round(Math.random()*10000)/100],
-                ['running', Math.round(Math.random()*10000)/100],
-                ['cycling', Math.round(Math.random()*10000)/100],
-                ['skiing', Math.round(Math.random()*10000)/100],
-                ['runing', Math.round(Math.random()*10000)/100],
-                ['runing', Math.round(Math.random()*10000)/100],
-                ['runing', Math.round(Math.random()*10000)/100],
-                ['runing', Math.round(Math.random()*10000)/100],
+                ['walking',  {{ stat.walking  }}],
+                ['hiking',   {{ stat.hiking   }}],
+                ['running',  {{ stat.running  }}],
+                ['cycling',  {{ stat.cycling  }}],
+                ['swimming', {{ stat.swimming }}],
+                ['skiing',   {{ stat.skiing   }}],
+                <!--['running', Math.round(Math.random()*10000)/100],-->
             ]);
 
             var options = {
