@@ -88,7 +88,7 @@ class ProfileView(LoginRequiredMixin, View):
                 'stories': StoryModel.objects.filter(user__username=username, is_active=True).count(),
             }
         stat = {
-            'walking': 0.1,
+            'walking': 0.1111111111,
             'hiking': 0.1,
             'running': 0.1,
             'cycling': 0.1,

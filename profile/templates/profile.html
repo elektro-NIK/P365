@@ -109,6 +109,10 @@
 {% block js %}
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
+        function roundTo(num, n) {
+            return Math.round(num*Math.pow(10,n))/Math.pow(10,n);
+        }
+
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
         function drawChart() {
@@ -123,7 +127,6 @@
                 ['cycling',  {{ stat.cycling  }}],
                 ['swimming', {{ stat.swimming }}],
                 ['skiing',   {{ stat.skiing   }}],
-                <!--['running', Math.round(Math.random()*10000)/100],-->
             ]);
 
             var options = {
@@ -133,45 +136,29 @@
                 pieSliceText: 'none',
                 pieSliceBorderColor: 'none',
                 backgroundColor: 'none',
-                <!--sliceVisibilityThreshold: 0.1,-->
-                pieResidueSliceLabel: 'other',
-                <!--legend: {-->
-                    <!--position: 'right',-->
-                    <!--alignment: 'center',-->
-                <!--},-->
                 legend: 'none',
                 tooltip: {
-                    text: 'percentage',
+                    trigger: 'none',
                 },
-                colors: [
-                    '#E25668',
-                    '#E28956',
-                    '#E2CF56',
-                    '#AEE256',
-                    '#68E256',
-                    '#56E289',
-                    '#56E2CF',
-                    '#56AEE2',
-                    '#5668E2',
-                    '#8A56E2',
-                    '#CF56E2',
-                    '#E256AE',
+                colors: ['#E25668', '#E28956', '#E2CF56', '#AEE256', '#68E256', '#56E289',
+                         <!--'#56E2CF', '#56AEE2', '#5668E2', '#8A56E2', '#CF56E2', '#E256AE',-->
                 ],
             };
 
             var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
 
             function overHandler(x) {
-                $('#chart_label_dig').text(data.getValue(x.row, 1));
+                var num = data.getValue(x.row, 1);
+                $('#chart_legend>ul li').eq(x.row).css('font-weight', 'Bold');
+                $('#chart_label_dig').text(roundTo(num, 2));
             };
 
             function outHandler() {
                 var sum = 0;
-                for (var y = 0, max_rows = data.getNumberOfRows(); y < max_rows; y++) {
+                for (var y = 0; y < data.getNumberOfRows(); y++)
                     sum += data.getValue(y, 1);
-                }
-                sum = Math.round(sum*100)/100;
-                $('#chart_label_dig').html(sum);
+                $('#chart_legend>ul li').css('font-weight', '');
+                $('#chart_label_dig').html(roundTo(sum, 2));
             };
 
             google.visualization.events.addListener(chart, 'onmouseover', overHandler);
