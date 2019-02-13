@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.db.models import Sum, Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
@@ -75,25 +76,19 @@ class ProfileView(LoginRequiredMixin, View):
     @staticmethod
     def get(request, username):
         profile = get_object_or_404(ProfileModel, user__username=username)
-        if request.user.username == username:
-            counter = {
-                'tracks': TrackModel.objects.filter(user__username=username, is_active=True).count(),
-                'routes': RouteModel.objects.filter(user__username=username, is_active=True).count(),
-                'stories': StoryModel.objects.filter(user__username=username, is_active=True).count(),
-            }
-        else:
-            counter = {
-                'tracks': TrackModel.objects.filter(user__username=username, public=True, is_active=True).count(),
-                'routes': RouteModel.objects.filter(user__username=username, public=True, is_active=True).count(),
-                'stories': StoryModel.objects.filter(user__username=username, is_active=True).count(),
-            }
+        tracks = TrackModel.objects.filter(user__username=username, is_active=True)
+        routes = RouteModel.objects.filter(user__username=username, is_active=True)
+        stories = StoryModel.objects.filter(user__username=username, is_active=True)
+        if request.user.username != username:
+            tracks, routes = tracks.filter(public=True), routes.filter(public=True)
+        counter = {'tracks': tracks.count(), 'routes': routes.count(), 'stories': stories.count()}
         stat = {
-            'walking': 0.1111111111,
-            'hiking': 0.1,
-            'running': 0.1,
-            'cycling': 0.1,
-            'swimming': 0.1,
-            'skiing': 0.1
+            'walking': tracks.filter(Q(tags__name='walking')).aggregate(Sum('length'))['length__sum'] or 0,
+            'hiking': tracks.filter(Q(tags__name='hiking')).aggregate(Sum('length'))['length__sum'] or 0,
+            'running': tracks.filter(Q(tags__name='running')).aggregate(Sum('length'))['length__sum'] or 0,
+            'cycling': tracks.filter(Q(tags__name='cycling')).aggregate(Sum('length'))['length__sum'] or 0,
+            'swimming': tracks.filter(Q(tags__name='swimming')).aggregate(Sum('length'))['length__sum'] or 0,
+            'skiing': tracks.filter(Q(tags__name='skiing')).aggregate(Sum('length'))['length__sum'] or 0
         }
         return render(request, 'profile.html', {
             'title': 'Profile',
