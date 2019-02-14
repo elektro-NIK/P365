@@ -65,28 +65,40 @@
                 <div id="chart_legend" class="col col-xs-4">
                     <ul class="list-group" style="max-height: 200px;overflow: auto;">
                         <li class="list-group-item">
-                            <i class="fas fa-walking fa-fw" style="color:#E25668"></i>
-                            <span>walking</span>
+                            {% if stat.walking %}
+                                <i class="fas fa-walking fa-fw" style="color:#E25668"></i>
+                                <span>walking</span>
+                            {% endif %}
                         </li>
                         <li class="list-group-item">
-                            <i class="fas fa-hiking fa-fw" style="color:#E28956"></i>
-                            <span>hiking</span>
+                            {% if stat.hiking %}
+                                <i class="fas fa-hiking fa-fw" style="color:#E28956"></i>
+                                <span>hiking</span>
+                            {% endif %}
                         </li>
                         <li class="list-group-item">
-                            <i class="fas fa-running fa-fw" style="color:#E2CF56"></i>
-                            <span>running</span>
+                            {% if stat.running %}
+                                <i class="fas fa-running fa-fw" style="color:#E2CF56"></i>
+                                <span>running</span>
+                            {% endif %}
                         </li>
                         <li class="list-group-item">
-                            <i class="fas fa-bicycle fa-fw" style="color:#AEE256"></i>
-                            <span>cycling</span>
+                            {% if stat.cycling %}
+                                <i class="fas fa-bicycle fa-fw" style="color:#AEE256"></i>
+                                <span>cycling</span>
+                            {% endif %}
                         </li>
                         <li class="list-group-item">
-                            <i class="fas fa-swimmer fa-fw" style="color:#68E256"></i>
-                            <span>swimming</span>
+                            {% if stat.swimming %}
+                                <i class="fas fa-swimmer fa-fw" style="color:#68E256"></i>
+                                <span>swimming</span>
+                            {% endif %}
                         </li>
                         <li class="list-group-item">
-                            <i class="fas fa-skiing fa-fw" style="color:#56E289"></i>
-                            <span>skiing</span>
+                            {% if stat.skiing %}
+                                <i class="fas fa-skiing fa-fw" style="color:#56E289"></i>
+                                <span>skiing</span>
+                            {% endif %}
                         </li>
                     </ul>
                 </div>
