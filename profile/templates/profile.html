@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <div id="chart_legend" class="col col-xs-4">
-                    <ul class="list-group" style="max-height: 200px;overflow: auto;">
+                    <ul class="list-group">
                         <li class="list-group-item">
                             {% if stat.walking %}
                                 <i class="fas fa-walking fa-fw" style="color:#E25668"></i>
@@ -103,8 +103,18 @@
                     </ul>
                 </div>
             </div>
-            <div class="col col-xs-12 col-sm-4">
-                text?
+            <div class="col col-xs-12 col-sm-4" id="stat-text">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <i class="fas fa-tachometer-alt fa-fw"></i> 100 km
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-arrow-circle-up fa-fw fa-rotate-45"></i> 12 km
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-arrow-circle-up fa-fw fa-rotate-135"></i> 10.2 km
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
