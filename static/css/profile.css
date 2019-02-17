@@ -35,12 +35,12 @@
     margin-left: 4px;
 }
 
-#chart_legend, #stat-text {
+#chart_legend, #stat-text>div {
     display: table;
     height: 250px;
 }
 
-#chart_legend>ul, #stat-text>ul {
+#chart_legend>ul, #stat-text>div>ul {
     display: table-cell;
     vertical-align: middle;
 }
