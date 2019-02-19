@@ -1,5 +1,5 @@
 $(window).on('map:init', function (e) {
-    $("input[name='leaflet-base-layers']").on('click', function () {
+    $("input[name="leaflet-base-layers"]").on('click', function () {
         var index = $("input[name='leaflet-base-layers']").index(this);
         localStorage.setItem('map_index', index);
     });
@@ -24,7 +24,7 @@ $(window).on('map:init', function (e) {
     detail.map.invalidateSize();
     detail.map.setZoom(7);
 
-    detail.map.on('click', function(e) {
+    detail.map.on('click', function() {
         var layers = [];
         var poi = null;
         var counter = 0;
@@ -32,14 +32,14 @@ $(window).on('map:init', function (e) {
             if (layer instanceof L.Polyline)
                 layers.push(layer);
             if (layer instanceof L.Marker) {
-                poi = layer
+                poi = layer;
                 counter++;
             }
-        })
-        if (layers.length > 0 && counter == 0)
+        });
+        if (layers.length > 0 && counter === 0)
             detail.map.fitBounds(L.featureGroup(layers).getBounds());
-        if (poi && counter == 1) {
-            var zoom = detail.map.getZoom()
+        if (poi && counter === 1) {
+            var zoom = detail.map.getZoom();
             detail.map.fitBounds(L.latLngBounds([poi.getLatLng()]));
             detail.map.setZoom(zoom);
         }

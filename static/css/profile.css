@@ -21,7 +21,6 @@
     text-align: center;
     font-size: 20pt;
     color: #8e8e8e;
-    font-family: Arial;
 }
 
 #chart_label_dig {
@@ -46,10 +45,10 @@
 }
 
 .list-group-item {
-    padding: 0px;
+    padding: 0;
     background: none;
     border: none;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .fa-rotate-45 {

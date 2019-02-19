@@ -23,7 +23,7 @@ SECRET_KEY = '0m!x2+t&33wa7()n6&!@k5w*f8guh(b+*!!xa_3s7*&y2snn8v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [f'192.168.1.{i}' for i in range(1, 256)] if DEBUG else []
+ALLOWED_HOSTS = [f'192.168.1.{i}' for i in range(1, 256)] + ['localhost'] if DEBUG else []
 
 # Application definition
 

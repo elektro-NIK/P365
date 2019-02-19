@@ -33,7 +33,7 @@ function map_init_basic (map, options) {
                 bottom: 20,
                 left: 60
             },
-            useHeightIndicator: true,
+            useHeightIndicator: true
         }).addTo(map);
         var track = L.geoJson(JSON.parse(data), {
             onEachFeature: elevation.addData.bind(elevation)

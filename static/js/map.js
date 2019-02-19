@@ -4,11 +4,11 @@ function delete_feature (map, feature, url) {
         type: "POST",
         url: url,
         data: {
-            csrfmiddlewaretoken: token,
+            csrfmiddlewaretoken: token
         },
         success: function() {
             map.eachLayer(function (layer) {
-                if (layer.feature == feature)
+                if (layer.feature === feature)
                     map.removeLayer(layer);
             });
         },
@@ -36,7 +36,7 @@ function parseData (map, data, url, url_edit, url_delete) {
         onEachFeature: function(feature, layer) {
             addPopup(map, feature, layer, url, url_edit, url_delete);
             layer.on('click', function() {
-                this.feature.geometry.type != 'Point' ? map.fitBounds(this.getBounds()) : {};
+                this.feature.geometry.type !== 'Point' ? map.fitBounds(this.getBounds()) : {};
             });
         }
     });

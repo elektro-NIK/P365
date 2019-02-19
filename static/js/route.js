@@ -19,7 +19,7 @@ function map_init_basic (map, options) {
     else
         var height = info_height;
     $('div.leaflet-container').height(height);
-    map.invalidate
+    map.invalidate;
     $.getJSON(url_route)
     .done(function (data) {
         var elevation = L.control.elevation({
@@ -32,7 +32,7 @@ function map_init_basic (map, options) {
                 bottom: 20,
                 left: 60
             },
-            useHeightIndicator: true,
+            useHeightIndicator: true
         }).addTo(map);
         var route = L.geoJson(JSON.parse(data), {
             onEachFeature: elevation.addData.bind(elevation)

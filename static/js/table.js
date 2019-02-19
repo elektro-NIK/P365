@@ -11,14 +11,14 @@ else {
 
 $('body').on('click', "a[data-toggle='tab']", function (e) {
     e.preventDefault()
-    var tab_name = this.getAttribute('href')
+    var tab_name = this.getAttribute('href');
     if (history.pushState) {
         history.pushState(null, null, tab_name)
     }
     else {
         location.hash = tab_name
     }
-    localStorage.setItem('activeTab', tab_name)
+    localStorage.setItem('activeTab', tab_name);
 
     $(this).tab('show');
     return false;
@@ -77,7 +77,7 @@ $('#table-tracks').on('click', 'td.status a', function() {
                 type: "POST",
                 url: url_track_clear_story.replace('0', id),
                 data: {
-                    csrfmiddlewaretoken: token,
+                    csrfmiddlewaretoken: token
                 },
                 error: function() {
                     setErrorMsg();
@@ -113,7 +113,7 @@ function trackHasStory(url, id) {
     return $.ajax({
         type: "GET",
         url: url.replace('0', id),
-        async: false,
+        async: false
     }).responseJSON.result;
 }
 

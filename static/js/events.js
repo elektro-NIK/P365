@@ -8,13 +8,13 @@ function editEvent(event) {
 }
 
 function deleteEvent(event) {
-    var csrf_token = $("input[name='csrfmiddlewaretoken']")[0].value
+    var csrf_token = $("input[name='csrfmiddlewaretoken']")[0].value;
     $.ajax({
         type: "POST",
         url: url_delete,
         data: {
             csrfmiddlewaretoken: csrf_token,
-            id: event.id,
+            id: event.id
         },
         success: function() {
             updateAllEvents()
@@ -32,7 +32,7 @@ function saveEvent() {
         description: $('#event-modal textarea[name="event-description"]').val(),
         startDate: $('#event-modal input[name="event-start-date"]').datepicker('getDate'),
         endDate: $('#event-modal input[name="event-end-date"]').datepicker('getDate')
-    }
+    };
 
     var csrf_token = $("input[name='csrfmiddlewaretoken']")[0].value
     $.ajax({
@@ -48,7 +48,7 @@ function saveEvent() {
         error: function() {
             setErrorMsg();
         }
-    })
+    });
     $('#event-modal').modal('hide');
 }
 
@@ -112,10 +112,10 @@ $(function() {
         },
         dayContextMenu: function(e) {
             $(e.element).popover('hide');
-        },
+        }
     });
     $('#save-event').click(function() {
         saveEvent();
     });
     updateAllEvents();
-})
+});

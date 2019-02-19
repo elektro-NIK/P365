@@ -6,7 +6,7 @@ $('div.well').on('click', 'a.btn-delete', function(){
         type: "POST",
         url: url_story_delete.replace('0', id),
         data: {
-            csrfmiddlewaretoken: token,
+            csrfmiddlewaretoken: token
         },
         success: function() {
             well.parent().addClass('hidden');

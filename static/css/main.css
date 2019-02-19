@@ -9,8 +9,8 @@ body {
 }
 
 div.row.content {
-    margin-right: 0px;
-    margin-left: 0px;
+    margin-right: 0;
+    margin-left: 0;
 }
 
 .noresize {
@@ -46,14 +46,14 @@ footer {
 }
 
 .copyright {
-    margin-top: 0px;
-    margin-bottom: 0px;
-    margin-left: 0px;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
 }
 
 h1.faicon {
-    margin-top: 0px;
-    margin-bottom: 0px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 a.faicon {
@@ -66,6 +66,6 @@ a.faicon {
 /* PROGRESSBAR */
 div.progress-bar-thin {
     height: 5px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     display: none;
 }

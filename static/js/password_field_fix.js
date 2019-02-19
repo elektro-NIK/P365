@@ -1,5 +1,4 @@
 if ($("#id_password")[0]) {
-    console.log("It's password!")
     var input = $("#id_password")[0].outerHTML;
     $("#id_password").replaceWith(
         '<div class="input-group">' +
@@ -11,7 +10,6 @@ if ($("#id_password")[0]) {
     );
 }
 else if ($("#id_password1")[0] && $("#id_password2")[0]) {
-    console.log("It's password1 and password2!")
     var input = $("#id_password1")[0].outerHTML;
     $("#id_password1").replaceWith(
         '<div class="input-group">' +
