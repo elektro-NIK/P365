@@ -1,8 +1,10 @@
+from datetime import timedelta
+
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.db.models import Sum, Q
+from django.db.models import Sum, Q, Max
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
@@ -82,13 +84,25 @@ class ProfileView(LoginRequiredMixin, View):
         if request.user.username != username:
             tracks, routes = tracks.filter(public=True), routes.filter(public=True)
         counter = {'tracks': tracks.count(), 'routes': routes.count(), 'stories': stories.count()}
+        total_time = timedelta()
+        for track in tracks:
+            total_time += track.finish_date - track.start_date
         stat = {
             'walking': tracks.filter(Q(tags__name='walking')).aggregate(Sum('length'))['length__sum'] or 0,
             'hiking': tracks.filter(Q(tags__name='hiking')).aggregate(Sum('length'))['length__sum'] or 0,
             'running': tracks.filter(Q(tags__name='running')).aggregate(Sum('length'))['length__sum'] or 0,
             'cycling': tracks.filter(Q(tags__name='cycling')).aggregate(Sum('length'))['length__sum'] or 0,
             'swimming': tracks.filter(Q(tags__name='swimming')).aggregate(Sum('length'))['length__sum'] or 0,
-            'skiing': tracks.filter(Q(tags__name='skiing')).aggregate(Sum('length'))['length__sum'] or 0
+            'skiing': tracks.filter(Q(tags__name='skiing')).aggregate(Sum('length'))['length__sum'] or 0,
+            'distance': tracks.aggregate(Sum('length'))['length__sum'],
+            'rise': tracks.aggregate(Sum('altitude_gain'))['altitude_gain__sum']/1000,
+            'fall': tracks.aggregate(Sum('altitude_loss'))['altitude_loss__sum']/1000,
+            'peak': tracks.aggregate(Max('altitude_max'))['altitude_max__max'],
+            'max_speed': tracks.aggregate(Max('speed_max'))['speed_max__max'],
+            'time': {
+                'hours': int(total_time.total_seconds() // 3600),
+                'minutes': int(total_time.total_seconds() % 3600 // 60)
+            }
         }
         return render(request, 'profile.html', {
             'title': 'Profile',

@@ -107,26 +107,26 @@
                 <div class="col col-xs-6">
                     <ul class="list-group">
                         <li class="list-group-item">
-                             <i class="fas fa-ruler fa-fw"></i> 100 km
+                             <i class="fas fa-ruler fa-fw"></i> {{ stat.distance|floatformat:0|default:0 }} km
                         </li>
                         <li class="list-group-item">
-                            <i class="fas fa-arrow-circle-up fa-fw fa-rotate-45"></i> 12 km
+                            <i class="fas fa-arrow-circle-up fa-fw fa-rotate-45"></i> {{ stat.rise|floatformat:2|default:0 }} km
                         </li>
                         <li class="list-group-item">
-                            <i class="fas fa-arrow-circle-up fa-fw fa-rotate-135"></i> 10.2 km
+                            <i class="fas fa-arrow-circle-up fa-fw fa-rotate-135"></i> {{ stat.fall|floatformat:2|default:0 }} km
                         </li>
                     </ul>
                 </div>
                 <div class="col col-xs-6">
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <i class="fas fa-clock fa-fw"></i> 26 hours
+                            <i class="fas fa-clock fa-fw"></i> {{ stat.time.hours|default:'00' }}:{{ stat.time.minutes|default:'00' }}
                         </li>
                         <li class="list-group-item">
-                            <i class="fas fa-mountain fa-fw "></i> 2061 m
+                            <i class="fas fa-mountain fa-fw "></i> {{ stat.peak|floatformat:0|default:0 }} m
                         </li>
                         <li class="list-group-item">
-                            <i class="fas fa-tachometer-alt fa-fw"></i> 15.2 km/h
+                            <i class="fas fa-tachometer-alt fa-fw"></i> {{ stat.max_speed|floatformat:1|default:0 }} km/h
                         </li>
                     </ul>
                 </div>
@@ -164,7 +164,7 @@
                 ['cycling',  {{ stat.cycling  }}],
                 ['swimming', {{ stat.swimming }}],
                 ['skiing',   {{ stat.skiing   }}],
-            ]);
+            ])
 
             var options = {
                 width: 250,
@@ -175,11 +175,11 @@
                 backgroundColor: 'none',
                 legend: 'none',
                 tooltip: {
-                    trigger: 'none',
+                    trigger: 'none'
                 },
                 colors: ['#E25668', '#E28956', '#E2CF56', '#AEE256', '#68E256', '#56E289',
                          <!--'#56E2CF', '#56AEE2', '#5668E2', '#8A56E2', '#CF56E2', '#E256AE',-->
-                ],
+                ]
             };
 
             var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
