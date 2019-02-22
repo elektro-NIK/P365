@@ -5,10 +5,11 @@
 <br>
 <div class="well col col-xs-12 col-sm-12 col-md-3 col-lg-2 col-lg-offset-1">
     <div id="avatar">
-        <img class="avatar" src="{{ profile.pic.url }}"/>
+        <!--suppress HtmlUnknownTarget -->
+        <img class="avatar" src="{{ profile.pic.url }}" alt="Profile pic"/>
     </div>
     <div id="username">
-        <center><big> {{ profile.user }}</big></center>
+        {{ profile.user }}
     </div>
     <div id="info">
         {% if profile.info %} {{ profile.info }} {% endif %}
@@ -19,40 +20,38 @@
     <div id="counters">
         <a href="#">
             <div class="thumbnail col-xs-4">
-                <center>
-                    Tracks
-                    <h4>{{ counter.tracks|default:0 }}</h4>
-                </center>
+                Tracks
+                <h4>{{ counter.tracks|default:0 }}</h4>
             </div>
         </a>
         <a href="#">
             <div class="thumbnail col-xs-4">
-                <center>
-                    Routes
-                    <h4>{{ counter.routes|default:0 }}</h4>
-                </center>
+                Routes
+                <h4>{{ counter.routes|default:0 }}</h4>
             </div>
         </a>
         <a href="#">
             <div class="thumbnail col-xs-4">
-                <center>
-                    Stories
-                    <h4>{{ counter.stories|default:0 }}</h4>
-                </center>
+                Stories
+                <h4>{{ counter.stories|default:0 }}</h4>
             </div>
         </a>
     </div>
     <div id="socials">
-        <center>
-            {% if profile.fb_url %} <a href="{{ profile.fb_url }}" target="_blank"><i class="fab fa-facebook-square fa-3x"></i></a> {% endif %}
-            {% if profile.tw_url %} <a href="{{ profile.tw_url }}" target="_blank"><i class="fab fa-twitter-square fa-3x"></i></a> {% endif %}
-            {% if profile.ig_url %} <a href="{{ profile.ig_url }}" target="_blank"><i class="fab fa-instagram fa-3x"></i></a> {% endif %}
-        </center>
+        {% if profile.fb_url %} <!--suppress HtmlUnknownTarget -->
+            <a href="{{ profile.fb_url }}" target="_blank"><i class="fab fa-facebook-square fa-3x"></i></a>
+        {% endif %}
+        {% if profile.tw_url %} <!--suppress HtmlUnknownTarget -->
+            <a href="{{ profile.tw_url }}" target="_blank"><i class="fab fa-twitter-square fa-3x"></i></a>
+        {% endif %}
+        {% if profile.ig_url %} <!--suppress HtmlUnknownTarget -->
+            <a href="{{ profile.ig_url }}" target="_blank"><i class="fab fa-instagram fa-3x"></i></a>
+        {% endif %}
     </div>
 </div>
 <div class="col col-xs-12 col-sm-12 col-md-9 col-lg-8">
     <div class="well">
-        <div class="row"><b>Statistics</b></div>
+        <div class="row title">Statistics</div>
         <div class="row">
             <div id="chart_container" class="col col-xs-12 col-sm-6">
                 <div id="chart" class="col col-xs-8">
@@ -140,80 +139,21 @@
 {% endblock %}
 
 {% block css %}
-    <link href="{% static 'css/profile.css' %}" rel="stylesheet" media="screen">
+    <!--suppress HtmlUnknownTarget -->
+<link href="{% static 'css/profile.css' %}" rel="stylesheet" media="screen">
 {% endblock %}
 
 {% block js %}
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <!--suppress HtmlUnknownTarget -->
+<script type="text/javascript" src="{% static 'js/profile.js' %}"></script>
+    <!--suppress BadExpressionStatementJS -->
     <script type="text/javascript">
-        function roundTo(num, n) {
-            return Math.round(num*Math.pow(10,n))/Math.pow(10,n);
-        }
-
-        google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(drawChart);
-        function drawChart() {
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Name');
-            data.addColumn('number', 'Slices');
-
-            data.addRows([
-                ['walking',  {{ stat.walking  }}],
-                ['hiking',   {{ stat.hiking   }}],
-                ['running',  {{ stat.running  }}],
-                ['cycling',  {{ stat.cycling  }}],
-                ['swimming', {{ stat.swimming }}],
-                ['skiing',   {{ stat.skiing   }}],
-            ])
-
-            var options = {
-                width: 250,
-                height: 250,
-                pieHole: 0.6,
-                pieSliceText: 'none',
-                pieSliceBorderColor: 'none',
-                backgroundColor: 'none',
-                legend: 'none',
-                tooltip: {
-                    trigger: 'none'
-                },
-                colors: ['#E25668', '#E28956', '#E2CF56', '#AEE256', '#68E256', '#56E289',
-                         <!--'#56E2CF', '#56AEE2', '#5668E2', '#8A56E2', '#CF56E2', '#E256AE',-->
-                ]
-            };
-
-            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-
-            function overHandler(x) {
-                var num = data.getValue(x.row, 1);
-                $('#chart_legend>ul li').eq(x.row).css('font-weight', 'Bold');
-                $('#chart_label_dig').text(roundTo(num, 2));
-            };
-
-            function outHandler() {
-                var sum = 0;
-                for (var y = 0; y < data.getNumberOfRows(); y++)
-                    sum += data.getValue(y, 1);
-                $('#chart_legend>ul li').css('font-weight', '');
-                $('#chart_label_dig').html(roundTo(sum, 2));
-            };
-
-            google.visualization.events.addListener(chart, 'onmouseover', overHandler);
-            google.visualization.events.addListener(chart, 'onmouseout', outHandler);
-
-            outHandler();
-            chart.draw(data, options);
-
-            $('#chart_legend>ul li').each(function(index, item) {
-                $(item).mouseover(function() {
-                    chart.setSelection([{row: index, column: null}]);
-                    overHandler({row: index});
-                });
-                $(item).mouseout(function() {
-                    chart.setSelection([]);
-                    outHandler();
-                });
-            });
-        }
+        ds = [['walking',  {{ stat.walking  }}],
+              ['hiking',   {{ stat.hiking   }}],
+              ['running',  {{ stat.running  }}],
+              ['cycling',  {{ stat.cycling  }}],
+              ['swimming', {{ stat.swimming }}],
+              ['skiing',   {{ stat.skiing   }}]]
     </script>
 {% endblock %}

@@ -1,5 +1,20 @@
+#username {
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+}
+
+.title {
+    text-align: center;
+    font-weight: bold;
+}
+
 #counters {
     margin-top: 20px;
+}
+
+#counters>a>div, #socials {
+    text-align: center;
 }
 
 #chart {
