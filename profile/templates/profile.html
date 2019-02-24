@@ -133,7 +133,30 @@
         </div>
     </div>
     <div class="well">
-        Feed etc
+        <div class="row title">Last activity</div>
+        <div class="row">
+            <div class="multitable">
+                <ul class="nav nav-tabs">
+                    <li class="feed active"><a href="#feed" data-toogle="tab" role="tab" data-target="#table-feed">Feed</a></li>
+                    <li class="tracks"><a href="#tracks" data-toggle="tab" role="tab" data-target="#table-tracks">Tracks</a></li>
+                    <li class="routes"><a href="#routes" data-toggle="tab" role="tab" data-target="#table-routes">Routes</a></li>
+                    <li class="pois"><a href="#stories" data-toggle="tab" role="tab" data-target="#table-stories">Stories</a></li>
+                    <a href="#">
+                        <button class="btn btn-success pull-right">
+                            Map
+                        </button>
+                    </a>
+                    <a href="#">
+                        <button class="btn btn-success pull-right">
+                            Calendar
+                        </button>
+                    </a>
+                </ul>
+                <div class="tab-content" id="tables">
+                    <!--{% include 'partials/_tables.html' %}-->
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
