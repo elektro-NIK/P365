@@ -22,10 +22,10 @@ class TableView(View):
     @staticmethod
     def get(request, username=None):
         if not username or username == request.user:
-            user = request.user
+            profile = get_object_or_404(ProfileModel, user=request.user)
         else:
             profile = get_object_or_404(ProfileModel, user__username=username)
-            user = profile.user
+        user = profile.user
         pois = POIModel.objects.filter(user=user, is_active=True).order_by('-created')
         routes = RouteModel.objects.filter(user=user, is_active=True).order_by('-created')
         tracks = TrackModel.objects.filter(user=user, is_active=True).order_by('-start_date')
