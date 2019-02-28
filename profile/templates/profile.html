@@ -109,10 +109,10 @@
                              <i class="fas fa-ruler fa-fw"></i> {{ stat.distance|floatformat:0|default:0 }} km
                         </li>
                         <li class="list-group-item">
-                            <i class="fas fa-arrow-circle-up fa-fw fa-rotate-45"></i> {{ stat.rise|floatformat:2|default:0 }} km
+                            <i class="fas fa-arrow-circle-up fa-fw fa-rotate-45"></i> {{ stat.rise|floatformat:-2|default:0 }} km
                         </li>
                         <li class="list-group-item">
-                            <i class="fas fa-arrow-circle-up fa-fw fa-rotate-135"></i> {{ stat.fall|floatformat:2|default:0 }} km
+                            <i class="fas fa-arrow-circle-up fa-fw fa-rotate-135"></i> {{ stat.fall|floatformat:-2|default:0 }} km
                         </li>
                     </ul>
                 </div>
@@ -125,7 +125,7 @@
                             <i class="fas fa-mountain fa-fw "></i> {{ stat.peak|floatformat:0|default:0 }} m
                         </li>
                         <li class="list-group-item">
-                            <i class="fas fa-tachometer-alt fa-fw"></i> {{ stat.max_speed|floatformat:1|default:0 }} km/h
+                            <i class="fas fa-tachometer-alt fa-fw"></i> {{ stat.max_speed|floatformat:-1|default:0 }} km/h
                         </li>
                     </ul>
                 </div>
