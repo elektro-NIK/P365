@@ -33,11 +33,11 @@
     {% else %}
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-                <a href="{% url 'user:profile' user.username %}" class="dropdown-toggle" data-toggle="dropdown">
+                <a href="{% url 'user:profile' user %}" class="dropdown-toggle" data-toggle="dropdown">
                     <img src="{{ user.profilemodel.pic.url }}"> {{ user.username }} <span class="glyphicon glyphicon-triangle-bottom"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="{% url 'user:profile' username=user.username %}">
+                    <li><a href="{% url 'user:profile' user %}">
                         <span class="glyphicon glyphicon-user"></span> Profile</a>
                     </li>
                     <li class="divider"></li>
