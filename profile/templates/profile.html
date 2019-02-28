@@ -18,13 +18,13 @@
         {% if profile.location %} <i class="glyphicon glyphicon-map-marker"></i> {{ profile.location }} {% endif %}
     </div>
     <div id="counters">
-        <a href="#">
+        <a href="{% url 'user:table' profile.user %}#tracks">
             <div class="thumbnail col-xs-4">
                 Tracks
                 <h4>{{ counter.tracks|default:0 }}</h4>
             </div>
         </a>
-        <a href="#">
+        <a href="{% url 'user:table' profile.user %}#routes">
             <div class="thumbnail col-xs-4">
                 Routes
                 <h4>{{ counter.routes|default:0 }}</h4>
@@ -137,7 +137,7 @@
         <div class="row">
             <div class="multitable">
                 <ul class="nav nav-tabs">
-                    <li class="feed active"><a href="#feed" data-toogle="tab" role="tab" data-target="#table-feed">Feed</a></li>
+                    <li class="feed active"><a href="#feed" data-toggle="tab" role="tab" data-target="#table-feed">Feed</a></li>
                     <li class="tracks"><a href="#tracks" data-toggle="tab" role="tab" data-target="#table-tracks">Tracks</a></li>
                     <li class="routes"><a href="#routes" data-toggle="tab" role="tab" data-target="#table-routes">Routes</a></li>
                     <li class="pois"><a href="#stories" data-toggle="tab" role="tab" data-target="#table-stories">Stories</a></li>
@@ -152,7 +152,11 @@
                         </button>
                     </a>
                 </ul>
-                <div class="tab-content" id="tables">
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="table-feed">AAA</div>
+                    <div class="tab-pane fade in" id="table-tracks">BBB</div>
+                    <div class="tab-pane fade in" id="table-routes">CCC</div>
+                    <div class="tab-pane fade in" id="table-stories">DDD</div>
                     <!--{% include 'partials/_tables.html' %}-->
                 </div>
             </div>

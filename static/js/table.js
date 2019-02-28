@@ -1,16 +1,17 @@
 if (location.hash) {
     $('a[href=\'' + location.hash + '\']').tab('show');
 }
-var activeTab = localStorage.getItem('activeTab');
-if (activeTab) {
-    $('a[href="' + activeTab + '"]').tab('show');
-}
 else {
-    $('a[href="#tracks"]').tab('show');
+    var activeTab = localStorage.getItem('activeTab');
+    if (activeTab) {
+        $('a[href="' + activeTab + '"]').tab('show');
+    } else {
+        $('a[href="#tracks"]').tab('show');
+    }
 }
 
 $('body').on('click', "a[data-toggle='tab']", function (e) {
-    e.preventDefault()
+    e.preventDefault();
     var tab_name = this.getAttribute('href');
     if (history.pushState) {
         history.pushState(null, null, tab_name)
@@ -42,19 +43,13 @@ function updateTable(url, id) {
     });
 }
 
-function updateAllTables() {
-    updateTable(url_update_tracks, "#table-tracks");
-    updateTable(url_update_routes, "#table-routes");
-    updateTable(url_update_pois,   "#table-pois");
-}
-
 function changeFeature(url, id, url_upd, id_upd) {
     var token = $('[name=csrfmiddlewaretoken]').val();
     $.ajax({
         type: "POST",
         url: url.replace('0', id),
         data: {
-            csrfmiddlewaretoken: token,
+            csrfmiddlewaretoken: token
         },
         success: function() {
             updateTable(url_upd, id_upd);

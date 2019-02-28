@@ -95,8 +95,8 @@ class ProfileView(LoginRequiredMixin, View):
             'swimming': tracks.filter(Q(tags__name='swimming')).aggregate(Sum('length'))['length__sum'] or 0,
             'skiing': tracks.filter(Q(tags__name='skiing')).aggregate(Sum('length'))['length__sum'] or 0,
             'distance': tracks.aggregate(Sum('length'))['length__sum'],
-            'rise': tracks.aggregate(Sum('altitude_gain'))['altitude_gain__sum']/1000,
-            'fall': tracks.aggregate(Sum('altitude_loss'))['altitude_loss__sum']/1000,
+            'rise': tracks.aggregate(Sum('altitude_gain'))['altitude_gain__sum'] or 0 / 1000,
+            'fall': tracks.aggregate(Sum('altitude_loss'))['altitude_loss__sum'] or 0 / 1000,
             'peak': tracks.aggregate(Max('altitude_max'))['altitude_max__max'],
             'max_speed': tracks.aggregate(Max('speed_max'))['speed_max__max'],
             'time': {
