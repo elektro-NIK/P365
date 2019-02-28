@@ -2,53 +2,57 @@
 {% load taggit_templatetags2_tags %}
 
 {% if routes %}
-    <table class="table table-hover table-condensed">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Created</th>
-                <th>Length</th>
-                <th class="center">Tags</th>
-                <th class="center">Status</th>
-                <th class="center">Edit</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for route in routes %}
-                <tr id="route{{ route.id }}">
-                    <td>
-                        <a href="{% url 'route:view' route.id %}">{{ route.name }}</a>
-                    </td>
-                    <td>{{ route.created|naturaltime }}</td>
-                    <td>{{ route.length|floatformat }} km</td>
-                    <td>
-                        {% get_tags_for_object route as 'tags' %}
-                        {% for tag in tags|slice:':3' %}
-                            <a href="{% url 'tag:tag' tag.slug %}" class="label label-default">{{ tag }}</a>
-                        {% endfor %}
-                        {% if tags|length > 3 %}
-                            <i class="label label-default">...</i>
-                        {% endif %}
-                    </td>
-                    <td class="center status">
-                        {% if route.public %}
-                            <a href="#" class="glyphicon glyphicon-globe" title="public"></a>
-                        {% else %}
-                            <a href="#" class="glyphicon glyphicon-user" title="private"></a>
-                        {% endif %}
-                    </td>
-                    <td class="center edit">
-                        <a href="{% url 'route:edit' route.id %}" class="glyphicon glyphicon-edit" title="edit"></a>
-                        {% if not route.public %}
-                            <a href="#" class="glyphicon glyphicon-trash" title="delete"></a>
-                        {% endif %}
-                    </td>
-                </tr>
+<table class="table table-hover table-condensed">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Created</th>
+        <th>Length</th>
+        <th class="center">Tags</th>
+        <th class="center">Status</th>
+        <th class="center">Edit</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for route in routes %}
+    <tr id="route{{ route.id }}">
+        <td>
+            <a href="{% url 'route:view' route.id %}">{{ route.name }}</a>
+        </td>
+        <td>{{ route.created|naturaltime }}</td>
+        <td>{{ route.length|floatformat }} km</td>
+        <td>
+            {% get_tags_for_object route as 'tags' %}
+            {% for tag in tags|slice:':3' %}
+            <a href="{% url 'tag:tag' tag.slug %}" class="label label-default">{{ tag }}</a>
             {% endfor %}
-        </tbody>
-    </table>
+            {% if tags|length > 3 %}
+            <i class="label label-default">...</i>
+            {% endif %}
+        </td>
+        <td class="center status">
+            {% if route.public %}
+            <a href="#" class="glyphicon glyphicon-globe" title="public"></a>
+            {% else %}
+            <a href="#" class="glyphicon glyphicon-user" title="private"></a>
+            {% endif %}
+        </td>
+        <td class="center edit">
+            <a href="{% url 'route:edit' route.id %}" class="glyphicon glyphicon-edit" title="edit"></a>
+            {% if not route.public %}
+            <a href="#" class="glyphicon glyphicon-trash" title="delete"></a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
 {% else %}
-    <div class="alert alert-info" role="alert">
-        You don't have routes yet. Try to <a href="{% url 'route:create' %}" class="alert-link">create your first route</a>
-    </div>
+<div class="alert alert-info" role="alert">
+    {% if active %}
+    You don't have routes yet. Try to <a href="{% url 'route:create' %}" class="alert-link">create your first route</a>
+    {% else %}
+    <a href="{% url 'user:profile' profile %}"><b>{{ profile }}</b></a> has no public routes yet
+    {% endif %}
+</div>
 {% endif %}

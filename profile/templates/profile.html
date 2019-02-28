@@ -18,13 +18,13 @@
         {% if profile.location %} <i class="glyphicon glyphicon-map-marker"></i> {{ profile.location }} {% endif %}
     </div>
     <div id="counters">
-        <a href="#">
+        <a href="{% url 'user:table' profile.user %}#tracks">
             <div class="thumbnail col-xs-4">
                 Tracks
                 <h4>{{ counter.tracks|default:0 }}</h4>
             </div>
         </a>
-        <a href="#">
+        <a href="{% url 'user:table' profile.user %}#routes">
             <div class="thumbnail col-xs-4">
                 Routes
                 <h4>{{ counter.routes|default:0 }}</h4>
@@ -109,10 +109,10 @@
                              <i class="fas fa-ruler fa-fw"></i> {{ stat.distance|floatformat:0|default:0 }} km
                         </li>
                         <li class="list-group-item">
-                            <i class="fas fa-arrow-circle-up fa-fw fa-rotate-45"></i> {{ stat.rise|floatformat:2|default:0 }} km
+                            <i class="fas fa-arrow-circle-up fa-fw fa-rotate-45"></i> {{ stat.rise|floatformat:-2|default:0 }} km
                         </li>
                         <li class="list-group-item">
-                            <i class="fas fa-arrow-circle-up fa-fw fa-rotate-135"></i> {{ stat.fall|floatformat:2|default:0 }} km
+                            <i class="fas fa-arrow-circle-up fa-fw fa-rotate-135"></i> {{ stat.fall|floatformat:-2|default:0 }} km
                         </li>
                     </ul>
                 </div>
@@ -125,7 +125,7 @@
                             <i class="fas fa-mountain fa-fw "></i> {{ stat.peak|floatformat:0|default:0 }} m
                         </li>
                         <li class="list-group-item">
-                            <i class="fas fa-tachometer-alt fa-fw"></i> {{ stat.max_speed|floatformat:1|default:0 }} km/h
+                            <i class="fas fa-tachometer-alt fa-fw"></i> {{ stat.max_speed|floatformat:-1|default:0 }} km/h
                         </li>
                     </ul>
                 </div>
@@ -133,7 +133,34 @@
         </div>
     </div>
     <div class="well">
-        Feed etc
+        <div class="row title">Last activity</div>
+        <div class="row">
+            <div class="multitable">
+                <ul class="nav nav-tabs">
+                    <li class="feed active"><a href="#feed" data-toggle="tab" role="tab" data-target="#table-feed">Feed</a></li>
+                    <li class="tracks"><a href="#tracks" data-toggle="tab" role="tab" data-target="#table-tracks">Tracks</a></li>
+                    <li class="routes"><a href="#routes" data-toggle="tab" role="tab" data-target="#table-routes">Routes</a></li>
+                    <li class="pois"><a href="#stories" data-toggle="tab" role="tab" data-target="#table-stories">Stories</a></li>
+                    <a href="#">
+                        <button class="btn btn-success pull-right">
+                            Map
+                        </button>
+                    </a>
+                    <a href="#">
+                        <button class="btn btn-success pull-right">
+                            Calendar
+                        </button>
+                    </a>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="table-feed">AAA</div>
+                    <div class="tab-pane fade in" id="table-tracks">BBB</div>
+                    <div class="tab-pane fade in" id="table-routes">CCC</div>
+                    <div class="tab-pane fade in" id="table-stories">DDD</div>
+                    <!--{% include 'partials/_tables.html' %}-->
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

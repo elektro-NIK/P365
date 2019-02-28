@@ -81,3 +81,7 @@
     -o-transform: rotate(135deg);
     transform: rotate(135deg);
 }
+
+.pull-right {
+    margin-left: 10px;
+}

@@ -46,7 +46,11 @@
         </tbody>
     </table>
 {% else %}
-    <div class="alert alert-info" role="alert">
-        You don't have pois yet. Try to <a href="{% url 'poi:create' %}" class="alert-link">create your first poi</a>
-    </div>
+<div class="alert alert-info" role="alert">
+    {% if active %}
+    You don't have pois yet. Try to <a href="{% url 'poi:create' %}" class="alert-link">create your first poi</a>
+    {% else %}
+    <a href="{% url 'user:profile' profile %}"><b>{{ profile }}</b></a> has no public pois yet
+    {% endif %}
+</div>
 {% endif %}
