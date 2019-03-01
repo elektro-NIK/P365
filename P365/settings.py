@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.gis',
 
     'leaflet',
-    'bootstrap3',
+    'bootstrap4',
     'taggit',
     'taggit_templatetags2',
     'django_summernote',

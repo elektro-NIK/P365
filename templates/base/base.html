@@ -1,42 +1,37 @@
 <!DOCTYPE html>
 {% load staticfiles %}
-{% load bootstrap3 %}
+{% load bootstrap4 %}
+{% bootstrap_messages %}
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
+    <title>{{ title }} - P365</title>
+
     {% bootstrap_css %}
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/solid.css" integrity="sha384-r/k8YTFqmlOaqRkZuSiE9trsrDXkh07mRaoGBMoDcmA58OHILZPsk29i2BsFng1B" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/brands.css" integrity="sha384-BKw0P+CQz9xmby+uplDwp82Py8x1xtYPK3ORn/ZSoe6Dk3ETP59WCDnX+fI1XCKK" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/fontawesome.css" integrity="sha384-4aon80D8rXCGx9ayDt85LbyUHeMWd3UiBaWliBlJ53yzm9hqN21A+o1pqoyK04h+" crossorigin="anonymous">
     <link href="{% static 'css/main.css' %}" rel="stylesheet" media="screen">
     {% block css %}{% endblock %}
-    <title>{{ title }} - P365</title>
+    <!--TODO: debug style, disable me!-->
+    <style>
+        div[class^=col] { border: 1px solid; }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="header_container">
-        <div class="container-fluid">
-            {% include "base/header.html" %}
-        </div>
-    </nav>
-    <div id="content-container" class="container-fluid">
+    {% include "base/header.html" %}
+    <div class="container" id="content-container">
         <div class="row">
-            <div class="col col-xs-12">
-                <div id="msg-wrong"></div>
-                <div id="msg-alert"></div>
+            <div class="col">
+                {% block content %}{% endblock %}
             </div>
         </div>
-        <div class="row content">
-            {% block content %}{% endblock %}
-        </div>
     </div>
-    <footer>
-        <div class="container-fluid navbar-inverse">
-            {% include "base/footer.html" %}
-        </div>
-    </footer>
-    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
-    {% bootstrap_javascript %}
+    {% include "base/footer.html" %}
+
+    {% bootstrap_javascript jquery="slim" %}
     {% block js %}{% endblock %}
 </body>
 </html>
