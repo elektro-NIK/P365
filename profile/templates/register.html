@@ -1,32 +1,54 @@
 {% extends "base/base.html" %}
 {% load staticfiles %}
-{% load bootstrap3 %}
+{% load bootstrap4 %}
 
 {% block content %}
+<form method="post" action="{% url 'signup' %}?next={{ next }}">
+    {% csrf_token %}
+    {% bootstrap_form_errors form %}
     <div class="row">
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
-            <br>
-            <form class="form-horizontal" method="post" action="{% url 'signup' %}?next={{ next }}">
-                {% csrf_token %}
-                {% bootstrap_form_errors form %}
-                {% bootstrap_field form.username    show_label=False show_help=False addon_before='<i class="glyphicon glyphicon-user"></i>' %}
-                {% bootstrap_field form.first_name  show_label=False show_help=False addon_before='<i class="glyphicon glyphicon-info-sign"></i>' %}
-                {% bootstrap_field form.last_name   show_label=False show_help=False addon_before='<i class="glyphicon glyphicon-info-sign"></i>' %}
-                {% bootstrap_field form.email       show_label=False show_help=False addon_before='<i class="glyphicon glyphicon-envelope"></i>'%}
-                {% bootstrap_field form.password1   show_label=False show_help=False %}
-                {% bootstrap_field form.password2   show_label=False show_help=False %}
-                <div class="form-group">
-                    <div  class="center-block text-center">
-                        {% bootstrap_button 'Sign Up' button_type='submit' button_class='btn-success' %}
-                        or {% url 'login' as login_url %}
-                        {% bootstrap_button 'Login' button_type='link' href=login_url %}
-                    </div>
-                </div>
-            </form>
+        <div class="col-md-12">
+            {% bootstrap_field form.username    show_label=False show_help=False addon_before='<i class="fas fa-user-circle" aria-hidden="true"></i>' %}
+        </div>
+        <div class="col-md-6">
+            {% bootstrap_field form.first_name  show_label=False show_help=False addon_before='<i class="fa fa-info-circle" aria-hidden="true"></i>' %}
+        </div>
+        <div class="col-md-6">
+            {% bootstrap_field form.last_name   show_label=False show_help=False addon_before='<i class="fa fa-info-circle" aria-hidden="true"></i>' %}
+        </div>
+        <div class="col-md-12">
+            {% bootstrap_field form.email       show_label=False show_help=False addon_before='<i class="fa fa-envelope" aria-hidden="true"></i>' %}
+        </div>
+        <div class="col-md-6">
+            {% bootstrap_field form.password1   show_label=False show_help=False addon_before='<i class="fas fa-key" aria-hidden="true"></i>' %}
+        </div>
+        <div class="col-md-6">
+            {% bootstrap_field form.password2   show_label=False show_help=False addon_before='<i class="fas fa-key" aria-hidden="true"></i>' %}
         </div>
     </div>
+    <div class="form-group">
+        <div  class="center-block text-center">
+            {% bootstrap_button 'Sign Up' button_type='submit' button_class='btn-success' %}
+            or {% url 'login' as login_url %}
+            {% bootstrap_button 'Login' button_class='btn-secondary' href=login_url %}
+        </div>
+    </div>
+</form>
 {% endblock %}
 
 {% block js %}
-    <script src="{% static 'js/password_field_fix.js' %}"></script>
+<script>
+    <!--Fix email field bug-->
+    var input = $("#id_email")[0].outerHTML;
+    $("#id_email").replaceWith(
+        '<div class="input-group">' +
+            '<div class="input-group-prepend">' +
+                '<span class="input-group-text">' +
+                    '<i class="fa fa-envelope" aria-hidden="true"></i>' +
+                '</span>' +
+            '</div>' +
+            input +
+        '</div>'
+    );
+</script>
 {% endblock %}
