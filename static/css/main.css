@@ -1,25 +1,69 @@
 /*----------MAIN----------*/
 
-body {
-    margin-top: 70px;
-    margin-bottom: 70px;
-}
-
 html {
     position: relative;
     min-height: 100%;
 }
 
+body {
+    margin-top: 70px;
+    margin-bottom: 70px;
+}
+
+.required * {
+    font-weight: bold;
+}
+
+#profile-container {
+    padding: 0;
+}
+
+#username {
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+}
+
+a.btn, a.btn:hover {
+    padding: 0;
+    margin: 2px;
+    color: inherit;
+}
+
+a.btn > div.card-title {
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+    margin: 0;
+}
+
+a.btn > div.card-text {
+    text-align: center;
+    font-size: small;
+}
+
+#counters {
+    margin: 15px 0;
+}
+
+#counters > div.card {
+    padding: 0;
+}
+
+#socials > a, #socials > a:hover, #username > a, #username > a:hover {
+    color: inherit;
+}
+
 /*----------HEADER----------*/
 
-@media (max-width:991px) {
+@media (max-width:767.98px) {
   .divider {
       height: 1px;
       background-color: #9a9da0;
     }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 768px) {
     .navbar-nav.navbar-center {
         position: absolute;
         left: 50%;
@@ -27,9 +71,9 @@ html {
     }
 }
 
-/*.navbar-nav img {*/
-    /*height: 18px;*/
-/*}*/
+.navbar-nav img {
+    height: 22px;
+}
 
 /*----------FOOTER----------*/
 

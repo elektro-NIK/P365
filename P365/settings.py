@@ -252,3 +252,7 @@ SUMMERNOTE_CONFIG = {
         },
     },
 }
+
+BOOTSTRAP4 = {
+    'required_css_class': 'required',
+}

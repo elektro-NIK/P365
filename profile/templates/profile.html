@@ -2,54 +2,7 @@
 {% load staticfiles %}
 
 {% block content %}
-<br>
-<div class="well col col-xs-12 col-sm-12 col-md-3 col-lg-2 col-lg-offset-1">
-    <div id="avatar">
-        <!--suppress HtmlUnknownTarget -->
-        <img class="avatar" src="{{ profile.pic.url }}" alt="Profile pic"/>
-    </div>
-    <div id="username">
-        {{ profile.user }}
-    </div>
-    <div id="info">
-        {% if profile.info %} {{ profile.info }} {% endif %}
-    </div>
-    <div id="location">
-        {% if profile.location %} <i class="glyphicon glyphicon-map-marker"></i> {{ profile.location }} {% endif %}
-    </div>
-    <div id="counters">
-        <a href="{% url 'user:table' profile.user %}#tracks">
-            <div class="thumbnail col-xs-4">
-                Tracks
-                <h4>{{ counter.tracks|default:0 }}</h4>
-            </div>
-        </a>
-        <a href="{% url 'user:table' profile.user %}#routes">
-            <div class="thumbnail col-xs-4">
-                Routes
-                <h4>{{ counter.routes|default:0 }}</h4>
-            </div>
-        </a>
-        <a href="#">
-            <div class="thumbnail col-xs-4">
-                Stories
-                <h4>{{ counter.stories|default:0 }}</h4>
-            </div>
-        </a>
-    </div>
-    <div id="socials">
-        {% if profile.fb_url %} <!--suppress HtmlUnknownTarget -->
-            <a href="{{ profile.fb_url }}" target="_blank"><i class="fab fa-facebook-square fa-3x"></i></a>
-        {% endif %}
-        {% if profile.tw_url %} <!--suppress HtmlUnknownTarget -->
-            <a href="{{ profile.tw_url }}" target="_blank"><i class="fab fa-twitter-square fa-3x"></i></a>
-        {% endif %}
-        {% if profile.ig_url %} <!--suppress HtmlUnknownTarget -->
-            <a href="{{ profile.ig_url }}" target="_blank"><i class="fab fa-instagram fa-3x"></i></a>
-        {% endif %}
-    </div>
-</div>
-<div class="col col-xs-12 col-sm-12 col-md-9 col-lg-8">
+<div class="col">
     <div class="well">
         <div class="row title">Statistics</div>
         <div class="row">
@@ -157,7 +110,6 @@
                     <div class="tab-pane fade in" id="table-tracks">BBB</div>
                     <div class="tab-pane fade in" id="table-routes">CCC</div>
                     <div class="tab-pane fade in" id="table-stories">DDD</div>
-                    <!--{% include 'partials/_tables.html' %}-->
                 </div>
             </div>
         </div>
@@ -166,21 +118,19 @@
 {% endblock %}
 
 {% block css %}
-    <!--suppress HtmlUnknownTarget -->
 <link href="{% static 'css/profile.css' %}" rel="stylesheet" media="screen">
 {% endblock %}
 
 {% block js %}
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <!--suppress HtmlUnknownTarget -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript" src="{% static 'js/profile.js' %}"></script>
-    <!--suppress BadExpressionStatementJS -->
-    <script type="text/javascript">
-        ds = [['walking',  {{ stat.walking  }}],
-              ['hiking',   {{ stat.hiking   }}],
-              ['running',  {{ stat.running  }}],
-              ['cycling',  {{ stat.cycling  }}],
-              ['swimming', {{ stat.swimming }}],
-              ['skiing',   {{ stat.skiing   }}]]
-    </script>
+<!--suppress BadExpressionStatementJS -->
+<script type="text/javascript">
+    ds = [['walking',  {{ stat.walking  }}],
+          ['hiking',   {{ stat.hiking   }}],
+          ['running',  {{ stat.running  }}],
+          ['cycling',  {{ stat.cycling  }}],
+          ['swimming', {{ stat.swimming }}],
+          ['skiing',   {{ stat.skiing   }}]];
+</script>
 {% endblock %}

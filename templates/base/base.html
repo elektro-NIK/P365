@@ -15,16 +15,21 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/fontawesome.css" integrity="sha384-4aon80D8rXCGx9ayDt85LbyUHeMWd3UiBaWliBlJ53yzm9hqN21A+o1pqoyK04h+" crossorigin="anonymous">
     <link href="{% static 'css/main.css' %}" rel="stylesheet" media="screen">
     {% block css %}{% endblock %}
-    <!--TODO: debug style, disable me!-->
-    <style>
-        div[class^=col] { border: 1px solid; }
-    </style>
+    <!--&lt;!&ndash;TODO: debug style, disable me!&ndash;&gt;-->
+    <!--<style>-->
+        <!--div[class^=col] { border: 1px solid; }-->
+    <!--</style>-->
 </head>
-<body>
+<body class="bg-secondary">
     {% include "base/header.html" %}
     <div class="container" id="content-container">
         <div class="row">
-            <div class="col">
+            {% if profile %}
+            <div class="col-md-3" id="profile-container">
+                {% include "partials/_profile.html" %}
+            </div>
+            {% endif %}
+            <div class="col{% if profile %}-md-9{% endif %}">
                 {% block content %}{% endblock %}
             </div>
         </div>
