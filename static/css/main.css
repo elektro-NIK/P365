@@ -54,6 +54,10 @@ a.btn > div.card-text {
     color: inherit;
 }
 
+textarea.noresize {
+    resize: none;
+}
+
 /*----------HEADER----------*/
 
 @media (max-width:767.98px) {

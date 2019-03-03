@@ -2,16 +2,9 @@
 {% load staticfiles %}
 
 {% block content %}
-<div class="row">
-    <div class="col-xs-12">
-        <br>
-        {% csrf_token %}
-        <div id="calendar"></div>
-        <div id="event-modal" class="modal modal-fade" hidden>
-            {% include '_event-modal.html' %}
-        </div>
-    </div>
-</div>
+    {% csrf_token %}
+    <div id="calendar"></div>
+    {% include '_event-modal.html' %}
 {% endblock %}
 
 {% block css %}
