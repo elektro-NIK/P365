@@ -1,3 +1,7 @@
-html, body, div.row.map, div.row.content, #content-container, .leaflet-container {
+html, body, #content-container, #content-container>.row {
     height: 100%;
+}
+
+#mainmap {
+    width: 100%;
 }

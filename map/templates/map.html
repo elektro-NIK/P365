@@ -3,13 +3,11 @@
 {% load staticfiles %}
 
 {% block content %}
-    <div class="row map">
-        <div class="progress progress-bar-thin">
-            <div class="progress-bar progress-bar-striped active" role="progressbar"></div>
-        </div>
-        {% csrf_token %}
-        {% leaflet_map "mainmap" callback="window.map_init_basic" %}
+    <div class="progress progress-bar-thin">
+        <div class="progress-bar progress-bar-striped active" role="progressbar"></div>
     </div>
+    {% csrf_token %}
+    {% leaflet_map "mainmap" callback="window.map_init_basic" %}
 {% endblock %}
 
 {% block css %}
