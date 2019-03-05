@@ -6,8 +6,7 @@ html {
 }
 
 body {
-    margin-top: 70px;
-    margin-bottom: 70px;
+    padding: 70px 0;
 }
 
 .required * {
@@ -90,10 +89,11 @@ textarea.noresize {
 .copyright {
     margin: 0;
     padding: 0;
+    font-size: small;
 }
 
-h1.faicon {
-    margin: 0;
+a.faicon > i {
+    font-size: 38px;
 }
 
 a.faicon {
