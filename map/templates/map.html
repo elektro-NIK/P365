@@ -1,10 +1,10 @@
-{% extends "base/base.html" %}
+{% extends "base/base_fullscreen.html" %}
 {% load leaflet_tags %}
 {% load staticfiles %}
 
 {% block content %}
-    <div class="progress progress-bar-thin">
-        <div class="progress-bar progress-bar-striped active" role="progressbar"></div>
+    <div class="progress">
+        <div class="progress-bar bg-success" role="progressbar"></div>
     </div>
     {% csrf_token %}
     {% leaflet_map "mainmap" callback="window.map_init_basic" %}

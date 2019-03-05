@@ -2,6 +2,11 @@ html, body, #content-container, #content-container>.row {
     height: 100%;
 }
 
-#mainmap {
-    width: 100%;
+.leaflet-container {
+    height: 100%;
+}
+
+div.progress {
+    height: 5px;
+    border-radius: 0;
 }

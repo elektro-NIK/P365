@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load bootstrap4 %}
+{% bootstrap_messages %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
+    <title>{{ title }} - P365</title>
+
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/solid.css" integrity="sha384-r/k8YTFqmlOaqRkZuSiE9trsrDXkh07mRaoGBMoDcmA58OHILZPsk29i2BsFng1B" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/brands.css" integrity="sha384-BKw0P+CQz9xmby+uplDwp82Py8x1xtYPK3ORn/ZSoe6Dk3ETP59WCDnX+fI1XCKK" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/fontawesome.css" integrity="sha384-4aon80D8rXCGx9ayDt85LbyUHeMWd3UiBaWliBlJ53yzm9hqN21A+o1pqoyK04h+" crossorigin="anonymous">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/main_fullscreen.css' %}" rel="stylesheet" media="screen">
+    {% block css %}{% endblock %}
+    <!--&lt;!&ndash;TODO: debug style, disable me!&ndash;&gt;-->
+    <!--<style>-->
+        <!--div[class^=col] { border: 1px solid; }-->
+    <!--</style>-->
+</head>
+<body class="bg-secondary">
+    {% include "base/header.html" %}
+    <div class="container-fluid" id="content-container">
+        <div class="row">
+            {% if profile %}
+            <div class="col-md-3" id="profile-container">
+                {% include "partials/_profile.html" %}
+            </div>
+            {% endif %}
+            <div class="col{% if profile %}-md-9{% endif %}">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+    {% include "base/footer.html" %}
+
+    {% bootstrap_javascript jquery="full" %}
+    {% block js %}{% endblock %}
+</body>
+</html>

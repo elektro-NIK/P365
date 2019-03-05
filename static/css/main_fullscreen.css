@@ -1,0 +1,8 @@
+body {
+    padding: 56px 0 !important;
+}
+
+#content-container, #content-container>div.row, #content-container>div.row>div {
+    margin: 0;
+    padding: 0;
+}
