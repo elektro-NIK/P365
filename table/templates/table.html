@@ -2,48 +2,31 @@
 {% load staticfiles %}
 
 {% block content %}
-<div class="row">
-    {% if active %}
-    <div class="progress progress-bar-thin">
-        <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%;"></div>
+<div class="card text-white bg-dark">
+    <div class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 100%;"></div>
     </div>
-    {% else %}
-    <br>
-    <div class="col col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
-        <a href="{% url 'user:profile' profile %}">
-            <b>
-                <span id="avatar">
-                    <!--suppress HtmlUnknownTarget -->
-                    <img class="avatar-48" src="{{ profile.pic.url }}" alt="Profile pic"/>
-                </span>
-                <span id="username">
-                    {{ profile.user }}
-                </span>
-            </b>
-        </a>
-    </div>
-    {% endif %}
-    <div class="table-responsive col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+    <div class="table-responsive">
         <div class="multitable">
             <ul class="nav nav-tabs">
-                <li class="tracks"><a href="#tracks" data-toggle="tab" role="tab" data-target="#table-tracks">Tracks</a></li>
-                <li class="routes"><a href="#routes" data-toggle="tab" role="tab" data-target="#table-routes">Routes</a></li>
-                <li class="pois"><a href="#pois" data-toggle="tab" role="tab" data-target="#table-pois">POIs</a></li>
+                <li class="nav-item tracks"><a class="nav-link" href="#tracks" data-toggle="tab" role="tab" data-target="#table-tracks">Tracks</a></li>
+                <li class="nav-item routes"><a class="nav-link" href="#routes" data-toggle="tab" role="tab" data-target="#table-routes">Routes</a></li>
+                <li class="nav-item pois mr-auto">  <a class="nav-link" href="#pois"   data-toggle="tab" role="tab" data-target="#table-pois">  POIs  </a></li>
                 {% if active %}
                 <form class="form" method="post" enctype="multipart/form-data" action="{% url 'table:view' %}">
                     {% csrf_token %}
-                    <label class="btn btn-success pull-right">
-                        <i class="glyphicon glyphicon-upload"></i> Import GPX<input type="file" accept=".gpx" onchange="$('div.progress').show(); this.form.submit()" hidden name="gpx_file">
+                    <label class="btn btn-success tab-btn">
+                        <i class="fas fa-upload" aria-hidden="true"></i> Import GPX<input type="file" accept=".gpx" onchange="$('div.progress').css('display', 'flex'); this.form.submit()" hidden name="gpx_file">
                     </label>
                 </form>
                 <a href="{% url 'route:create' %}">
-                    <button class="btn btn-success pull-right">
-                        <i class="glyphicon glyphicon-plus"></i> Route
+                    <button class="btn btn-success tab-btn">
+                        <i class="fas fa-plus" aria-hidden="true"></i> Route
                     </button>
                 </a>
                 <a href="{% url 'poi:create' %}">
-                    <button class="btn btn-success pull-right">
-                        <i class="glyphicon glyphicon-plus"></i> POI
+                    <button class="btn btn-success tab-btn">
+                        <i class="fas fa-plus" aria-hidden="true"></i> POI
                     </button>
                 </a>
                 {% endif %}
@@ -63,17 +46,19 @@
 {% block js %}
 <script src="{% static 'js/msg_wrong.js' %}"></script>
 <script>
-    var url_track_has_story = "{% url 'track:json_has_story' 0 %}",
-        url_track_clear_story = "{% url 'track:json_clear_story' 0 %}",
-        url_track_status = "{% url 'track:json_change_status' 0 %}",
-        url_track_delete = "{% url 'track:json_delete' 0 %}",
-        url_track_update = "{% url 'table:update_tracks' %}",
-        url_route_status = "{% url 'route:json_change_status' 0 %}",
-        url_route_delete = "{% url 'route:json_delete' 0 %}",
-        url_route_update = "{% url 'table:update_routes' %}",
-        url_poi_status = "{% url 'poi:json_change_status' 0 %}",
-        url_poi_delete = "{% url 'poi:json_delete' 0 %}",
-        url_poi_update = "{% url 'table:update_pois' %}";
+    var url_track_has_story, url_track_clear_story, url_track_status, url_track_delete, url_track_update,
+        url_route_status, url_route_delete, url_route_update, url_poi_status, url_poi_delete, url_poi_update;
+    url_track_has_story = "{% url 'track:json_has_story' 0 %}";
+    url_track_clear_story = "{% url 'track:json_clear_story' 0 %}";
+    url_track_status = "{% url 'track:json_change_status' 0 %}";
+    url_track_delete = "{% url 'track:json_delete' 0 %}";
+    url_track_update = "{% url 'table:update_tracks' %}";
+    url_route_status = "{% url 'route:json_change_status' 0 %}";
+    url_route_delete = "{% url 'route:json_delete' 0 %}";
+    url_route_update = "{% url 'table:update_routes' %}";
+    url_poi_status = "{% url 'poi:json_change_status' 0 %}";
+    url_poi_delete = "{% url 'poi:json_delete' 0 %}";
+    url_poi_update = "{% url 'table:update_pois' %}";
 </script>
 <script src="{% static 'js/table.js' %}"></script>
 {% endblock %}

@@ -1,16 +1,31 @@
-a.glyphicon {
-    color: black;
-    text-decoration: none;
+.tab-btn {
+    margin: 0 0 0 10px;
 }
 
-td.center, th.center {
-    text-align: center;
+div.progress {
+    height: 5px;
+    margin-bottom: 5px;
+    display: none;
 }
 
-.pull-right {
-    margin-left: 10px;
+a.nav-link, a.nav-link:hover {
+    color: inherit;
 }
 
-[hidden] {
-    display: none !important;
+ul.nav-tabs > li > a.nav-link:not(.active):hover {
+    border-color: #28a745;
+}
+
+a.nav-link.active, a.nav-link.active:hover {
+    color: inherit !important;
+    border-color: #28a745 !important;
+    background-color: #28a745 !important;
+}
+
+ul.nav-tabs {
+    border-bottom-color: #28a745;
+}
+
+tbody > tr > td > a, tbody > tr > td > a:hover{
+    color: inherit;
 }

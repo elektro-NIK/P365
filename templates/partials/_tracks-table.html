@@ -2,15 +2,16 @@
 {% load taggit_templatetags2_tags %}
 
 {% if tracks %}
-<table class="table table-hover table-condensed">
+<table class="table table-dark table-striped table-hover table-sm">
+    <caption class="sr-only">Tracks table</caption>
     <thead>
     <tr>
         <th>Name</th>
         <th>Started</th>
         <th>Length</th>
-        <th class="center">Tags</th>
-        <th class="center">Status</th>
-        <th class="center">Edit</th>
+        <th class="text-center">Tags</th>
+        <th class="text-center">Status</th>
+        <th class="text-center">Edit</th>
     </tr>
     </thead>
     <tbody>
@@ -24,23 +25,23 @@
         <td>
             {% get_tags_for_object track as 'tags' %}
             {% for tag in tags|slice:':3' %}
-            <a href="{% url 'tag:tag' tag.slug %}" class="label label-default">{{ tag }}</a>
+            <a href="{% url 'tag:tag' tag.slug %}" class="badge badge-secondary">{{ tag }}</a>
             {% endfor %}
             {% if tags|length > 3 %}
-            <i class="label label-default">...</i>
+            <i class="badge badge-secondary">...</i>
             {% endif %}
         </td>
-        <td class="center status">
+        <td class="text-center status">
             {% if track.public %}
-            <a href="#" class="glyphicon glyphicon-globe" title="public"></a>
+            <a href="#" title="public"><i class="fa fa-globe"></i></a>
             {% else %}
-            <a href="#" class="glyphicon glyphicon-user" title="private"></a>
+            <a href="#" title="private"><i class="fas fa-user-lock"></i></a>
             {% endif %}
         </td>
-        <td class="center edit">
-            <a href="{% url 'track:edit' track.id %}" class="glyphicon glyphicon-edit" title="edit"></a>
+        <td class="text-center edit">
+            <a href="{% url 'track:edit' track.id %}" title="edit"><i class="fas fa-edit"></i></a>
             {% if not track.public %}
-            <a href="#" class="glyphicon glyphicon-trash" title="delete"></a>
+            <a href="#" title="delete"><i class="fa fa-trash"></i></a>
             {% endif %}
         </td>
     </tr>
