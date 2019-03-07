@@ -1,3 +1,20 @@
-.pull-right {
-  float: right !important;
+@media (max-width: 767.98px) {
+    div.card {
+        margin-bottom: 2px !important;
+    }
+    div.row {
+        margin-bottom: 5px;
+    }
+    div.row > div {
+        padding: 2px 0;
+    }
+}
+
+@media (min-width: 768px) {
+    div.row {
+        margin-bottom: 10px;
+    }
+    div.row > div {
+        padding: 7px;
+    }
 }

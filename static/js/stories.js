@@ -1,6 +1,32 @@
-$('div.well').on('click', 'a.btn-delete', function(){
-    var well = $(this).parent().parent().parent(),
-        id = well.attr('id').replace('story', ''),
+function map_init_basic (map, options) {
+    map.dragging.disable();
+    map.touchZoom.disable();
+    map.doubleClickZoom.disable();
+    map.scrollWheelZoom.disable();
+    map.boxZoom.disable();
+    map.keyboard.disable();
+    if (map.tap) map.tap.disable();
+    $(".leaflet-control-container").css("visibility", "hidden");
+
+    var track_id = parseInt(map._container.id.split('_')[1]);
+    if (track_id) {
+        $.getJSON(url_track_json.replace('0', track_id))
+            .done(function (data) {
+                var track = L.geoJson(JSON.parse(data)).addTo(map);
+                map.fitBounds(track.getBounds());
+            }).fail(function () {
+            setErrorMsg()
+        });
+    } else {
+        map.setZoom(1);
+    }
+}
+
+$('a.btn-delete').on('click', function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    var card = $(this).parent().parent().parent().parent(),
+        id = card.attr('id').replace('story-', ''),
         token = $('[name=csrfmiddlewaretoken]').val();
     $.ajax({
         type: "POST",
@@ -9,11 +35,10 @@ $('div.well').on('click', 'a.btn-delete', function(){
             csrfmiddlewaretoken: token
         },
         success: function() {
-            well.parent().addClass('hidden');
+            card.parent().hide();
         },
         error: function() {
             setErrorMsg();
         }
     });
-    return false;
 });
