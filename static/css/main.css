@@ -59,7 +59,7 @@ textarea.noresize {
 
 /*----------HEADER----------*/
 
-@media (max-width:767.98px) {
+@media (max-width: 767.98px) {
   .divider {
       height: 1px;
       background-color: #9a9da0;
