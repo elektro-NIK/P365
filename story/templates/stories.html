@@ -5,7 +5,7 @@
 {% block content %}
     {% csrf_token %}
     {% if stories %}
-<div class="row" xmlns:story="http://www.w3.org/1999/xhtml">
+    <div class="row">
         <div class="col">
             <a href="{% url 'story:create' %}">
                 <button class="btn btn-success float-right">

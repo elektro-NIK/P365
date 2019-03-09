@@ -1,24 +1,26 @@
 {% extends "base/base.html" %}
-{% load bootstrap3 %}
-{% load leaflet_tags %}
 {% load staticfiles %}
+{% load leaflet_tags %}
 
 {% block content %}
-    <div class="row">
-        <br>
-        <div class="col-xs-12 col-sm-6 col-md-4 fixed">
-            {% leaflet_map "mainmap" callback="window.map_init_basic" %}
-        </div>
-        <div class="col-xs-12 col-xs-offset-12 col-sm-6 col-sm-offset-6 col-md-8 col-md-offset-4">
-            <h3 align="center">{{ story.title }}</h3>
-            <p align="center"><b>{{ story.event.start_date|date }} - {{ story.event.finish_date|date }}</b></p>
-            <div id="text">{{ story.text|safe }}</div>
-        </div>
+<div class="row">
+    <div class="col-6">
+        {% leaflet_map "mainmap" callback="window.map_init_basic" %}
     </div>
+    <div class="col-6">
+        <div id="title" class="text-center">
+            <h3>{{ story.title }}</h3>
+            <small>by <a href="{% url 'user:profile' story.user %}">{{ story.user }}</a></small>
+            <p><b>{{ story.event.start_date|date }} - {{ story.event.finish_date|date }}</b></p>
+        </div>
+        <div id="text">{{ story.text|safe }}</div>
+    </div>
+</div>
 {% endblock %}
 
 {% block css %}
     {% leaflet_css plugins='elevation' %}
+    <link href="{% static 'css/story-viewer.css' %}" rel="stylesheet" media="screen">
 {% endblock %}
 
 {% block js %}

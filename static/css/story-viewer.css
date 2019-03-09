@@ -1,0 +1,9 @@
+#mainmap {
+    position: sticky !important;
+    top: 70px;
+    height: calc(100vh - 81px);
+}
+
+#title > h3 {
+    margin: 0;
+}

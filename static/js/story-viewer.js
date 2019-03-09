@@ -7,20 +7,8 @@ function map_init_basic (map, options) {
     if (index)
         $("input[name='leaflet-base-layers']")[index].click();
 
-    var info_height = $('#info').height();
-    var page_height = $(document).height();
-    var window_height = $(window).height();
-    var header_height = $('#header_container').height() + parseInt($('#header_container').css('margin-bottom').replace('px', ''));
-    var footer_height = $('footer').height();
-    if (info_height + header_height >= window_height)
-        var height = window_height - header_height;
-    else if (info_height + header_height + footer_height <= window_height)
-        var height = page_height - header_height - footer_height - parseInt($('#header_container').css('margin-bottom').replace('px', '')) - 2;
-    else
-        var height = info_height;
-    var height = window_height - header_height - parseInt($('#header_container').css('margin-bottom').replace('px', ''));
-    $('div.leaflet-container').height(height);
-    map.invalidateSize();
+    // $('div.leaflet-container').height(height);
+    // map.invalidateSize();
     bounds = map.getBounds();
     map.on('click', function() {
         bounds && bounds.isValid() ? map.fitBounds(bounds) : {};
