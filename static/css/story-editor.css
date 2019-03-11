@@ -1,4 +1,47 @@
-#event-dates {
-    padding-top: 7px;
-    font-weight: bold;
+#mainmap {
+    height: calc(100vh - 138px);
 }
+
+@media (max-width: 767.98px) {
+    #mainmap {
+        margin-bottom: 15px;
+    }
+}
+
+@media (min-width: 768px) {
+    #map > .form-group {
+        position: sticky !important;
+        top: 70px;
+    }
+
+    #mainmap {
+        position: sticky !important;
+        top: 124px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    #event-dates {
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    #event-dates {
+        padding-top: 12px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    #event-dates {
+        margin-top: -5px;
+    }
+}
+
+@media (min-width: 992px) {
+    #event-dates {
+        padding-top: 7px;
+    }
+}
+
+

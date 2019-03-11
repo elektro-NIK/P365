@@ -7,8 +7,6 @@ function map_init_basic (map, options) {
     if (index)
         $("input[name='leaflet-base-layers']")[index].click();
 
-    // $('div.leaflet-container').height(height);
-    // map.invalidateSize();
     bounds = map.getBounds();
     map.on('click', function() {
         bounds && bounds.isValid() ? map.fitBounds(bounds) : {};
