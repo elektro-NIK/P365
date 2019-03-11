@@ -1,34 +1,33 @@
 {% extends "base/base.html" %}
-{% load bootstrap3 %}
+{% load bootstrap4 %}
 {% load leaflet_tags %}
 {% load staticfiles %}
 
 {% block content %}
+<form method="post" action="" class="form">
+    {% csrf_token %}
     <div class="row">
-        <br>
-        <form action="" method="post" class="form">
-            {% csrf_token %}
-            <div class="col-xs-12 col-sm-6 col-md-4 fixed" id="map">
-                {% bootstrap_field form.track show_label=False %}
-                {% leaflet_map "mainmap" callback="window.map_init_basic" %}
-            </div>
-            <div class="col-xs-12 col-xs-offset-12 col-sm-6 col-xs-offset-6 col-md-8 col-md-offset-4" id="other">
-                {% bootstrap_form_errors form %}
-                {% bootstrap_field form.title show_label=False %}
-                <div class="row">
-                    <div class="col-xs-6">
-                        {% bootstrap_field form.event show_label=False %}
-                    </div>
-                    <div class="col-xs-6" id="event-dates"></div>
+        <div class="col-md-6" id="map">
+            {% bootstrap_field form.track show_label=False %}
+            {% leaflet_map "mainmap" callback="window.map_init_basic" %}
+        </div>
+        <div class="col-md-6" id="other">
+            {% bootstrap_form_errors form %}
+            {% bootstrap_field form.title show_label=False %}
+            <div class="row">
+                <div class="col-sm-6">
+                    {% bootstrap_field form.event show_label=False %}
                 </div>
-                {{ form.text }}
-                {% bootstrap_field form.tags show_label=False %}
-                <div class="col-xs-12 form-group center-block text-center">
-                    {% bootstrap_button 'Save' button_type='submit' button_class='btn-success' %}
-                </div>
+                <div class="col-sm-6 text-center" id="event-dates"></div>
             </div>
-        </form>
+            {{ form.text }}
+            {% bootstrap_field form.tags show_label=False %}
+            <div class="col-12 form-group text-center">
+                {% bootstrap_button 'Save' button_type='submit' button_class='btn-success' %}
+            </div>
+        </div>
     </div>
+</form>
 {% endblock %}
 
 {% block css %}

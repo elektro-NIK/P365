@@ -251,6 +251,7 @@ SUMMERNOTE_CONFIG = {
             ],
         },
     },
+    'css': (os.path.join(STATIC_URL, 'css/summernote-fix.css'),)
 }
 
 BOOTSTRAP4 = {
