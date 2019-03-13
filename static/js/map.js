@@ -21,9 +21,9 @@ function delete_feature (map, feature, url) {
 function addPopup (map, feature, layer, url, url_edit, url_delete) {
     var popup = $('<p>').append($('<a>').attr('href', url.replace('0', feature.properties.pk)).html($('<b>').html(feature.properties.name)), ' ');
     if (url_edit)
-        popup.append($('<a>').attr('href', url_edit.replace('0', feature.properties.pk)).addClass('glyphicon glyphicon-pencil'), ' ');
+        popup.append($('<a>').attr('href', url_edit.replace('0', feature.properties.pk)).addClass('fas fa-edit'), ' ');
     if (!feature.properties.public)
-        popup.append($('<a>').attr('href', '#').addClass('glyphicon glyphicon-trash').on('click', function() {
+        popup.append($('<a>').attr('href', '#').addClass('fa fa-trash').on('click', function() {
             delete_feature(map, feature, url_delete.replace('0', feature.properties.pk));
         }));
     popup.append($('<br>'), (feature.properties.description || ''));
