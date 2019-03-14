@@ -1,0 +1,15 @@
+.text-muted {
+    color: inherit !important;
+    text-align: center;
+    height: 100;
+}
+
+#id_geom-map {
+    height: calc(100vh - 141px);
+}
+
+#map > .form-group {
+    position: sticky !important;
+    top: 70px;
+    margin-bottom: 0;
+}
