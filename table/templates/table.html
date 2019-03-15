@@ -11,7 +11,7 @@
             <ul class="nav nav-tabs">
                 <li class="nav-item tracks"><a class="nav-link" href="#tracks" data-toggle="tab" role="tab" data-target="#table-tracks">Tracks</a></li>
                 <li class="nav-item routes"><a class="nav-link" href="#routes" data-toggle="tab" role="tab" data-target="#table-routes">Routes</a></li>
-                <li class="nav-item pois mr-auto">  <a class="nav-link" href="#pois"   data-toggle="tab" role="tab" data-target="#table-pois">  POIs  </a></li>
+                <li class="nav-item pois mr-auto">  <a class="nav-link" href="#pois"   data-toggle="tab" role="tab" data-target="#table-pois">POIs</a></li>
                 {% if active %}
                 <form class="form" method="post" enctype="multipart/form-data" action="{% url 'table:view' %}">
                     {% csrf_token %}
