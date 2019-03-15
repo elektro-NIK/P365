@@ -1,73 +1,93 @@
 {% extends "base/base.html" %}
-{% load bootstrap3 %}
+{% load bootstrap4` %}
 {% load leaflet_tags %}
 {% load taggit_templatetags2_tags %}
 {% load staticfiles %}
 
 {% block content %}
-    <div class="row">
-        <br>
-        <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3" id="info">
-            <center>
-                <b>
-                    {{ track.name }}
-                    <a href="{% url 'track:edit' id=track.pk %}"><i class="glyphicon glyphicon-pencil"></i></a>
-                </b>
-            </center>
-            <center>
+<div class="row">
+    <div class="col-md-3 card text-white bg-dark" id="info">
+        <div class="card-body">
+            <div class="card-title text-center" id="feature_name">
+                {{ track.name }}
+                <a href="{% url 'track:edit' id=track.pk%}" class="fa fa-edit"></a>
+            </div>
+            <div class="card-title text-center">
                 {% get_tags_for_object track as "tags" %}
                 {% for tag in tags %}
-                    <a href="{% url 'tag:tag' tag.slug %}" class="label label-default">{{ tag }}</a>
+                <small><a href="{% url 'tag:tag' tag.slug %}" class="badge badge-secondary">{{ tag }}</a></small>
                 {% endfor %}
-            </center>
-            <br><p>{{ track.description|default:'' }}</p>
-            <div class="thumbnail text-center col-xs-12">
-                <div class="col-xs-12">
-                    Distance
-                    <h4>{{ track.length|floatformat|default:'-' }} km</h4>
-                    <hr class="slim">
+            </div>
+            <div class="card-text">
+                {{ track.description|default:'' }}
+            </div>
+            <div class="card-text">
+                <div class="row">
+                    <div class="card text-white bg-success text-center col-12">
+                        <small>Distance:</small>
+                        {{ track.length|floatformat|default:'-' }} km
+                    </div>
                 </div>
-                <div class="col-xs-6">
-                    Avg. speed
-                    <h4>{{ track.speed|floatformat|default:'-' }} km/h</h4>
-                    <hr class="slim">
-                    Altitude gain
-                    <h4>{{ track.altitude_gain|floatformat|default:'-' }} m</h4>
-                    <hr class="slim">
-                    Max altitude
-                    <h4>{{ track.altitude_max|floatformat|default:'-' }} m</h4>
-                    <hr class="slim">
-                    Start time
-                    <h4>{{ track.start_date|date|default:'-' }} {{track.start_date|time|default:'-'}}</h4>
+                <div class="row">
+                    <div class="card text-white bg-success text-center col-6">
+                        <small>Avg. speed:</small>
+                        {{ track.speed|floatformat|default:'-' }} km/h
+                    </div>
+                    <div class="card text-white bg-success text-center col-6">
+                        <small>Max speed:</small>
+                        {{ track.speed_max|floatformat|default:'-' }} km/h
+                    </div>
                 </div>
-                <div class="col-xs-6">
-                    Max speed
-                    <h4>{{ track.speed_max|floatformat|default:'-' }} km/h</h4>
-                    <hr class="slim">
-                    Altitude loss
-                    <h4>{{ track.altitude_loss|floatformat|default:'-' }} m</h4>
-                    <hr class="slim">
-                    Min altitude
-                    <h4>{{ track.altitude_min|floatformat|default:'-' }} m</h4>
-                    <hr class="slim">
-                    Finish time
-                    <h4>{{ track.finish_date|date|default:'-' }} {{ track.finish_date|time|default:'' }}</h4>
+                <div class="row">
+                    <div class="card text-white bg-success text-center col-6">
+                        <small>Altitude gain:</small>
+                        {{ track.altitude_gain|floatformat|default:'-' }} m
+                    </div>
+                    <div class="card text-white bg-success text-center col-6">
+                        <small>Altitude loss:</small>
+                        {{ track.altitude_loss|floatformat|default:'-' }} m
+                    </div>
                 </div>
-                <div class="col-xs-12">
-                    <hr class="slim">
-                    Time
-                    <h4>{{ track.start_date|timesince:track.finish_date }}</h4>
+                <div class="row">
+                    <div class="card text-white bg-success text-center col-6">
+                        <small>Max altitude:</small>
+                        {{ track.altitude_max|floatformat|default:'-' }} m
+                    </div>
+                    <div class="card text-white bg-success text-center col-6">
+                        <small>Min altitude:</small>
+                        {{ track.altitude_min|floatformat|default:'-' }} m
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="card text-white bg-success text-center col-12">
+                        <small>Start time:</small>
+                        {{ track.start_date|date|default:'-' }} {{track.start_date|time|default:'-'}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="card text-white bg-success text-center col-12">
+                        <small>Finish time:</small>
+                        {{ track.finish_date|date|default:'-' }} {{ track.finish_date|time|default:'' }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="card text-white bg-success text-center col-12">
+                        <small>Time:</small>
+                        {{ track.start_date|timesince:track.finish_date }}
+                    </div>
                 </div>
             </div>
         </div>
-         <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
-             {% leaflet_map "mainmap" callback="window.map_init_basic" %}
-         </div>
     </div>
+    <div class="col-md-9">
+        {% leaflet_map "mainmap" callback="window.map_init_basic" %}
+    </div>
+</div>
 {% endblock %}
 
 {% block css %}
     {% leaflet_css plugins='elevation' %}
+    <link href="{% static 'css/feature-viewer.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block js %}
