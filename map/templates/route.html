@@ -1,54 +1,65 @@
 {% extends "base/base.html" %}
-{% load bootstrap3 %}
+{% load bootstrap4 %}
 {% load leaflet_tags %}
 {% load taggit_templatetags2_tags %}
 {% load staticfiles %}
 
 {% block content %}
-    <div class="row">
-        <br>
-        <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3" id="info">
-            <center>
-                <b>
-                    {{ route.name }}
-                    <a href="{% url 'route:edit' id=route.pk%}"><i class="glyphicon glyphicon-pencil"></i></a>
-                </b>
-            </center>
-            <center>
+<div class="row">
+    <div class="col-md-3 card text-white bg-dark" id="info">
+        <div class="card-body">
+            <div class="card-title text-center" id="feature_name">
+                {{ route.name }}
+                <a href="{% url 'route:edit' id=route.pk%}" class="fa fa-edit"></a>
+            </div>
+            <div class="card-title text-center">
                 {% get_tags_for_object route as "tags" %}
                 {% for tag in tags %}
-                    <a href="{% url 'tag:tag' tag.slug %}" class="label label-default">{{ tag }}</a>
+                <small><a href="{% url 'tag:tag' tag.slug %}" class="badge badge-secondary">{{ tag }}</a></small>
                 {% endfor %}
-            </center>
-            <br><p>{{ route.description|default:'' }}</p>
-            <div class="thumbnail text-center col-xs-12">
-                Distance
-                <h4>{{ route.length|floatformat|default:'-' }} km</h4>
-                <hr class="slim">
-                <div class="col-xs-6">
-                    Altitude gain
-                    <h4>{{ route.altitude_gain|floatformat|default:'-' }} m</h4>
-                    <hr class="slim">
-                    Max altitude
-                    <h4>{{ route.altitude_max|floatformat|default:'-' }} m</h4>
+            </div>
+            <div class="card-text">
+                {{ route.description|default:'' }}
+            </div>
+            <div class="card-text">
+                <div class="row">
+                    <div class="card text-white bg-success text-center col-12">
+                        <small>Distance:</small>
+                        {{ route.length|floatformat|default:'-' }} km
+                    </div>
                 </div>
-                <div class="col-xs-6">
-                    Altitude loss
-                    <h4>{{ route.altitude_loss|floatformat|default:'-' }} m</h4>
-                    <hr class="slim">
-                    Min altitude
-                    <h4>{{ route.altitude_min|floatformat|default:'-' }} m</h4>
+                <div class="row">
+                    <div class="card text-white bg-success text-center col-6">
+                        <small>Altitude gain:</small>
+                        {{ route.altitude_gain|floatformat|default:'-' }} m
+                    </div>
+                    <div class="card text-white bg-success text-center col-6">
+                        <small>Max altitude:</small>
+                        {{ route.altitude_max|floatformat|default:'-' }} m
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="card text-white bg-success text-center col-6">
+                        <small>Altitude loss:</small>
+                        {{ route.altitude_loss|floatformat|default:'-' }} m
+                    </div>
+                    <div class="card text-white bg-success text-center col-6">
+                        <small>Min altitude:</small>
+                        {{ route.altitude_min|floatformat|default:'-' }} m
+                    </div>
                 </div>
             </div>
         </div>
-         <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
-             {% leaflet_map "mainmap" callback="window.map_init_basic" %}
-         </div>
     </div>
+    <div class="col-md-9">
+        {% leaflet_map "mainmap" callback="window.map_init_basic" %}
+    </div>
+</div>
 {% endblock %}
 
 {% block css %}
     {% leaflet_css plugins='elevation' %}
+    <link href="{% static 'css/feature-viewer.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block js %}
