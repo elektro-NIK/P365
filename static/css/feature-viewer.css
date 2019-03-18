@@ -1,0 +1,11 @@
+#info {
+    padding: 0;
+}
+
+#poi_name {
+    margin-bottom: 0;
+}
+
+#mainmap {
+    height: calc(100vh - 140px);
+}
