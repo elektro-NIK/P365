@@ -23,6 +23,10 @@ body {
     font-weight: bold;
 }
 
+a.fa, a.fa:hover {
+    color: inherit;
+}
+
 a.btn, a.btn:hover {
     padding: 0;
     margin: 2px;

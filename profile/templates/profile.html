@@ -2,114 +2,116 @@
 {% load staticfiles %}
 
 {% block content %}
-<div class="col">
-    <div class="well">
-        <div class="row title">Statistics</div>
-        <div class="row">
-            <div id="chart_container" class="col col-xs-12 col-sm-6">
-                <div id="chart" class="col col-xs-8">
-                    <div id="chart_div"></div>
-                    <div id="chart_label">
-                        <div id="chart_label_dig">0</div>
-                        <div id="chart_label_km"> km</div>
+<div class="card text-white bg-dark mb-1">
+    <div class="card-body">
+        <div class="card-title">Statistics</div>
+        <div class="card-text">
+            <div id="chart_container" class="row">
+                <div class="col">
+                    <div class="row">
+                        <div id="chart" class="col">
+                            <div id="chart_div"></div>
+                            <div id="chart_label">
+                                <div id="chart_label_dig">0</div>
+                                <div id="chart_label_km"> km</div>
+                            </div>
+                        </div>
+                        <div id="chart_legend" class="col d-flex align-content-center flex-wrap">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    {% if stat.walking %}
+                                    <i class="fas fa-walking fa-fw" style="color:#E25668"></i>
+                                    <span>walking</span>
+                                    {% endif %}
+                                </li>
+                                <li class="list-group-item">
+                                    {% if stat.hiking %}
+                                    <i class="fas fa-hiking fa-fw" style="color:#E28956"></i>
+                                    <span>hiking</span>
+                                    {% endif %}
+                                </li>
+                                <li class="list-group-item">
+                                    {% if stat.running %}
+                                    <i class="fas fa-running fa-fw" style="color:#E2CF56"></i>
+                                    <span>running</span>
+                                    {% endif %}
+                                </li>
+                                <li class="list-group-item">
+                                    {% if stat.cycling %}
+                                    <i class="fas fa-bicycle fa-fw" style="color:#AEE256"></i>
+                                    <span>cycling</span>
+                                    {% endif %}
+                                </li>
+                                <li class="list-group-item">
+                                    {% if stat.swimming %}
+                                    <i class="fas fa-swimmer fa-fw" style="color:#68E256"></i>
+                                    <span>swimming</span>
+                                    {% endif %}
+                                </li>
+                                <li class="list-group-item">
+                                    {% if stat.skiing %}
+                                    <i class="fas fa-skiing fa-fw" style="color:#56E289"></i>
+                                    <span>skiing</span>
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="stat-text" class="col d-flex align-content-center flex-wrap">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <i class="fas fa-ruler fa-fw"></i> {{ stat.distance|floatformat:0|default:0 }} km
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-arrow-circle-up fa-fw fa-rotate-45"></i> {{ stat.rise|floatformat:-2|default:0 }} km
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-arrow-circle-up fa-fw fa-rotate-135"></i> {{ stat.fall|floatformat:-2|default:0 }} km
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-clock fa-fw"></i> {{ stat.time.hours|default:'00' }}:{{ stat.time.minutes|default:'00' }}
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-mountain fa-fw "></i> {{ stat.peak|floatformat:0|default:0 }} m
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-tachometer-alt fa-fw"></i> {{ stat.max_speed|floatformat:-1|default:0 }} km/h
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div id="chart_legend" class="col col-xs-4">
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            {% if stat.walking %}
-                                <i class="fas fa-walking fa-fw" style="color:#E25668"></i>
-                                <span>walking</span>
-                            {% endif %}
-                        </li>
-                        <li class="list-group-item">
-                            {% if stat.hiking %}
-                                <i class="fas fa-hiking fa-fw" style="color:#E28956"></i>
-                                <span>hiking</span>
-                            {% endif %}
-                        </li>
-                        <li class="list-group-item">
-                            {% if stat.running %}
-                                <i class="fas fa-running fa-fw" style="color:#E2CF56"></i>
-                                <span>running</span>
-                            {% endif %}
-                        </li>
-                        <li class="list-group-item">
-                            {% if stat.cycling %}
-                                <i class="fas fa-bicycle fa-fw" style="color:#AEE256"></i>
-                                <span>cycling</span>
-                            {% endif %}
-                        </li>
-                        <li class="list-group-item">
-                            {% if stat.swimming %}
-                                <i class="fas fa-swimmer fa-fw" style="color:#68E256"></i>
-                                <span>swimming</span>
-                            {% endif %}
-                        </li>
-                        <li class="list-group-item">
-                            {% if stat.skiing %}
-                                <i class="fas fa-skiing fa-fw" style="color:#56E289"></i>
-                                <span>skiing</span>
-                            {% endif %}
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div id="stat-text" class="col col-xs-12 col-sm-6">
-                <div class="col col-xs-6">
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                             <i class="fas fa-ruler fa-fw"></i> {{ stat.distance|floatformat:0|default:0 }} km
-                        </li>
-                        <li class="list-group-item">
-                            <i class="fas fa-arrow-circle-up fa-fw fa-rotate-45"></i> {{ stat.rise|floatformat:-2|default:0 }} km
-                        </li>
-                        <li class="list-group-item">
-                            <i class="fas fa-arrow-circle-up fa-fw fa-rotate-135"></i> {{ stat.fall|floatformat:-2|default:0 }} km
-                        </li>
-                    </ul>
-                </div>
-                <div class="col col-xs-6">
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <i class="fas fa-clock fa-fw"></i> {{ stat.time.hours|default:'00' }}:{{ stat.time.minutes|default:'00' }}
-                        </li>
-                        <li class="list-group-item">
-                            <i class="fas fa-mountain fa-fw "></i> {{ stat.peak|floatformat:0|default:0 }} m
-                        </li>
-                        <li class="list-group-item">
-                            <i class="fas fa-tachometer-alt fa-fw"></i> {{ stat.max_speed|floatformat:-1|default:0 }} km/h
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>
     </div>
-    <div class="well">
-        <div class="row title">Last activity</div>
-        <div class="row">
-            <div class="multitable">
-                <ul class="nav nav-tabs">
-                    <li class="feed active"><a href="#feed" data-toggle="tab" role="tab" data-target="#table-feed">Feed</a></li>
-                    <li class="tracks"><a href="#tracks" data-toggle="tab" role="tab" data-target="#table-tracks">Tracks</a></li>
-                    <li class="routes"><a href="#routes" data-toggle="tab" role="tab" data-target="#table-routes">Routes</a></li>
-                    <li class="pois"><a href="#stories" data-toggle="tab" role="tab" data-target="#table-stories">Stories</a></li>
-                    <a href="#">
-                        <button class="btn btn-success pull-right">
-                            Map
-                        </button>
-                    </a>
-                    <a href="#">
-                        <button class="btn btn-success pull-right">
-                            Calendar
-                        </button>
-                    </a>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane fade in active" id="table-feed">AAA</div>
-                    <div class="tab-pane fade in" id="table-tracks">BBB</div>
-                    <div class="tab-pane fade in" id="table-routes">CCC</div>
-                    <div class="tab-pane fade in" id="table-stories">DDD</div>
+</div>
+<div class="card text-white bg-dark">
+    <div class="card-body">
+        <div class="card-title">Last activity</div>
+        <div class="card-text">
+            <div class="table-responsive">
+                <div class="multitable">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item feed"><a class="nav-link active show" href="#feed" data-toggle="tab" role="tab" data-target="#table-feed">Feed</a></li>
+                        <li class="nav-item tracks"><a class="nav-link" href="#tracks" data-toggle="tab" role="tab" data-target="#table-tracks">Tracks</a></li>
+                        <li class="nav-item routes"><a class="nav-link" href="#routes" data-toggle="tab" role="tab" data-target="#table-routes">Routes</a></li>
+                        <li class="nav-item pois mr-auto"><a class="nav-link" href="#stories" data-toggle="tab" role="tab" data-target="#table-stories">Stories</a></li>
+                        <a href="#">
+                            <button class="btn btn-success tab-btn">
+                                Map
+                            </button>
+                        </a>
+                        <a href="#">
+                            <button class="btn btn-success tab-btn">
+                                Calendar
+                            </button>
+                        </a>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active show" id="table-feed">AAA</div>
+                        <div class="tab-pane fade in" id="table-tracks">BBB</div>
+                        <div class="tab-pane fade in" id="table-routes">CCC</div>
+                        <div class="tab-pane fade in" id="table-stories">DDD</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -124,7 +126,6 @@
 {% block js %}
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript" src="{% static 'js/profile.js' %}"></script>
-<!--suppress BadExpressionStatementJS -->
 <script type="text/javascript">
     ds = [['walking',  {{ stat.walking  }}],
           ['hiking',   {{ stat.hiking   }}],
