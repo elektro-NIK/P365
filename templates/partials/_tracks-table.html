@@ -22,7 +22,7 @@
         </td>
         <td>{{ track.start_date|naturaltime }}</td>
         <td>{{ track.length|floatformat }} km</td>
-        <td>
+        <td class="text-center">
             {% get_tags_for_object track as 'tags' %}
             {% for tag in tags|slice:':3' %}
             <a href="{% url 'tag:tag' tag.slug %}" class="badge badge-secondary">{{ tag }}</a>

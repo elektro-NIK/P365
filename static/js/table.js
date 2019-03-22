@@ -112,8 +112,8 @@ function trackHasStory(url, id) {
     }).responseJSON.result;
 }
 
-$('#table-tracks').on('click', 'td.edit a.glyphicon-trash', function(){
-    var id = $(this).parent().parent().attr('id').replace('track', ''),
+$('#table-tracks').on('click', 'td.edit a i.fa-trash', function(){
+    var id = $(this).parent().parent().parent().attr('id').replace('track', ''),
         url = url_track_delete,
         url_upd = url_track_update,
         id_upd = "#table-tracks";
@@ -121,8 +121,8 @@ $('#table-tracks').on('click', 'td.edit a.glyphicon-trash', function(){
     return false;
 });
 
-$('#table-routes').on('click', 'td.edit a.glyphicon-trash', function(){
-    var id = $(this).parent().parent().attr('id').replace('route', ''),
+$('#table-routes').on('click', 'td.edit a i.fa-trash', function(){
+    var id = $(this).parent().parent().parent().attr('id').replace('route', ''),
         url = url_route_delete,
         url_upd = url_route_update,
         id_upd = "#table-routes";
@@ -130,8 +130,8 @@ $('#table-routes').on('click', 'td.edit a.glyphicon-trash', function(){
     return false;
 });
 
-$('#table-pois').on('click', 'td.edit a.glyphicon-trash', function(){
-    var id = $(this).parent().parent().attr('id').replace('poi', ''),
+$('#table-pois').on('click', 'td.edit a i.fa-trash', function(){
+    var id = $(this).parent().parent().parent().attr('id').replace('poi', ''),
         url = url_poi_delete,
         url_upd = url_poi_update,
         id_upd = "#table-pois";

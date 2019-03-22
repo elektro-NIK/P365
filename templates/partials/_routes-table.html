@@ -22,13 +22,13 @@
         </td>
         <td>{{ route.created|naturaltime }}</td>
         <td>{{ route.length|floatformat }} km</td>
-        <td>
+        <td class="text-center">
             {% get_tags_for_object route as 'tags' %}
             {% for tag in tags|slice:':3' %}
-            <a href="{% url 'tag:tag' tag.slug %}" class="label label-default">{{ tag }}</a>
+            <a href="{% url 'tag:tag' tag.slug %}" class="badge badge-secondary">{{ tag }}</a>
             {% endfor %}
             {% if tags|length > 3 %}
-            <i class="label label-default">...</i>
+            <i class="badge badge-secondary">...</i>
             {% endif %}
         </td>
         <td class="text-center status">

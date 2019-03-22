@@ -37,7 +37,6 @@
 
 {% block js %}
     {% leaflet_js %}
-    <script src="{% static 'js/msg_wrong.js' %}"></script>
     <script>
         var url_track_json = "{% url 'track:json' 0 %}",
             url_calendar_dates = "{% url 'calendar:dates_event' 0 %}";

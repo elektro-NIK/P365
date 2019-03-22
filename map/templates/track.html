@@ -92,7 +92,6 @@
 
 {% block js %}
     {% leaflet_js plugins='elevation' %}
-    <script src="{% static 'js/msg_wrong.js' %}"></script>
     <script>
         var url_track = "{% url 'track:json' track.id %}";
     </script>

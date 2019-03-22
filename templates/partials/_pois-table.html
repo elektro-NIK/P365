@@ -20,13 +20,13 @@
             <a href="{% url 'poi:view' poi.id %}">{{ poi.name }}</a>
         </td>
         <td>{{ poi.created|naturaltime }}</td>
-        <td>
+        <td class="text-center">
             {% get_tags_for_object poi as 'tags' %}
             {% for tag in tags|slice:':3' %}
-            <a href="{% url 'tag:tag' tag.slug %}" class="label label-default">{{ tag }}</a>
+            <a href="{% url 'tag:tag' tag.slug %}" class="badge badge-secondary">{{ tag }}</a>
             {% endfor %}
             {% if tags|length > 3 %}
-            <i class="label label-default">...</i>
+            <i class="badge badge-secondary">...</i>
             {% endif %}
         </td>
         <td class="text-center status">

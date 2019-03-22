@@ -24,34 +24,34 @@
         <ul class="navbar-nav ml-auto text-right">
             <li class="divider"></li>
             <li class="nav-item{% if active == 'signup' %} active{% endif %}">
-                <a class="nav-link" href="{% url 'signup' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
+                <a class="nav-link" href="{% url 'signup' %}"><span class="fas fa-user-circle"></span> Sign Up</a>
             </li>
             <li class="nav-item{% if active == 'login' %} active{% endif %}">
-                <a class="nav-link" href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                <a class="nav-link" href="{% url 'login' %}"><span class="fas fa-sign-in-alt"></span> Login</a>
             </li>
         </ul>
         {% else %}
         <ul class="navbar-nav ml-auto text-right">
             <li class="dropdown">
                 <a href="{% url 'user:profile' user %}" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                    <img src="{{ user.profilemodel.pic.url }}" alt="userpic"> {{ user.username }} <span class="glyphicon glyphicon-triangle-bottom"></span>
+                    <img src="{{ user.profilemodel.pic.url }}" alt="userpic"> {{ user.username }}
                 </a>
                 <ul class="dropdown-menu">
                     <li>
                         <a class="nav-link" href="{% url 'user:profile' user %}">
-                            <span class="glyphicon glyphicon-user"></span> Profile
+                            <span class="fas fa-user-circle"></span> Profile
                         </a>
                     </li>
                     <li class="divider"></li>
                     <li>
                         <a class="nav-link" href="#">
-                            <span class="glyphicon glyphicon-stats"></span> User stats
+                            <span class="fas fa-chart-line"></span> User stats
                         </a>
                     </li>
                     <li class="divider"></li>
                     <li>
                         <a class="nav-link" href="{% url 'logout' %}">
-                            <span class="glyphicon glyphicon-log-out"></span> Logout
+                            <span class="fas fa-sign-out-alt"></span> Logout
                         </a>
                     </li>
                 </ul>

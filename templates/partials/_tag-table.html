@@ -1,145 +1,146 @@
 {% load humanize %}
 
-{% if not tracks and not routes and not pois %}
-    <div class="tab-pane fade in active" role="tabpanel">
-        <div class="alert alert-info" role="alert">
-            There is nothing to show. Tag any item
-        </div>
+{% if not stories and not tracks and not routes and not pois %}
+<div class="tab-pane fade active" role="tabpanel">
+    <div class="alert alert-info" role="alert">
+        There is nothing to show. Tag any item
     </div>
+</div>
 {% else %}
-    <div id="table-stories" class="tab-pane fade in {% if stories %} active {% endif %}" role="tabpanel">
-        {% if stories %}
-            <table class="table table-hover table-condensed">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>User</th>
-                        <th>Created</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for story in stories %}
-                        <tr id="story{{ story.id }}">
-                            <td>
-                                <a href="{% url 'story:view' story.id %}">{{ story.title }}</a>
-                            </td>
-                            <td>
-                                <a href="{% url 'user:profile' story.user %}">{{ story.user }}</a>
-                            </td>
-                            <td>{{ story.created|naturaltime }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% endif %}
-    </div>
+<div id="table-stories" class="tab-pane fade {% if stories %} active show {% endif %}" role="tabpanel">
+    {% if stories %}
+    <table class="table table-dark table-striped table-hover table-sm">
+        <caption class="sr-only">Stories table</caption>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>User</th>
+            <th>Created</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for story in stories %}
+        <tr id="story{{ story.id }}">
+            <td>
+                <a href="{% url 'story:view' story.id %}">{{ story.title }}</a>
+            </td>
+            <td>
+                <a href="{% url 'user:profile' story.user %}">{{ story.user }}</a>
+            </td>
+            <td>{{ story.created|naturaltime }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
 
-    <div id="table-tracks" class="tab-pane fade in {% if not stories and tracks %} active {% endif %}" role="tabpanel">
-        {% if tracks %}
-            <table class="table table-hover table-condensed">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>User</th>
-                        <th>Length</th>
-                        <th>Created</th>
-                        <th class="center">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for track in tracks %}
-                        <tr id="track{{ track.id }}">
-                            <td>
-                                <a href="{% url 'track:view' track.id %}">{{ track.name }}</a>
-                            </td>
-                            <td>
-                                <a href="{% url 'user:profile' track.user %}">{{ track.user }}</a>
-                            </td>
-                            <td>{{ track.length|floatformat }} km</td>
-                            <td>{{ track.start_date|naturaltime }}</td>
-                            <td class="center status">
-                                {% if track.public %}
-                                    <i class="glyphicon glyphicon-globe" title="public"></i>
-                                {% else %}
-                                    <i class="glyphicon glyphicon-user" title="private"></i>
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% endif %}
-    </div>
+<div id="table-tracks" class="tab-pane fade {% if not stories and tracks %} active show {% endif %}" role="tabpanel">
+    {% if tracks %}
+    <table class="table table-dark table-striped table-hover table-sm">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>User</th>
+            <th>Length</th>
+            <th>Created</th>
+            <th class="text-center">Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for track in tracks %}
+        <tr id="track{{ track.id }}">
+            <td>
+                <a href="{% url 'track:view' track.id %}">{{ track.name }}</a>
+            </td>
+            <td>
+                <a href="{% url 'user:profile' track.user %}">{{ track.user }}</a>
+            </td>
+            <td>{{ track.length|floatformat }} km</td>
+            <td>{{ track.start_date|naturaltime }}</td>
+            <td class="text-center status">
+                {% if track.public %}
+                <i class="fa fa-globe" title="public"></i>
+                {% else %}
+                <i class="fas fa-user-lock" title="private"></i>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
 
-    <div id="table-routes" class="tab-pane fade in  {% if not stories and not tracks and routes%} active {% endif %}" role="tabpanel">
-        {% if routes %}
-            <table class="table table-hover table-condensed">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>User</th>
-                        <th>Length</th>
-                        <th>Created</th>
-                        <th class="center">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for route in routes %}
-                        <tr id="route{{ route.id }}">
-                            <td>
-                                <a href="{% url 'route:view' route.id %}">{{ route.name }}</a>
-                            </td>
-                            <td>
-                                <a href="{% url 'user:profile' route.user %}">{{ route.user }}</a>
-                            </td>
-                            <td>{{ route.length|floatformat }} km</td>
-                            <td>{{ route.created|naturaltime }}</td>
-                            <td class="center status">
-                                {% if route.public %}
-                                    <i class="glyphicon glyphicon-globe" title="public"></i>
-                                {% else %}
-                                    <i class="glyphicon glyphicon-user" title="private"></i>
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% endif %}
-    </div>
+<div id="table-routes" class="tab-pane fade {% if not stories and not tracks and routes%} active show {% endif %}" role="tabpanel">
+    {% if routes %}
+    <table class="table table-dark table-striped table-hover table-sm">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>User</th>
+            <th>Length</th>
+            <th>Created</th>
+            <th class="text-center">Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for route in routes %}
+        <tr id="route{{ route.id }}">
+            <td>
+                <a href="{% url 'route:view' route.id %}">{{ route.name }}</a>
+            </td>
+            <td>
+                <a href="{% url 'user:profile' route.user %}">{{ route.user }}</a>
+            </td>
+            <td>{{ route.length|floatformat }} km</td>
+            <td>{{ route.created|naturaltime }}</td>
+            <td class="text-center status">
+                {% if route.public %}
+                <i class="fa fa-globe" title="public"></i>
+                {% else %}
+                <i class="fas fa-user-lock" title="private"></i>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
 
-    <div id="table-pois" class="tab-pane fade in {% if not stories and not tracks and not routes and pois%} active {% endif %}" role="tabpanel">
-        {% if pois %}
-            <table class="table table-hover table-condensed">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>User</th>
-                        <th>Created</th>
-                        <th class="center">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for poi in pois %}
-                        <tr id="poi{{ poi.id }}">
-                            <td>
-                                <a href="{% url 'poi:view' poi.id %}">{{ poi.name }}</a>
-                            </td>
-                            <td>
-                                <a href="{% url 'user:profile' poi.user %}">{{ poi.user }}</a>
-                            </td>
-                            <td>{{ poi.created|naturaltime }}</td>
-                            <td class="center status">
-                                {% if poi.public %}
-                                    <i class="glyphicon glyphicon-globe" title="public"></i>
-                                {% else %}
-                                    <i class="glyphicon glyphicon-user" title="private"></i>
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% endif %}
-    </div>
+<div id="table-pois" class="tab-pane fade {% if not stories and not tracks and not routes and pois%} active show {% endif %}" role="tabpanel">
+    {% if pois %}
+    <table class="table table-dark table-striped table-hover table-sm">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>User</th>
+            <th>Created</th>
+            <th class="text-center">Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for poi in pois %}
+        <tr id="poi{{ poi.id }}">
+            <td>
+                <a href="{% url 'poi:view' poi.id %}">{{ poi.name }}</a>
+            </td>
+            <td>
+                <a href="{% url 'user:profile' poi.user %}">{{ poi.user }}</a>
+            </td>
+            <td>{{ poi.created|naturaltime }}</td>
+            <td class="text-center status">
+                {% if poi.public %}
+                <i class="fa fa-globe" title="public"></i>
+                {% else %}
+                <i class="fas fa-user-lock" title="private"></i>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
 {% endif %}

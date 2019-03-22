@@ -31,6 +31,7 @@
             </div>
             {% endif %}
             <div class="col{% if profile %}-md-9{% endif %}">
+                <div id="msg-wrong"></div>
                 {% block content %}{% endblock %}
             </div>
         </div>
@@ -38,6 +39,7 @@
     {% include "base/footer.html" %}
 
     {% bootstrap_javascript jquery="full" %}
+    <script src="{% static 'js/main.js' %}"></script>
     {% block js %}{% endblock %}
 </body>
 </html>
