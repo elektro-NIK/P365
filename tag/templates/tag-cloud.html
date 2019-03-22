@@ -3,19 +3,19 @@
 {% load staticfiles %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-xs-12 col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
-            <center><h1>Most popular tags</h1></center>
+<div class="card text-white bg-dark">
+    <div class="card-body">
+        <h1 class="card-title">Most popular tags</h1>
+        <div class="card-text">
             {% get_tagcloud as tags %}
             {% for tag in tags %}
-                <font size={{tag.weight|floatformat:0}}>
-                    <a href="{% url 'tag:tag' tag.slug %}" class="label label-default">{{ tag }}</a>
-                </font>
+            {% if tag.num_times %}
+            <font size="{{ tag.weight|floatformat:0 }}">
+                <a href="{% url 'tag:tag' tag.slug %}" class="badge  badge-success">{{ tag }} <span class="badge badge-secondary">{{ tag.num_times }}</span></a>
+            </font>
+            {% endif %}
             {% endfor %}
         </div>
     </div>
-{% endblock %}
-
-{% block js %}
-    <script src="{% static 'js/msg_wrong.js' %}"></script>
+</div>
 {% endblock %}

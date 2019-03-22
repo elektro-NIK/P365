@@ -2,52 +2,50 @@
 {% load staticfiles %}
 
 {% block content %}
-    <br>
-    <div class="row">
-        <div class="table-responsive col-xs-12 col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
-            <div class="multitable">
-                <ul class="nav nav-tabs">
-                    {% if stories %}
-                        <li class="stories {% if stories %} active {% endif %}">
-                            <a href="#stories" data-toggle="tab" role="tab" data-target="#table-stories">
-                                Stories <span class="badge">{{ stories|length }}</span>
-                            </a>
-                        </li>
-                    {% endif %}
-                    {% if tracks %}
-                        <li class="tracks {% if not stories and tracks %} active {% endif %}">
-                            <a href="#tracks" data-toggle="tab" role="tab" data-target="#table-tracks">
-                                Tracks <span class="badge">{{ tracks|length }}</span>
-                            </a>
-                        </li>
-                    {% endif %}
-                    {% if routes %}
-                        <li class="routes {% if not stories and not tracks and routes%} active {% endif %}">
-                            <a href="#routes" data-toggle="tab" role="tab" data-target="#table-routes">
-                                Routes <span class="badge">{{ routes|length }}</span>
-                            </a>
-                        </li>
-                    {% endif %}
-                    {% if pois %}
-                        <li class="pois {% if not stories and not tracks and not routes and pois%} active {% endif %}">
-                            <a href="#pois" data-toggle="tab" role="tab" data-target="#table-pois">
-                                POIs <span class="badge">{{ pois|length }}</span>
-                            </a>
-                        </li>
-                    {% endif %}
-                </ul>
-                <div class="tab-content" id="tables">
-                    {% include 'partials/_tag-table.html' %}
-                </div>
+<div class="card text-white bg-dark">
+    <div class="card-body">
+        <h1 class="card-title">#{{ tag }}</h1>
+    </div>
+    <div class="table-responsive">
+        <div class="multitable">
+            <ul class="nav nav-tabs">
+                {% if stories %}
+                <li class="nav-item stories">
+                    <a class="nav-link active show" href="#stories" data-toggle="tab" role="tab" data-target="#table-stories">
+                        Stories <span class="badge badge-secondary">{{ stories|length }}</span>
+                    </a>
+                </li>
+                {% endif %}
+                {% if tracks %}
+                <li class="nav-item tracks">
+                    <a class="nav-link {% if not stories and tracks %} active show {% endif %}" href="#tracks" data-toggle="tab" role="tab" data-target="#table-tracks">
+                        Tracks <span class="badge badge-secondary">{{ tracks|length }}</span>
+                    </a>
+                </li>
+                {% endif %}
+                {% if routes %}
+                <li class="nav-item routes">
+                    <a class="nav-link {% if not stories and not tracks and routes%} active show {% endif %}" href="#routes" data-toggle="tab" role="tab" data-target="#table-routes">
+                        Routes <span class="badge badge-secondary">{{ routes|length }}</span>
+                    </a>
+                </li>
+                {% endif %}
+                {% if pois %}
+                <li class="nav-item pois">
+                    <a class="nav-link {% if not stories and not tracks and not routes and pois%} active show {% endif %}" href="#pois" data-toggle="tab" role="tab" data-target="#table-pois">
+                        POIs <span class="badge badge-secondary">{{ pois|length }}</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+            <div class="tab-content" id="tables">
+                {% include 'partials/_tag-table.html' %}
             </div>
         </div>
     </div>
+</div>
 {% endblock %}
 
 {% block css %}
-    <link href="{% static 'css/tables.css' %}" rel="stylesheet" media="screen">
-{% endblock %}
-
-{% block js %}
-    <script src="{% static 'js/msg_wrong.js' %}"></script>
+<link href="{% static 'css/tables.css' %}" rel="stylesheet" media="screen">
 {% endblock %}
