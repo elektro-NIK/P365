@@ -12,28 +12,28 @@
                 {% if stories %}
                 <li class="nav-item stories">
                     <a class="nav-link active show" href="#stories" data-toggle="tab" role="tab" data-target="#table-stories">
-                        Stories <span class="badge badge-secondary">{{ stories|length }}</span>
+                        Stories <span class="badge badge-pill badge-secondary">{{ stories|length }}</span>
                     </a>
                 </li>
                 {% endif %}
                 {% if tracks %}
                 <li class="nav-item tracks">
                     <a class="nav-link {% if not stories and tracks %} active show {% endif %}" href="#tracks" data-toggle="tab" role="tab" data-target="#table-tracks">
-                        Tracks <span class="badge badge-secondary">{{ tracks|length }}</span>
+                        Tracks <span class="badge badge-pill badge-secondary">{{ tracks|length }}</span>
                     </a>
                 </li>
                 {% endif %}
                 {% if routes %}
                 <li class="nav-item routes">
                     <a class="nav-link {% if not stories and not tracks and routes%} active show {% endif %}" href="#routes" data-toggle="tab" role="tab" data-target="#table-routes">
-                        Routes <span class="badge badge-secondary">{{ routes|length }}</span>
+                        Routes <span class="badge badge-pill badge-secondary">{{ routes|length }}</span>
                     </a>
                 </li>
                 {% endif %}
                 {% if pois %}
                 <li class="nav-item pois">
                     <a class="nav-link {% if not stories and not tracks and not routes and pois%} active show {% endif %}" href="#pois" data-toggle="tab" role="tab" data-target="#table-pois">
-                        POIs <span class="badge badge-secondary">{{ pois|length }}</span>
+                        POIs <span class="badge badge-pill badge-secondary">{{ pois|length }}</span>
                     </a>
                 </li>
                 {% endif %}

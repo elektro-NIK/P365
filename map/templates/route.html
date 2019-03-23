@@ -15,7 +15,7 @@
             <div class="card-title text-center">
                 {% get_tags_for_object route as "tags" %}
                 {% for tag in tags %}
-                <small><a href="{% url 'tag:tag' tag.slug %}" class="badge badge-secondary">{{ tag }}</a></small>
+                <small><a href="{% url 'tag:tag' tag.slug %}" class="badge badge-pill badge-secondary">{{ tag }}</a></small>
                 {% endfor %}
             </div>
             <div class="card-text">

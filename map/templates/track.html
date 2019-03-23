@@ -1,5 +1,5 @@
 {% extends "base/base.html" %}
-{% load bootstrap4` %}
+{% load bootstrap4 %}
 {% load leaflet_tags %}
 {% load taggit_templatetags2_tags %}
 {% load staticfiles %}
@@ -15,7 +15,7 @@
             <div class="card-title text-center">
                 {% get_tags_for_object track as "tags" %}
                 {% for tag in tags %}
-                <small><a href="{% url 'tag:tag' tag.slug %}" class="badge badge-secondary">{{ tag }}</a></small>
+                <a href="{% url 'tag:tag' tag.slug %}" class="badge badge-pill badge-secondary">{{ tag }}</a>
                 {% endfor %}
             </div>
             <div class="card-text">

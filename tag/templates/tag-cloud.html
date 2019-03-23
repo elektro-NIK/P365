@@ -11,7 +11,7 @@
             {% for tag in tags %}
             {% if tag.num_times %}
             <font size="{{ tag.weight|floatformat:0 }}">
-                <a href="{% url 'tag:tag' tag.slug %}" class="badge  badge-success">{{ tag }} <span class="badge badge-secondary">{{ tag.num_times }}</span></a>
+                <a href="{% url 'tag:tag' tag.slug %}" class="badge badge-pill badge-success">{{ tag }} <span class="badge badge-pill badge-secondary">{{ tag.num_times }}</span></a>
             </font>
             {% endif %}
             {% endfor %}
