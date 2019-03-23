@@ -17,7 +17,7 @@
     <div class="row">
         {% for story in stories %}
         <div class="card-group col-sm-12 col-md-6 col-lg-4">
-            <div class="card" id="story-{{ story.id }}" onclick="location.href='{% url "story:view" story.id %}'" style="cursor:pointer">
+            <div class="card text-white bg-dark" id="story-{{ story.id }}" onclick="location.href='{% url "story:view" story.id %}'" style="cursor:pointer">
                 <div class="card-img-top">
                     {% with story.id|stringformat:"s" as story_id and story.track.id|stringformat:"s"|default:"0" as track_id %}
                     {% with "map-"|add:story_id|add:"_"|add:track_id as map_id %}
