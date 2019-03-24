@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
 
+from profile.models import ProfileModel
 from story.models import StoryModel
 from .forms import POIForm, RouteForm, TrackForm
 from .models import TrackModel, POIModel, RouteModel
@@ -16,8 +17,16 @@ from .models import TrackModel, POIModel, RouteModel
 @method_decorator(login_required, name='dispatch')
 class MapView(View):
     @staticmethod
-    def get(request):
-        return render(request, 'map.html', {'title': 'Map', 'active': 'map'})
+    def get(request, username=None):
+        if not username or username == request.user:
+            profile = get_object_or_404(ProfileModel, user=request.user)
+        else:
+            profile = get_object_or_404(ProfileModel, user__username=username)
+        return render(request, 'map.html', {
+            'title': 'Map',
+            'active': 'map',
+            'profile': profile
+        })
 
 
 @method_decorator(login_required, name='dispatch')

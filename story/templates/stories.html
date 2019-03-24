@@ -3,50 +3,50 @@
 {% load leaflet_tags %}
 
 {% block content %}
-    {% csrf_token %}
-    {% if stories %}
-    <div class="row">
-        <div class="col">
-            <a href="{% url 'story:create' %}">
-                <button class="btn btn-success float-right">
-                    <i class="fas fa-plus" aria-hidden="true"></i> New story
-                </button>
-            </a>
-        </div>
+{% csrf_token %}
+{% if stories %}
+<div class="row">
+    <div class="col">
+        <a href="{% url 'story:create' %}">
+            <button class="btn btn-success float-right">
+                <i class="fas fa-plus" aria-hidden="true"></i> New story
+            </button>
+        </a>
     </div>
-    <div class="row">
-        {% for story in stories %}
-        <div class="card-group col-sm-12 col-md-6 col-lg-4">
-            <div class="card text-white bg-dark" id="story-{{ story.id }}" onclick="location.href='{% url "story:view" story.id %}'" style="cursor:pointer">
-                <div class="card-img-top">
-                    {% with story.id|stringformat:"s" as story_id and story.track.id|stringformat:"s"|default:"0" as track_id %}
-                    {% with "map-"|add:story_id|add:"_"|add:track_id as map_id %}
-                    {% leaflet_map map_id callback="window.map_init_basic" %}
-                    {% endwith %}
-                    {% endwith %}
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">
-                        {{ story.title }}
-                        <span class="float-right"><a href="#" class="btn btn-default btn-delete" role="button"><i class="fa fa-trash"></i></a></span>
-                        <span class="float-right"><a href="{% url 'story:edit' story.id %}" class="btn btn-default" role="button"><i class="fas fa-edit"></i></a></span>
-                    </h5>
-                    <p class="card-text">
-                        {{ story.text|truncatewords_html:20|safe }}
-                    </p>
-                </div>
-                <div class="card-footer text-center">
-                    <small class="text-muted">{{ story.event.start_date|date }} - {{ story.event.finish_date|date }}</small>
-                </div>
+</div>
+<div class="row">
+    {% for story in stories %}
+    <div class="card-group col-sm-12 col-md-6 col-xl-4">
+        <div class="card text-white bg-dark" id="story-{{ story.id }}" onclick="location.href='{% url "story:view" story.id %}'" style="cursor:pointer">
+            <div class="card-img-top">
+                {% with story.id|stringformat:"s" as story_id and story.track.id|stringformat:"s"|default:"0" as track_id %}
+                {% with "map-"|add:story_id|add:"_"|add:track_id as map_id %}
+                {% leaflet_map map_id callback="window.map_init_basic" %}
+                {% endwith %}
+                {% endwith %}
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{ story.title }}
+                    <span class="float-right"><a href="#" class="btn btn-default btn-delete" role="button"><i class="fa fa-trash"></i></a></span>
+                    <span class="float-right"><a href="{% url 'story:edit' story.id %}" class="btn btn-default" role="button"><i class="fas fa-edit"></i></a></span>
+                </h5>
+                <p class="card-text">
+                    {{ story.text|truncatewords_html:20|safe }}
+                </p>
+            </div>
+            <div class="card-footer text-center">
+                <small class="text-muted">{{ story.event.start_date|date }} - {{ story.event.finish_date|date }}</small>
             </div>
         </div>
-        {% empty %}
-        <div class="alert alert-info" role="alert">
-            You don't have Stories yet. Try to <a href="{% url 'story:create' %}" class="alert-link">create your first Story</a>.
-        </div>
-        {% endfor %}
     </div>
-    {% endif %}
+    {% empty %}
+    <div class="alert alert-info" role="alert">
+        You don't have Stories yet. Try to <a href="{% url 'story:create' %}" class="alert-link">create your first Story</a>.
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
 {% endblock %}
 
 {% block css %}

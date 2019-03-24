@@ -9,14 +9,23 @@ from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views import View
 
+from profile.models import ProfileModel
 from .models import EventModel
 
 
 @method_decorator(login_required, name='dispatch')
 class CalendarView(View):
     @staticmethod
-    def get(request):
-        return render(request, 'calendar.html', {'title': 'Calendar', 'active': 'calendar'})
+    def get(request, username=None):
+        if not username or username == request.user:
+            profile = get_object_or_404(ProfileModel, user=request.user)
+        else:
+            profile = get_object_or_404(ProfileModel, user__username=username)
+        return render(request, 'calendar.html', {
+            'title': 'Calendar',
+            'active': 'calendar',
+            'profile': profile
+        })
 
 
 @method_decorator(login_required, name='dispatch')

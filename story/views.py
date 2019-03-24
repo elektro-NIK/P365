@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
 
+from profile.models import ProfileModel
 from story.forms import StoryForm
 from story.models import StoryModel
 
@@ -12,9 +13,18 @@ from story.models import StoryModel
 @method_decorator(login_required, name='dispatch')
 class StoriesView(View):
     @staticmethod
-    def get(request):
+    def get(request, username=None):
+        if not username or username == request.user:
+            profile = get_object_or_404(ProfileModel, user=request.user)
+        else:
+            profile = get_object_or_404(ProfileModel, user__username=username)
         stories = StoryModel.objects.filter(user=request.user, is_active=True).order_by('-event__start_date')
-        return render(request, 'stories.html', {'title': 'Stories', 'active': 'stories', 'stories': stories})
+        return render(request, 'stories.html', {
+            'title': 'Stories',
+            'active': 'stories',
+            'profile': profile,
+            'stories': stories
+        })
 
 
 @method_decorator(login_required, name='dispatch')
