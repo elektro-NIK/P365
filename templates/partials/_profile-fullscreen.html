@@ -1,0 +1,53 @@
+<div class="card text-white bg-dark">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-6">
+                <div class="card-text">
+                    <img src="{{ profile.pic.url }}" alt="Profile pic" style="height: 100px;"/>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card-title" id="username">
+                    <a href="{% url 'user:profile' profile.user %}">{{ profile.user }}</a>
+                </div>
+                <div class="card-text">
+                    {% if profile.info %} {{ profile.info }} {% endif %}
+                </div>
+                <div class="card-text">
+                    {% if profile.location %}<i class="fa fa-map-marker"></i> {{ profile.location }} {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="card-group" id="counters">
+            <div class="card text-white bg-success col-4">
+                <a class="btn" href="{% url 'user:table' profile.user %}#tracks">
+                    <div class="card-text">Tracks</div>
+                    <div class="card-title">{{ counter.tracks|default:0 }}</div>
+                </a>
+            </div>
+            <div class="card text-white bg-success col-4">
+                <a class="btn" href="{% url 'user:table' profile.user %}#routes">
+                    <div class="card-text">Routes</div>
+                    <div class="card-title">{{ counter.routes|default:0 }}</div>
+                </a>
+            </div>
+            <div class="card text-white bg-success col-4">
+                <a class="btn" href="#">
+                    <div class="card-text">Stories</div>
+                    <div class="card-title">{{ counter.stories|default:0 }}</div>
+                </a>
+            </div>
+        </div>
+        <div class="text-center" id="socials">
+            {% if profile.fb_url %}
+                <a href="{{ profile.fb_url }}" target="_blank"><i class="fab fa-facebook-square fa-3x"></i></a>
+            {% endif %}
+            {% if profile.tw_url %}
+                <a href="{{ profile.tw_url }}" target="_blank"><i class="fab fa-twitter-square fa-3x"></i></a>
+            {% endif %}
+            {% if profile.ig_url %}
+                <a href="{{ profile.ig_url }}" target="_blank"><i class="fab fa-instagram fa-3x"></i></a>
+            {% endif %}
+        </div>
+    </div>
+</div>
