@@ -2,23 +2,26 @@
 {% load staticfiles %}
 
 {% block content %}
+<div class="card text-white bg-dark">
     {% csrf_token %}
     <div id="calendar"></div>
     {% include '_event-modal.html' %}
+</div>
 {% endblock %}
 
 {% block css %}
-    <link href="{% static 'bootstrap/css/bootstrap-datepicker.min.css' %}" rel="stylesheet" media="screen">
-    <link href="{% static 'bootstrap/css/bootstrap-year-calendar.min.css' %}" rel="stylesheet" media="screen">
+<link href="{% static 'bootstrap/css/bootstrap-datepicker.min.css' %}" rel="stylesheet" media="screen">
+<link href="{% static 'bootstrap/css/bootstrap-year-calendar.min.css' %}" rel="stylesheet" media="screen">
+<link href="{% static 'css/calendar.css' %}" rel="stylesheet" media="screen">
 {% endblock %}
 
 {% block js %}
-    <script src="{% static 'bootstrap/js/bootstrap-datepicker.min.js' %}"></script>
-    <script src="{% static 'bootstrap/js/bootstrap-year-calendar.min.js' %}"></script>
-    <script src="{% static 'js/events.js' %}"></script>
-    <script>
-        var url_delete = "{% url 'calendar:delete_event' %}",
-            url_save   = "{% url 'calendar:update_event' %}",
-            url_update = "{% url 'calendar:get_all_events' %}";
-    </script>
+<script src="{% static 'bootstrap/js/bootstrap-datepicker.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap-year-calendar.min.js' %}"></script>
+<script src="{% static 'js/events.js' %}"></script>
+<script>
+    var url_delete = "{% url 'calendar:delete_event' %}",
+        url_save   = "{% url 'calendar:update_event' %}",
+        url_update = "{% url 'calendar:get_all_events' %}";
+</script>
 {% endblock %}
