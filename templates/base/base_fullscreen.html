@@ -16,15 +16,16 @@
     <link href="{% static 'css/main.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/main_fullscreen.css' %}" rel="stylesheet" media="screen">
     {% block css %}{% endblock %}
-    <!--&lt;!&ndash;TODO: debug style, disable me!&ndash;&gt;-->
-    <!--<style>-->
-        <!--div[class^=col] { border: 1px solid; }-->
-    <!--</style>-->
 </head>
 <body class="bg-secondary">
     {% include "base/header.html" %}
     <div class="container-fluid" id="content-container">
         <div class="row">
+            <div class="col progress">
+                <div class="progress-bar bg-success" role="progressbar"></div>
+            </div>
+        </div>
+        <div class="row row-100">
             {% if profile %}
             <div class="col-md-3" id="profile-container">
                 {% include "partials/_profile-fullscreen.html" %}

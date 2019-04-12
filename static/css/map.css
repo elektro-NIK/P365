@@ -1,4 +1,4 @@
-html, body, #content-container, #content-container>.row {
+html, body, #content-container, #content-container>.row-100 {
     height: 100%;
 }
 
