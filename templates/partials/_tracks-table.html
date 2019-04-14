@@ -20,7 +20,7 @@
         <td>
             <a href="{% url 'track:view' track.id %}">{{ track.name }}</a>
         </td>
-        <td>{{ track.start_date|naturaltime }}</td>
+        <td>{{ track.start_date|date:"SHORT_DATE_FORMAT" }} {{ track.start_date|time }}</td>
         <td>{{ track.length|floatformat }} km</td>
         <td class="text-center">
             {% get_tags_for_object track as 'tags' %}

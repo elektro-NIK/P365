@@ -19,7 +19,7 @@
         <td>
             <a href="{% url 'poi:view' poi.id %}">{{ poi.name }}</a>
         </td>
-        <td>{{ poi.created|naturaltime }}</td>
+        <td>{{ poi.created|date:"SHORT_DATE_FORMAT" }} {{ poi.created|time }}</td>
         <td class="text-center">
             {% get_tags_for_object poi as 'tags' %}
             {% for tag in tags|slice:':3' %}

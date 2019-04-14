@@ -20,7 +20,7 @@
         <td>
             <a href="{% url 'route:view' route.id %}">{{ route.name }}</a>
         </td>
-        <td>{{ route.created|naturaltime }}</td>
+        <td>{{ route.created|date:"SHORT_DATE_FORMAT" }} {{ route.created|time }}</td>
         <td>{{ route.length|floatformat }} km</td>
         <td class="text-center">
             {% get_tags_for_object route as 'tags' %}
